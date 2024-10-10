@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="default.xsl"?>
+<fr:tree
+toc="true"
+numbered="true"
+show-heading="true"
+show-metadata="true"
+expanded="true"
+root="false"
+xmlns:fr="http://www.jonmsterling.com/jms-005P.xml"><fr:frontmatter><fr:anchor>247</fr:anchor><fr:addr
+type="user">index</fr:addr><fr:route>index.xml</fr:route><fr:title
+text="Hello, World!">Hello, World!</fr:title><fr:authors /></fr:frontmatter><fr:mainmatter><fr:p>Welcome to your first tree! This tree is the root of your forest.
+  <fr:ul><fr:li><fr:link
+type="external"
+href="http://www.jonmsterling.com/jms-007D.xml">Build and view your forest for the first time</fr:link></fr:li>
+    <fr:li><fr:link
+type="external"
+href="http://www.jonmsterling.com/jms-007N.xml">Overview of the Forester markup language</fr:link></fr:li>
+    <fr:li><fr:link
+type="external"
+href="http://www.jonmsterling.com/jms-007H.xml">Creating new trees</fr:link></fr:li>
+    <fr:li><fr:link
+type="external"
+href="http://www.jonmsterling.com/jms-007K.xml">Creating your personal biographical tree</fr:link></fr:li></fr:ul></fr:p></fr:mainmatter><fr:backmatter /></fr:tree>
