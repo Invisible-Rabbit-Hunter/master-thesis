@@ -1,0 +1,24 @@
+\title{Context, Judgement, Deduction}
+\taxon{reference}
+\author{Greta Coraglia}
+\author{Ivan Di Liberti}
+\meta{bibtex}{\startverb
+  @misc{coraglia2022contextjudgementdeduction,
+    title={Context, Judgement, Deduction},
+    author={Greta Coraglia and Ivan Di Liberti},
+    year={2022},
+    eprint={2111.09438},
+    archivePrefix={arXiv},
+    primaryClass={math.LO},
+    url={https://arxiv.org/abs/2111.09438},
+  }\stopverb}
+
+\meta{doi}{10.48550/arXiv.2111.09438}
+
+\p{We introduce judgemental theories and their calculi as a general framework to present and study deductive systems.
+As an exemplification of their expressivity, we approach dependent type theory and natural deduction as special kinds of
+judgemental theories. Our analysis sheds light on both the topics, providing a new point of view. In the case of type theory,
+we provide an abstract definition of type constructor featuring the usual formation, introduction, elimination and computation
+rules. For natural deduction we offer a deep analysis of structural rules, demystifying some of their properties, and putting
+them into context. We finish the paper discussing the internal logic of a topos, a predicative topos, an elementary 2-topos et
+similia, and show how these can be organized in judgemental theories. }

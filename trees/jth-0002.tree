@@ -1,0 +1,27 @@
+\title{Fibration in a 2-category}
+\date{2024-10-06}
+\taxon{definition}
+
+\import{base-macros}
+
+\def\cal[x]{#{\mathcal{\x}}}
+\def\K{\cal{K}}
+
+\p{
+Let \cal{K} be a strict 2-category. A morphism #{p : E \to B} in \K is a fibration if
+\ul{
+\li{for all objects #{X \in \K}, the functor #{p_* = \K(X,p) : \K(X,E) \to \K(X,B)} is a [Grothendieck fibration](jth-0003)}
+\li{and for all 1-cells #{f : Y \to X \in \K},
+\texfig{\begin{codi}[tetragonal=base 8em height 4.8em]
+    \obj {|(KXE)| \K(X,E) & |(KYE)| \K(Y,X) \\
+          |(KXB)| \K(X,B) & |(KYB)| \K(Y,B) \\};
+    \mor KXE f^*:-> KYE p_*:-> KYB;
+    \mor KXE p_*:-> KXB f^*:-> KYB;
+  \end{codi}}
+}
+is a morphism of fibrations.
+}}
+
+\p{
+  If each functor #{p_* : \K(X,E) \to \K(X,B)} is a discrete fibration, we say that #{p} is a discrete fibration.
+}
