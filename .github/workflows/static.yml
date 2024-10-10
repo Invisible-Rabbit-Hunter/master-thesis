@@ -54,6 +54,9 @@ jobs:
       - name: Check `latex` version
         run: latex --version
 
+      - name: Make assets if it does not exist.
+        run: mkdir -p assets
+
       - name: Build with Forester
         run: opam exec -- forester build forest.toml
 
