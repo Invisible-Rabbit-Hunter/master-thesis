@@ -1,0 +1,25 @@
+\date{2024-10-12}
+\title{Fibrations in 2-categories}
+\taxon{definition}
+
+\import{base-macros}
+
+\def\K{\cal{K}}
+
+\p{
+  Let \K be a 2-category and #{p : E \to B} be a morphism of \K. We say that #{p} is a \em{fibration} when, for every
+  object #{X}, the functor #{p_* = \K(X,p) : \K(X,E) \to \K(X,B)} is a [Grothendieck fibration](jth-0003), and for every morphism
+  #{f : Y \to X}, the diagram
+  \codi{tetragonal=base 2cm height 1.5cm}{
+    \obj {|(tl)| \K(X,E) & |(tr)| \K(Y,E) \\
+          |(bl)| \K(X,B) & |(br)| \K(Y,B) \\};
+    \mor tl f^*:-> tr p_*:-> br;
+    \mor[swap] tl p_*:-> bl f^*:-> br;
+  }
+  is a morphism of fibrations.
+}
+
+\p{
+  Equivalently, #{p : E \to B} is a fibration if the canonical map #{i : p \to B/p} has a right adjoint in #{\K / B},
+  where #{B/p} denotes the comma object of #{\id_B} and #{p}.
+}

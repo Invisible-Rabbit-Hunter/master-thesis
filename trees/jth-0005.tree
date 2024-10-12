@@ -1,0 +1,16 @@
+\date{2024-10-12}
+\import{base-macros}
+\taxon{definition}
+\title{finite limit 2-sketches}
+
+\p{
+  A \em{finite limit 2-sketch} is a small 2-category #{S} equipped with a set of finite limit 2-cones #{C}.
+}
+
+\p{
+  A \em{morphism} of a 2-sketches #{S, T} is a 2-functor #{S \to T} sending the 2-cones in #{S} to 2-cones in #{T}.
+}
+
+\p{
+  A \em{model} of a 2-sketch #{(S, C)} in a 2-category \C is a 2-functor #{S \to C} sending the 2-cones in #{C} to limit 2-cones in \C.
+}

@@ -36,6 +36,10 @@
  }
 }
 
+\def\codi[args][body]{\texfig{\begin{codi}[\args]
+  \body
+\end{codi}}}
+
 \def\proof[body]{
  \scope{
    \put\transclude/toc{false}
@@ -45,3 +49,19 @@
    }
  }
 }
+
+\def\id{#{\mathrm{id}}}
+
+\def\cal[body]{#{\mathcal{\body}}}
+\def\T{\cal{T}}
+\def\J{\cal{J}}
+\def\C{\cal{C}}
+\def\ctx{#{\mathbf{ctx}}}
+\def\U{\cal{U}}
+\def\Udot{#{\do\cal{U}}}
+\def\Cat{#{\mathbf{Cat}}}
+\def\dtt{#{\mathrm{dtt}}}
+
+\def\A{\cal{A}}
+\def\dom{#{\mathrm{dom}}}
+\def\cod{#{\mathrm{cod}}}

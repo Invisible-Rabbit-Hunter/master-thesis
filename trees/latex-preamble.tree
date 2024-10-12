@@ -1,5 +1,5 @@
 \def\latex-preamble/diagrams{
-%  \startverb
+ \verb<<<|
  \usepackage{tikz, tikz-cd, mathtools, amssymb, stmaryrd}
  \usepackage{commutative-diagrams}
 %  \usetikzlibrary{matrix,arrows}
@@ -277,5 +277,5 @@
 %    \path[spath/save = #1east] (#1ne) to (#1se);
 %    \path[spath/save = #1south] (#1sw) to (#1se);
 %  }
-%  \stopverb
+  <<<
 }

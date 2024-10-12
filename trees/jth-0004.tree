@@ -1,0 +1,16 @@
+\date{2024-10-12}
+\taxon{Definition}
+\title{Finite-Limit Sketch}
+\import{base-macros}
+
+\p{
+  A \em{finite-limit sketch} is a small category #{S} equipped with a set of finite-limit cones #{C}.
+}
+
+\p{
+  A \em{morphism} of a sketches #{S, T} is a functor #{S \to T} sending the cones in #{S} to cones in #{T}.
+}
+
+\p{
+  A \em{model} of a sketch #{(S, C)} in a category \C is a functor #{S \to C} sending the cones in #{C} to limit cones in \C.
+}
