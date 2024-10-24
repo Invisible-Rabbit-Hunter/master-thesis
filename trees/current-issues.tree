@@ -1,0 +1,51 @@
+\import{base-macros}
+
+\p{
+  \ul{
+    \li{
+      Strictness:
+      \p{
+        Given the theory of [fibrations](jth-0008), a model is a fibration equipped with a cleavage,
+        and by the current definition a strict homomorphism of models must preserve must preserve
+        this cleavage on the nose, but a pseudo homomorphism does not require the square
+        \codi{}{
+          \obj {E & E' \\
+                B & B' \\};
+          \mor E f_E:-> E' p':-> B';
+          \mor[swap] E p:-> B f_B:-> B';
+          \mor f_E f_p:-2> f_B;
+        } 
+        to commute strictly, but only up to isomorphism.
+      }
+
+      \p{
+        One solution is to equip the 2-theory with a class of "strict" morphisms, where we require the
+        2-cells of the homomorphism to be identity on them, i.e. we mark #{p} to be a strict morphism,
+        so that #{f_p} must be identity. There is some precedent for this, in that John Bourke in
+        "ACCESSIBLE ASPECTS OF 2-CATEGORY THEORY" shows how, in order to recover lax monoidal functors
+        as model homomorphisms of the 2-theory of monoids, you need that certain projections from the product object
+        are strict. 
+      }
+
+      \p{
+        Another consideration could be looking at cartesian double theories, where they seem to recover
+        the lax monoidal functors without needing to strictify certain limit projections. Not quite sure
+        why yet, though, and I can't give a good account for what the proarrows would correspond to
+        syntactically.
+      }
+    }
+    \li{
+      Duality:
+      \p{I cannot find a nice way to describe the theory of e.g. cartesian closed categories, since
+      exponentiation should have "arity" #{\Rightarrow : \bullet^\op \times \bullet \to \bullet}, but we have no
+      way to describe #{\bullet^\op} as a 2-limit, as far as I know.}
+    }
+
+    \li{
+      Discreteness:
+      \p{Whilst there is a definition of discrete (two-sided) fibration in literature, this is not given by a limit
+      construction, and so I think lex 2-functors need not preserve them. Maybe forcing them to be pseudomonic
+      fibrations would work, but that feels like it might be too strong.}
+    }
+  }
+}

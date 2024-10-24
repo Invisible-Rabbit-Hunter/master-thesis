@@ -4,7 +4,6 @@
 
 \xmlns:html{http://www.w3.org/1999/xhtml}
 
-
 \def\nowrap[body]{\<html:span>[style]{white-space: nowrap}{\body}}
 \def\mark[body]{\<html:mark>{\body}}
 
@@ -58,10 +57,11 @@
 \def\C{\cal{C}}
 \def\ctx{#{\mathbf{ctx}}}
 \def\U{\cal{U}}
-\def\Udot{#{\do\cal{U}}}
+\def\Udot{#{\dot{\cal{U}}}}
 \def\Cat{#{\mathbf{Cat}}}
 \def\dtt{#{\mathrm{dtt}}}
 
 \def\A{\cal{A}}
 \def\dom{#{\mathrm{dom}}}
 \def\cod{#{\mathrm{cod}}}
+\def\op{#{\mathrm{op}}}

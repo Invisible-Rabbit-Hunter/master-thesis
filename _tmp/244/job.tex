@@ -1,6 +1,7 @@
-\def\latex-preamble/diagrams{
-  \verb<<<|
-  \usepackage{tikz, tikz-cd, mathtools, amssymb, stmaryrd}
+\documentclass[crop,dvisvgm]{standalone}
+
+  
+    \usepackage{tikz, tikz-cd, mathtools, amssymb, stmaryrd}
   \usepackage{commutative-diagrams}
   \pgfqkeys{/codi/arrows}{
   -2>/.style={
@@ -283,5 +284,16 @@
 %    \path[spath/save = #1east] (#1ne) to (#1se);
 %    \path[spath/save = #1south] (#1sw) to (#1se);
 %  }
-  <<<
-}
+
+  
+\begin{document}
+\begin {codi}[]
+  
+          \obj  {E & E' \\
+                B & B' \\};
+          \mor  E f_E:-> E' p':-> B';
+          \mor [swap] E p:-> B f_B:-> B';
+          \mor  f_E f_p:-2> f_B';
+        
+\end {codi}
+\end{document}

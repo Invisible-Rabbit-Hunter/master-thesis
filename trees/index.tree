@@ -3,6 +3,8 @@
 \p{
   This is [my](jonathanosser) attempt at a general theory of judgments and deductions,
   based on Greta Coraglia's and Ivan Di Liberti's paper, [Context, Judgement, Deduction](coraglia-diliberti-2021).
-
-  Start at \ref{jth-0001}.
+}
+\p{
+  The current issues I'm facing are
+  \transclude{current-issues}
 }
