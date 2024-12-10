@@ -1,0 +1,25 @@
+\date{2024-11-24}
+
+\import{base-macros}
+
+\def\bb[x]{#{\mathbb{\x}}}
+
+\p{
+  A \em{judgemental theory} is given by a family of \em{judgements} #{\cal{J}} and \em{rules} #{\cal{R}}.
+}
+
+\p{
+  The judgements dependent, in the sense that they are of the form
+  ##{\cal{K} \vdash \cal{J},}
+  where #{\cal{K}} is formally constructed as by finite 2-limits. The idea is that these will be interpreted
+  as tight morphisms in the opposite direction. For example, the context judgement is given by #{\bb{1} \vdash \ctx},
+  the substitution judgement by #{\ctx \times \ctx \vdash \ctx^\to}, and the type judgement by
+  #{\ctx \vdash \U}.
+}
+
+\p{
+  Rules are essentially morphisms between judgements, #{R : \cal{K} \to \cal{J}}. They come in two flavours, either
+  they state a constructive rule, in the sense of e.g. formation rules, or it is an equational rule, where the antecedent
+  is an equality. The former are to be interpreted as loose morphisms of judgements, and the latter as strict equalities
+  of arrows. Equalities in the assumptions can (probably) be determined in terms of pullbacks/equalizers in 2-limit form.
+}

@@ -8,7 +8,9 @@
   #{\ctx \to 1} and discrete fibrations #{\U, \Udot \to \ctx}, as well as a map of
   fibrations #{\Sigma : \Udot \to \U}, such that #{\ctx \to 1} and #{\Sigma}
   have a right adjoint.
-  
+}
+
+\p{
   A model \A of #{\T_\dtt} then consists of a category #{\ctx^\A} with a terminal objects,
   as well as two discrete fibrations #{\U^\A, \Udot^\A} over #{\ctx^A} and a map of
   fibrations #{\Sigma : \U^\A \to \Udot^\A} with a right adjoint. Thus this corresponds

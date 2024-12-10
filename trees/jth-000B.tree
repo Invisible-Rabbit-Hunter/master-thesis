@@ -1,0 +1,31 @@
+\title{Discrete objects in terms of isomorphisms with arrow object}
+\date{2024-10-30}
+\taxon{lemma}
+
+\import{base-macros}
+\import{jth-000A}
+
+\p{
+  Let \K be a 2-category with cotensors with the interval, and let #{X} be an object of \K. The following are equivalent:
+  \ol{
+    \li{#{X} is discrete}
+    \li{The map #{X \to X^\to} induced by #{\id_{\id_X} : \id_X \to \id_X} is an isomorphism}
+    \li{The source projection #{s : X^\to \to X} is an isomorphism}  
+    \li{The target projection #{t : X^\to \to X} is an isomorphism}  
+  }
+}
+
+\proof{
+  \p{
+    We first show that (1) and (2) are equivalent. In the forward direction, recall that we have a natural isomorphism #{\alpha : \K(-,X)^\to \cong \K(-,X^\to)},
+    and that #{i} is the image of the morphism #{\id_X \xrightarrow{\id_{\id_X}} \id_X \in K(X,X)^\to}. Since #{X} is discrete, we know that #{\K(X,X)} is
+    a discrete category. Thus the identity assignming map #{I : \K(X,X) \to \K(X,X)^\to} is an isomorphism, #{i = (\alpha \circ I)(\id_X)}, and functors
+    preserve isomorphism. Since #{\id_X} is an isomorphism
+  }
+
+  \p{
+    In the other direction, if #{s} is an isomorphism, then so is #{\K(Y,s) : \K(Y,X^\to) \to \K(Y,X)} for any object #{Y}. But then the source projection
+    #{\K(Y,X)^\to \to \K(Y,X)} is an isomorphism. The same holds for the target projection, so we conclude that #{\K(Y,X)} is discrete for any #{Y}. Therefore
+    #{X} is a discrete object of \K.
+  }
+}

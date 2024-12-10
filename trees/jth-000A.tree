@@ -1,0 +1,12 @@
+\title{Discrete Object}
+\date{2024-10-30}
+\taxon{definition}
+
+\import{base-macros}
+
+\def\K{\cal{K}}
+
+\p{
+  Let \K be a 2-category. An object #{X} of \K is called \em{discrete} if for every object #{Y} of \K, the
+  hom-category #{\K(Y,X)} is discrete.
+}

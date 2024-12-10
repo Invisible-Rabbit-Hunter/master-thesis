@@ -1,7 +1,7 @@
 \date{2024-10-12}
 \import{base-macros}
 \taxon{definition}
-\title{finite limit 2-sketches}
+\title{Finite limit 2-sketches}
 
 \p{
   A \em{finite limit 2-sketch} is a small 2-category #{S} equipped with a set of finite limit 2-cones #{C}.

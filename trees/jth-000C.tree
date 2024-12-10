@@ -1,0 +1,10 @@
+\date{2024-11-20}
+\title{Enhanced 2-category}
+\taxon{definition}
+
+\import{base-macros}
+
+\p{
+  Let #{\cal{F}} denote the full subcategory of #{\bf{Cat}^\to} on fully faithful and injective on objects functors.
+  An #{\cal{F}}-category, or enhanced 2-category, is a category enriched in #{\cal{F}}.
+}

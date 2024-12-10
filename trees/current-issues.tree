@@ -26,6 +26,9 @@
         as model homomorphisms of the 2-theory of monoids, you need that certain projections from the product object
         are strict. 
       }
+      \p{
+        A more established version of this is through \ref{jth-000C}, which also seems to solve the issues mentioned in "ACCESSIBLE ASPECTS OF 2-CATEGORY THEORY".
+      }
 
       \p{
         Another consideration could be looking at cartesian double theories, where they seem to recover

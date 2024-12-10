@@ -4,7 +4,7 @@
 \import{base-macros}
 
 \p{
-  A \em{finite-limit sketch} is a small category #{S} equipped with a set of finite-limit cones #{C}.
+  A \em{finite-limit sketch} is a small category #{S} equipped with a set of cones #{C}.
 }
 
 \p{
