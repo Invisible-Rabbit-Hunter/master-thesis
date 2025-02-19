@@ -62,10 +62,12 @@ jobs:
         run: latex --version
 
       - name: Make assets if it does not exist.
-        run: mkdir -p assets
+        run: mkdir -p forest/assets
 
       - name: Build with Forester
-        run: opam exec -- forester build forest.toml
+        run: |
+          cd forest
+          opam exec -- forester build forest.toml
 
       - name: Setup upterm session
         if: failure()
@@ -75,7 +77,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: './output'
+          path: './forest/output'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
