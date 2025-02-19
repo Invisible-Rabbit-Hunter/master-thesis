@@ -1,6 +1,108 @@
-\providecommand\main{..}
-\documentclass[\main/thesis.tex]{subfiles}
+\documentclass[../thesis.tex]{subfiles}
+
+\ifSubfilesClassLoaded{%
+    \externaldocument{\subfix{build/2-preliminaries}}%
+  }{}
 
 \begin{document}
   \chapter{Enhanced finite 2-limit theories}
+  We denote by $\cF$ the full subcategory of $\Cat^\to$ on full embeddings, where a functor is a full
+  embedding if it is fully faithful and injective on objects. Thus the objects of $\cF$ are full
+  embeddings, and a morphism $A \to B$ in $\cF$ is a commuting squares
+  \[\begin{codi}
+    \obj {A_\tau & B_\tau \\
+          A_\lambda & B_\lambda \\};
+
+    \mor A_tau -> B_tau ->,hook B_lambda;
+    \mor A_tau ->,hook A_lambda -> B_lambda;
+  \end{codi}\]
+  where $A_\tau$ denotes the domain of $A$ and $A_\lambda$ the codomain. 
+  \begin{remark}
+    An object of $\cF$ is in other words a category $A_\lambda$ equipped with a class $A_\tau$ of
+    objects. We call the objects of $A_\lambda$ loose and the objects in $A_\tau$ tight.
+  \end{remark}
+  
+  \todo{Move the following lemma to preliminaries.}
+  \begin{lemma}
+    The full embeddings are the right class of an orthogonal factorisation system on $\Cat$, where
+    the left class are surjective-on-objects functors.
+  \end{lemma}
+  \begin{proof}
+    Given any functor $F : A \to B$, let $A'$ denote the full subcategory of $B$ spanned by the
+    objects in the image of $F$. Clearly $F$ then factors through $A'$ as
+    \[\begin{codi}
+      \obj {A & & B \\
+            & A' & \\ };
+      \mor A F:-> B;
+      \mor A G:-> A' H:-> B;
+    \end{codi}\]
+    where $G$ is surjective on objects and $H$ is fully faithful and injective on objects.
+  \end{proof}
+  
+  In \cite{lack2012}, they show that $\cF$ is, among other things, cartesian closed. This means
+  it provides a good base for enrichment.
+  
+  \begin{definition}[{\cite[§3.1]{lack2012}}]
+    An \emph{enhanced 2-category}, or $\cF$-category, is a category enriched in $\cF$.
+    Effectively, an $\cF$-category $\bA$ consists of a 2-category $\bA_\lambda$ of
+    \emph{loose} morphisms, as well as a locally full sub-2-category $\bA_\tau$ of
+    \emph{tight} morphisms.
+  \end{definition}
+  \begin{notation}
+    We use $f : A \loose B$ to denote that $f$ is a loose morphism of $\bA$, i.e.\ a morphism of
+    $\bA_\lambda$, and $f : A \to B$ to denote that $f$ is tight, so a morphism of $\bA_\tau$.
+  \end{notation}
+  
+  Any 2-category $K$ gives rise to an enhanced 2-category in two different ways; its \emph{chordate}
+  ($K^+$) and \emph{inchordate} ($K^-$) $\cF$-categories. The chordate $\cF$-category $K^+$ has as
+  tight morphisms all morphisms of $K$, so that all morphisms are tight, and $K^-$ has only as tight
+  morphisms only the identities.
+
+  \section{Limits in \texorpdfstring{$\cF$}{F}-categories}
+  As $\cF$-categories are simply enriched categories, we have a general notion of limits in $\cF$-%
+  categories, as is described in \cref{sec:enriched/limits}. Here we show how limits are defined
+  explicitly in $\cF$-categories.
+
+
+  \section{Weak transformations of \texorpdfstring{$\cF$}{F}-functors}
+  \newcommand{\bFun}{{\mathbb{F}\mathrm{un}}}
+  Generalising finite limit theories, the morphisms of models of sketches should be $\cF$-natural
+  transformations. This notion, however, turns out to be too strict: it would require us to
+  preserve all structure strictly. We will therefore define a weakened notion of transformations.
+  \begin{definition}[{\cite[§4.1]{lack2012}}]
+    Let $w$ be a flavor of weakness and $F, G : \bA \to \bB$ be $\cF$-functors. A \emph{loose $w$-%
+    natural transformation} $F \to G$ is simply a $w$-natural transformation of 2-functors $\alpha
+    : F_\lambda \to G_\lambda$ such $\alpha J_\bA : F J_\bA \to G J_\bA$ is strictly 2-natural. A
+    \emph{tight} $w$-natural transformation $F \to G$ is a loose $w$-natural transformation
+    whose components are all tight.
+
+    These determine an $\cF$-category $\bFun(\bA,\bB)$ whose objects are $\cF$-functors $\bA \to
+    \bB$, loose (resp.\ tight) morphisms are loose (resp.\ tight)pseudonatural transformations,
+    and 2-cells are modifications. 
+  \end{definition}
+  \begin{remark}
+    \todo{something about marked categories and marked lax transformations}
+  \end{remark}
+
+  \section{Enhanced limit-sketches}
+
+  \section{Examples of theories}
+  \begin{example}
+    The simples theory is the theory of a single category: the sketch consists of the terminal
+    $\cF$-category, with no cones. Models of this theory in $\Cat$ are exactly categories,
+    morphisms of models are functors, and the transformations are exactly natural transformations.
+  \end{example}
+
+  \begin{example}
+    The theory of tight morphisms is given by a singular tight morphism $A \to B$, with no cones.
+  \end{example}
+  
+  \newcommand{\bone}{{\mathbb{1}}}
+  \begin{example}
+    The theory of cartesian categories is given by two objects $A$, $\bone$, loose morphisms $A
+    \to \bone$ and $\bone \to A$, the former tight and the latter loose and cones witnessing
+    $\bone$ as the terminal object, as well as 
+  \end{example}
+
+  \ifSubfilesClassLoaded{\printbibliography}{}
 \end{document}

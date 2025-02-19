@@ -1,7 +1,71 @@
-\documentclass{report}
+\documentclass[]{report}
 
 \usepackage{subfiles}
+\usepackage{luacode}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage[warnings-off={mathtools-colon,mathtools-overbracket},math-style=TeX]%
+           {unicode-math}
+\usepackage[pdfencoding=unicode]{hyperref}
+\usepackage{cleveref}
+\usepackage{commutative-diagrams}
+\usepackage{tikz-cd}
+\pgfqkeys{/codi}{every arrow/.append style={/ektropi/add=/tikz/commutative diagrams}}
+
+\usepackage{libertinus} % Font
+
+\usepackage{xr}
+
+\usepackage[left=2.5cm, right=2.5cm]{geometry}
+
+\usepackage{biblatex}
+\addbibresource{references.bib}
+
+\usepackage{todonotes}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{notation}{Notation}
+\newtheorem{example}{Example}
+\newtheorem*{definition*}{Definition}
+\newtheorem*{remark*}{Remark}
+\newtheorem*{notation*}{Notation}
+\newtheorem*{example*}{Example*}
+
+\AtBeginDocument{%
+  \NewCommandCopy{\phialt}{\phi}%
+  \RenewCommandCopy{\phi}{\varphi}%
+  \NewCommandCopy{\epsilonalt}{\epsilon}%
+  \RenewCommandCopy{\epsilon}{\varepsilon}%
+}
+
+\newcommand\cF{{\mathscr{F}}}
+\newcommand\Cat{{\mathbf{Cat}}}
+\newcommand\btwo{{\mathbb{2}}}
+\newcommand\into{\hookrightarrow}
+\newcommand\bA{{\mathbb{A}}}
+\newcommand\bB{{\mathbb{B}}}
+\newcommand\bC{{\mathbb{C}}}
+\newcommand\bK{{\mathbb{K}}}
+\newcommand\loose{\rightsquigarrow}
+
+\author{Jonathan Osser}
+\title{Enhanced Modeling of Type Theories}
 
 \begin{document}
+\maketitle
+\newpage
+\tableofcontents
+
+\subfile{chapters/1-introduction.tex}
+\subfile{chapters/2-preliminaries.tex}
 \subfile{chapters/3-logics.tex}
+
+\printbibliography
 \end{document}
