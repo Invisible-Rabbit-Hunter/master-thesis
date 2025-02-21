@@ -25,9 +25,10 @@ jobs:
           cd thesis
           latexmk thesis.tex
       - name: Create a Release
-        uses: elgohr/Github-Release-Action@v5
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
+          make_latest: true
+          token: ${{ github.token }}
+          draft: true
           files: |
             thesis/thesis.pdf
