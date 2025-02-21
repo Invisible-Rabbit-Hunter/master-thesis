@@ -29,6 +29,5 @@ jobs:
         with:
           make_latest: true
           token: ${{ github.token }}
-          draft: true
           files: |
             thesis/thesis.pdf
