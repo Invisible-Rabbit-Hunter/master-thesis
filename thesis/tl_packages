@@ -1,0 +1,12 @@
+subfiles
+amsmath
+amsthm
+mathtools
+unicode-math
+cleveref
+commutative-diagrams
+tikz-cd
+libertinus
+xr
+biblatex
+todonotes
