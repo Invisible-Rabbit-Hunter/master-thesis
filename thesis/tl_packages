@@ -6,6 +6,8 @@ unicode-math
 cleveref
 commutative-diagrams
 tikz-cd
+libertinus-fonts
+libertinus-otf
 libertinus
 xr
 biblatex
