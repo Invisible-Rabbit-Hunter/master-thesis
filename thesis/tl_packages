@@ -7,7 +7,7 @@ cleveref
 commutative-diagrams
 tikz-cd
 libertinus-fonts
-libertinus-otf
+# libertinus-otf
 libertinus
 xr
 biblatex
