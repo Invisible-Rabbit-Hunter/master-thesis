@@ -1,3 +1,5 @@
+name: Compile Thesis PDF
+
 on:
   push:
     tags:
