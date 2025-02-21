@@ -25,8 +25,9 @@
 \usepackage{todonotes}
 
 \newtheorem{theorem}{Theorem}
-\newtheorem{lemma}{Lemma}
-\newtheorem{proposition}{Proposition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
@@ -54,6 +55,9 @@
 \newcommand\bC{{\mathbb{C}}}
 \newcommand\bK{{\mathbb{K}}}
 \newcommand\loose{\rightsquigarrow}
+\newcommand\embed{\hookrightarrow}
+
+\DeclarePairedDelimiterX\set[1]{\{}{\}}{{\def\given{{\;\vert\;}}#1}}
 
 \author{Jonathan Osser}
 \title{Enhanced Modeling of Type Theories}

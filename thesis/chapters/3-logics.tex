@@ -4,11 +4,13 @@
     \externaldocument{\subfix{build/2-preliminaries}}%
   }{}
 
+  
+
 \begin{document}
   \chapter{Enhanced finite 2-limit theories}
-  We denote by $\cF$ the full subcategory of $\Cat^\to$ on full embeddings, where a functor is a full
-  embedding if it is fully faithful and injective on objects. Thus the objects of $\cF$ are full
-  embeddings, and a morphism $A \to B$ in $\cF$ is a commuting squares
+  We denote by $\cF$ the full subcategory of $\Cat^\to$ on full embeddings, where a functor is a
+  full embedding if it is fully faithful and injective on objects. Thus the objects of $\cF$ are
+  full embeddings, and a morphism $A \to B$ in $\cF$ is a commuting squares
   \[\begin{codi}
     \obj {A_\tau & B_\tau \\
           A_\lambda & B_\lambda \\};
@@ -38,6 +40,10 @@
     \end{codi}\]
     where $G$ is surjective on objects and $H$ is fully faithful and injective on objects.
   \end{proof}
+
+  \begin{corollary}
+    $\cF$ is a reflective subcategory of $\Cat^\to$, and so also cartesian closed.
+  \end{corollary}
   
   In \cite{lack2012}, they show that $\cF$ is, among other things, cartesian closed. This means
   it provides a good base for enrichment.
@@ -52,7 +58,19 @@
     We use $f : A \loose B$ to denote that $f$ is a loose morphism of $\bA$, i.e.\ a morphism of
     $\bA_\lambda$, and $f : A \to B$ to denote that $f$ is tight, so a morphism of $\bA_\tau$.
   \end{notation}
-  
+  \begin{remark}
+    Since an object of $\cF$ is essentially a category equipped with a class of tight objects, we
+    can equivalently view an $\cF$-category as a 2-category equipped with a class of tight morphisms
+    which is closed under identity (as the identity assigning functors preserve tightness and in the
+    terminal object of $\cF$ all morphisms are tight) and composition (for similar reasons regarding
+    the composition bifunctor).
+  \end{remark}
+
+  Any $\cF$-category $\bA$ gives rise two 2-categories: the 2-category of tight morphisms $\bA_
+  \lambda$ and its locally full sub-2-category of tight morphisms $\bA_\tau$. We use $J_\bA$ to
+  denote the inclusion $\bA_\tau \embed \bA_\lambda$ and and the
+  lo
+
   Any 2-category $K$ gives rise to an enhanced 2-category in two different ways; its \emph{chordate}
   ($K^+$) and \emph{inchordate} ($K^-$) $\cF$-categories. The chordate $\cF$-category $K^+$ has as
   tight morphisms all morphisms of $K$, so that all morphisms are tight, and $K^-$ has only as tight
@@ -70,14 +88,14 @@
   transformations. This notion, however, turns out to be too strict: it would require us to
   preserve all structure strictly. We will therefore define a weakened notion of transformations.
   \begin{definition}[{\cite[§4.1]{lack2012}}]
-    Let $w$ be a flavor of weakness and $F, G : \bA \to \bB$ be $\cF$-functors. A \emph{loose $w$-%
-    natural transformation} $F \to G$ is simply a $w$-natural transformation of 2-functors $\alpha
-    : F_\lambda \to G_\lambda$ such $\alpha J_\bA : F J_\bA \to G J_\bA$ is strictly 2-natural. A
-    \emph{tight} $w$-natural transformation $F \to G$ is a loose $w$-natural transformation
-    whose components are all tight.
+    Let $w$ be a flavor of weakness $w \in \set{s,p,l,c}$ and $F, G : \bA \to \bB$ be $\cF$-functors.
+    A \emph{loose $w$-natural transformation} $F \to G$ is a $w$-natural transformation of 2-functors
+    $\alpha : F_\lambda \to G_\lambda$ such $\alpha J_\bA : F J_\bA \to G J_\bA$ is strictly
+    2-natural. A \emph{tight} $w$-natural transformation $F \to G$ is a loose $w$-natural
+    transformation whose components are all tight.
 
     These determine an $\cF$-category $\bFun(\bA,\bB)$ whose objects are $\cF$-functors $\bA \to
-    \bB$, loose (resp.\ tight) morphisms are loose (resp.\ tight)pseudonatural transformations,
+    \bB$, loose (resp.\ tight) morphisms are loose (resp.\ tight) pseudonatural transformations,
     and 2-cells are modifications. 
   \end{definition}
   \begin{remark}
