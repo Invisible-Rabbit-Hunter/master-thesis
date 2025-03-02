@@ -10,6 +10,7 @@
 \usepackage[pdfencoding=unicode]{hyperref}
 \usepackage{cleveref}
 \usepackage{commutative-diagrams}
+\usepackage{tikz}
 \usepackage{tikz-cd}
 \pgfqkeys{/codi}{every arrow/.append style={/ektropi/add=/tikz/commutative diagrams}}
 
@@ -20,9 +21,10 @@
 \usepackage[left=2.5cm, right=2.5cm]{geometry}
 
 \usepackage{biblatex}
-\addbibresource{references.bib}
+\addbibresource{\subfix{references.bib}}
 
 \usepackage{todonotes}
+\usepackage{mathpartir}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}[theorem]{Proposition}
@@ -30,10 +32,10 @@
 \newtheorem{corollary}[theorem]{Corollary}
 
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}
-\newtheorem{remark}{Remark}
-\newtheorem{notation}{Notation}
-\newtheorem{example}{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{example}[theorem]{Example}
 \newtheorem*{definition*}{Definition}
 \newtheorem*{remark*}{Remark}
 \newtheorem*{notation*}{Notation}
@@ -48,16 +50,33 @@
 
 \newcommand\cF{{\mathscr{F}}}
 \newcommand\Cat{{\mathbf{Cat}}}
+\newcommand\Set{{\mathbf{Set}}}
+\newcommand\Mod{{\mathbf{Mod}}}
+\newcommand\Fun{{\mathbf{Fun}}}
+\newcommand\bzero{\mathbb{0}}
+\newcommand\bone{\mathbb{1}}
 \newcommand\btwo{{\mathbb{2}}}
+\newcommand\bthree{\mathbb{3}}
+\newcommand\bfour{\mathbb{4}}
+\newcommand\bfive{{\mathbb{5}}}
 \newcommand\into{\hookrightarrow}
 \newcommand\bA{{\mathbb{A}}}
 \newcommand\bB{{\mathbb{B}}}
 \newcommand\bC{{\mathbb{C}}}
+\newcommand\bD{{\mathbb{D}}}
+\newcommand\bE{{\mathbb{E}}}
+\newcommand\bF{{\mathbb{F}}}
+\newcommand\bG{{\mathbb{G}}}
+\newcommand\bH{{\mathbb{H}}}
+\newcommand\bI{{\mathbb{I}}}
+\newcommand\bJ{{\mathbb{J}}}
 \newcommand\bK{{\mathbb{K}}}
+\newcommand\id{\mathrm{id}}
 \newcommand\loose{\rightsquigarrow}
 \newcommand\embed{\hookrightarrow}
 
 \DeclarePairedDelimiterX\set[1]{\{}{\}}{{\def\given{{\;\vert\;}}#1}}
+\DeclarePairedDelimiterX\seq[1]{\langle}{\rangle}{{\def\given{{\;\vert\;}}#1}}
 
 \author{Jonathan Osser}
 \title{Enhanced Modeling of Type Theories}

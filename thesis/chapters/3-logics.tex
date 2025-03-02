@@ -2,12 +2,27 @@
 
 \ifSubfilesClassLoaded{%
     \externaldocument{\subfix{build/2-preliminaries}}%
+    \addbibresource{references.bib}
   }{}
 
   
 
 \begin{document}
   \chapter{Enhanced finite 2-limit theories}
+  In this chapter we generalize the notion of finite limit theories to two dimensions. We want
+  to define a theory $T$ to be a 2-category with finite 2-limits, and its 2-categories of models
+  $\Mod(T)$ to be finite 2-limit preserving functors $T \to \Cat$. However, with this naive
+  definition, the homomorphisms of models turn out to be either too strict or too loose. If we
+  consider strict 2-natural transformations, then all structure has to be preserved on the nose.
+  For example, consider a theory of cartesian categories; in the strict case, its homomorphisms
+  must preserve the choices of products and terminal objects exactly. On the other hand, if we take
+  morphisms to be for example pseudonatural transformations, then the morphisms need only preserve
+  the cartesian structure up to isomorphism, aligning with the standard definition of preservation
+  of products. However, in a theory of (discrete) fibrations, morphisms would be squares commuting 
+  only up to isomorphism, rather than the standard strict equality. It is this issue we aim to
+  resolve, as this fine control over strictness of models will be very relevant in describing
+  sketches of type theories in later chapters.
+
   We denote by $\cF$ the full subcategory of $\Cat^\to$ on full embeddings, where a functor is a
   full embedding if it is fully faithful and injective on objects. Thus the objects of $\cF$ are
   full embeddings, and a morphism $A \to B$ in $\cF$ is a commuting squares
@@ -20,8 +35,13 @@
   \end{codi}\]
   where $A_\tau$ denotes the domain of $A$ and $A_\lambda$ the codomain. 
   \begin{remark}
-    An object of $\cF$ is in other words a category $A_\lambda$ equipped with a class $A_\tau$ of
-    objects. We call the objects of $A_\lambda$ loose and the objects in $A_\tau$ tight.
+    An object of $\cF$ is in equivalently a category $A_\lambda$ equipped with a class $A_\tau$ of
+    objects. We call the objects of $A_\lambda$ loose and the objects in $A_\tau$ tight. Taking this
+    perspective, we find that a lot of structure will be uniqely determined by $A_\lambda$, with
+    $A_\tau$ placing restrictions on what structure is allowed. For example, a morphism in $\cF$
+    is simply a functor $F : A_\lambda \to B_\lambda$ with the restriction that if $f \in A_\tau$,
+    then $Ff \in B_\tau$, and so $\cF$-morphisms are uniquely determined by their action on the
+    loose morphisms.
   \end{remark}
   
   \todo{Move the following lemma to preliminaries.}
@@ -42,44 +62,205 @@
   \end{proof}
 
   \begin{corollary}
-    $\cF$ is a reflective subcategory of $\Cat^\to$, and so also cartesian closed.
+    $\cF$ is a reflective subcategory of $\Cat^\to$.
   \end{corollary}
-  
-  In \cite{lack2012}, they show that $\cF$ is, among other things, cartesian closed. This means
-  it provides a good base for enrichment.
+
+  \begin{corollary}
+    $\cF$ is cartesian closed.
+  \end{corollary}
+
+  \begin{lemma}
+    The functors $\bone_\lambda : \bzero \into \bone$ and $\bone_\tau : \bone \into \bone$ are the
+    representables of $\cF$, in the sense that for any $A \in \cF$, we have $A_\tau \cong \cF(\bone_%
+    \tau, A)$ and $A_\lambda
+    \cong \cF(\bone_\lambda, A)$, naturally in $A$.
+  \end{lemma}
+
+  \begin{corollary}
+    For any $A, B \in \cF$, the exponential $[A,B] \in \cF$ satisfies that $[A,B]_\tau \cong \cF(A,B)
+    $ and $[A,B]_\lambda \cong \Cat(A_\lambda, B_\lambda)$, naturally in $A,B$.
+  \end{corollary}
+  \begin{proof}
+    We have natural isomorphisms
+    \[[A,B]_\tau \cong \cF(\bone_\tau, [A,B]) \cong \cF(\bone_\tau \times A, B) \cong \cF(A,B)\]
+    and
+    \[[A,B]_\lambda \cong \cF(\bone_\lambda, [A,B]) \cong \cF(\bone_\lambda \times A, B) \cong
+    \Cat(A_\lambda, B_\lambda),\]
+    where we have $(\bone_\lambda \times A) \cong (\bzero \into A_\lambda)$ since limits are computed
+    pointwise, so that $\cF(\bone_\lambda \times A, B)$ is uniquely determined on the tight part,
+    irrespective of the loose part, and so $\cF(\bone_\lambda \times A, B) \cong \Cat(A_\lambda, B_%
+    \lambda)$.
+  \end{proof}
   
   \begin{definition}[{\cite[§3.1]{lack2012}}]
     An \emph{enhanced 2-category}, or $\cF$-category, is a category enriched in $\cF$.
-    Effectively, an $\cF$-category $\bA$ consists of a 2-category $\bA_\lambda$ of
-    \emph{loose} morphisms, as well as a locally full sub-2-category $\bA_\tau$ of
-    \emph{tight} morphisms.
   \end{definition}
   \begin{notation}
-    We use $f : A \loose B$ to denote that $f$ is a loose morphism of $\bA$, i.e.\ a morphism of
-    $\bA_\lambda$, and $f : A \to B$ to denote that $f$ is tight, so a morphism of $\bA_\tau$.
+    We will use blackboard bold letters $\bA,\bB,\bC,\dots$ to denote $\cF$-categories. Furthermore,
+    we use $A \loose B$ to denote loose morphisms of $\bA$, i.e.\ morphisms in $\bA_\lambda$, and
+    $A \to B$ to denote tight morphisms, i.e\ morphisms in $\bA_\tau$.
   \end{notation}
   \begin{remark}
     Since an object of $\cF$ is essentially a category equipped with a class of tight objects, we
     can equivalently view an $\cF$-category as a 2-category equipped with a class of tight morphisms
     which is closed under identity (as the identity assigning functors preserve tightness and in the
     terminal object of $\cF$ all morphisms are tight) and composition (for similar reasons regarding
-    the composition bifunctor).
+    the composition functor).
   \end{remark}
 
   Any $\cF$-category $\bA$ gives rise two 2-categories: the 2-category of tight morphisms $\bA_
   \lambda$ and its locally full sub-2-category of tight morphisms $\bA_\tau$. We use $J_\bA$ to
-  denote the inclusion $\bA_\tau \embed \bA_\lambda$ and and the
-  lo
+  denote the inclusion $\bA_\tau \embed \bA_\lambda$ and
 
-  Any 2-category $K$ gives rise to an enhanced 2-category in two different ways; its \emph{chordate}
-  ($K^+$) and \emph{inchordate} ($K^-$) $\cF$-categories. The chordate $\cF$-category $K^+$ has as
-  tight morphisms all morphisms of $K$, so that all morphisms are tight, and $K^-$ has only as tight
-  morphisms only the identities.
+  We let $\bF$ denote the $\cF$-category of $\cF$-categories, whose tight morphisms are $\cF$-%
+  functors and loose morphisms are functors on the loose categories, and whose 2-cells are $\cF$-%
+  natural transformations, i.e. natural transformations on whose components are all tight.
+  Furthermore, given two $\cF$-categories $\bA,\bB$, we let $[\bA,\bB]$ denote the $\cF$-category
+  whose objects are $\cF$-functors $\bA \to \bB$, whose tight morphisms are $\cF$-natural
+  transformations, loose morphisms are natural transformations whose componenets need not be
+  tight, and whose 2-cells are modifications.
+
+  Any 2-category $K$ can be regarded as an $\cF$-category in two natural ways: taking only
+  identities to be tight yields what we call the \emph{inchordate} $\cF$-category $K^-$, and 
+  dually taking all morphisms to be tight yields the \emph{chordate} $\cF$-category $K^+$. The
+  operations of taking a 2-category to its inchordate or chordate $\cF$-category extends to
+  functors $2\Cat \to \cF\text-\Cat$, and these are respectively left and right adjoint to the
+  functor $(-)_\lambda : \cF\text-\Cat \to 2\Cat$ taking a $\cF$-category to its underlying 2-%
+  category of loose morphisms.
+
 
   \section{Limits in \texorpdfstring{$\cF$}{F}-categories}
-  As $\cF$-categories are simply enriched categories, we have a general notion of limits in $\cF$-%
-  categories, as is described in \cref{sec:enriched/limits}. Here we show how limits are defined
-  explicitly in $\cF$-categories.
+  % In this section we develop \emph{weighted limits}, a generalization of the classical conical
+  % limits that behave much more nicely in enriched categories, in the specific context of $\cF$%
+  % -categories. These weighted limits are fundamental for the enhanced limit 2-sketches we will
+  % define later, and those will serve as the main method with which we later describe logics, for
+  % example giving us a nice theory of dependent type theories, whose models are exactly the natural
+  % models of Awodey.
+
+  \begin{definition}
+    Let $\bJ$ be an $\cF$-category. A $\bJ$-shaped weight is a functor $W : \bJ \to \bF$, where $\bF$
+    is the $\cF$-category induced by the cartesian closed structure of $\cF$. Given a $\bJ$-shaped
+    diagram $D : \bJ \to \bA$ in an $\cF$-category $\bA$, a loose $W$-weighted cone $(a,\alpha)$
+    from $a \in \bA$ to $D$ is a loose natural transformation $W \loose \bA(a,D)$. Concretely,
+    $\alpha$ consists of:
+    \begin{itemize}
+      \item for each object $x \in \bJ$ and $r \in W(x)$, a morphism $\alpha_{x,r} : a \loose Dx$,
+        and
+      \item for each $p : r \to s \in W(x)$, a 2-cell $\alpha_{x,p} : \alpha_{x,r} \to \alpha_{x,s}$,
+        such that
+      \item for each morphism $f : x \loose y$ in $\bJ$ and $r \in W(x)$, we have $Df \circ \alpha_%
+        {x,r} = \alpha_{y,W(f)(r)}$, and
+      \item for each $p : r \to s$ in $W(x)$ we have $Df \star \alpha_{x,p} = \alpha_{y,W(f)(p)}$.
+    \end{itemize} 
+    The cone $\alpha$ is \emph{tight} if, whenever $r \in W(x)$ is a tight object, the arrow
+    $\alpha_{x,r} : a \to Dx$ is tight.
+
+    A morphism of two parallel cones $\alpha,\alpha' \in [\bJ,\bF](W,\bA(a,D))$ is a modification,
+    which explicitly works out to be a family $(m_x : \alpha_x \to \alpha'_x)_{x \in \bJ}$ such
+    that for any $f : x \loose y \in \bJ$, we have $m_y \star Wf = \bA(a,Df) \star m_x$. Concretely,
+    each $m_x : \alpha_x \to \alpha'_x$ is a 2-cell in $\bF$, and so an assignment for each
+    $r \in W(x)$ a morphism $m_{x,r} : \alpha_{x,r} \to \alpha'_{x,r}$ such that for every $p :
+    r \to s \in W(x)$, we have $m_{x,s} \circ \alpha_{x,p} = \alpha'_{x,p} \circ m_{x,r}$,
+    and for every $f : x \loose y \in \bJ$, we have $m_y \star Wf = \bA(a,Df) \star m_x$
+    (where $m_y \star Wf : \alpha_y \circ Wf \to \alpha'_y \circ Wf$), which
+    works out to be for every $r \in W(x)$ the condition that
+    \[m_{y,Wf(r)} = Df \circ m_{x,r} : Df \circ \alpha_{x,r} = \alpha_{y,Wf(r)} \to \alpha'_{y,Wf(r)}
+    = Df \circ \alpha'_{x,r}.\]
+  \end{definition}
+
+  \begin{definition}[Pullback of cones]
+    Let $\bJ, \bA$ be $\cF$-categories, $W : \bJ \to \bF$ a weight, and $D : \bJ \to \bA$ a diagram.
+    Given a $W$-weighted cone $(a,\alpha)$ over $D$ and a morphism $f : b \to a$ in $\bA$, we define
+    the pullback of $(a,\alpha)$ along $f$ as the cone $(b,f^*\alpha)$ defined by
+    \[(f^*\alpha)_{x,r} = \alpha_{x,r} \circ f\]
+    on objects $x \in \bJ$ and $r \in W(x)$, and
+    \[(f^*\alpha)_{x,p} = \alpha_{x,p} \star f\]
+    on objects $x \in \bJ$ and morphisms $p : r \to s \in W(x)$.
+
+
+    Furthermore, for $\phi : f \to g : b \to a$ a 2-cell in $\bA$, we define a modification $\phi^*\alpha :
+    f^*\alpha \to g^*\alpha$ by \((\phi^*\alpha)_{x,r} = \alpha_{x,r} \star \phi\).
+  \end{definition}
+
+  \begin{definition}[Weighted Limit]
+    Given a shape $\cF$-category $\bJ$ and weight $W : \bJ \to \cF$, the $W$-weighted limit of a diagram
+    $D : \bJ \to \bA$ in an $\cF$-category $\bA$ is an object $L \in \bA$ such that there exists an
+    isomorphism in $\cF$
+    \[\bA(-,L) \cong [\bJ,\bF](W,\bA(-,D)).\]
+  \end{definition}
+
+  \begin{proposition}
+    Given a weight $W : \bJ \to \cF$, a diagram $D : \bJ \to \bA$ has a limit in $\bA$ if and only if there
+    exists an object $\ell \in \bA$ and cone $L : W \to \bA(\ell,D)$ (note the tightness) with the property that
+    \begin{enumerate}
+      \item for every cone $\alpha : W \loose \bA(a,D)$, there exists a unique morphism $h_\alpha : a \loose \ell$
+        such that $\alpha = h_\alpha^*L$, and $h_\alpha$ is tight if and only if $\alpha$ is tight,
+      \item for every modification $m : \alpha \to \alpha' : W \loose \bA(a,D)$ there exists a unique 2-cell
+        $h_m : h_\alpha \to h_{\alpha'}$ such that $h_m^*\ell = m$.
+    \end{enumerate}
+  \end{proposition}
+  \begin{proof}
+    We start by unfolding the naturality squares of the isomorphism $h : [\bJ,\bF](W,\bA(-,D)) \cong \bA(-,\ell)$
+    which is supposed to exist for $\ell$ to be the $W$-weighted limit of $D$. For each $a \in \bA$, we find that
+    $h_a : [\bJ,\bF](W,\bA(a,D)) \cong \bA(a,\ell)$ is an isomorphism in $\bF$, i.e.\ an invertible functor which
+    preserves and reflects tight morphisms. Naturality tells us that given a morphism $\phi : b \to a$, we have
+    that $h_b \circ \phi^* = \bA(\phi,\ell) \circ h_a$, where $\phi^*$ denotes the operation of pulling back a 
+    cone along a morphism of $\bA$. On cones $\alpha : W \loose \bA(b,\ell)$, this gives us that $h_b(\phi^*
+    \alpha) = h_a(\alpha) \circ \phi$, and on modifactions $m : \alpha \to \alpha' : W \loose \bA(b,D)$, we
+    have $h_b(\phi^*m) = h_a(m) \star \phi$. We have similar naturality conditions for $h^{-1}$.
+    
+    Now, given a natural isomorphism $h$ as above, we can consider the cone $L = h^{-1}(\id_\ell)$. Given any
+    other cone $\alpha : W \loose \bA(a,D)$, naturality tells us that
+    \[h_a(h_a(\alpha)^*L) = h_\ell(L) \circ h_a(\alpha) = \id_\ell \circ h_a(\alpha) = h_a(\alpha),\]
+    so $h_a(\alpha)^*L = \alpha$ since $h$ is an isomorphism. Similarly, for a modification $m : \alpha \to
+    \alpha'$ we find that
+    \[h_a(h_a(m)^*L) = h_a(m)\]
+  \end{proof}
+
+  On 1-cells, the naturality condition is equivalent to the existence of an object $L$, such that for every
+  cone $\alpha \in [\bJ,\bF](W,\bA(a,D))$, there exists a \emph{unique} 1-cell $h_\alpha : a \to L$ such that
+  $\alpha = h_\alpha^* L$.
+
+
+
+  Limits in $\cF$-categories are computed essentially as 2-limits in their induced loose 2-categories,
+  subject to two additional constraints.
+  \begin{theorem}
+    Let $\bJ,\bA$ be $\cF$-categories, and $W : \bJ \to \bF$ and $D : \bJ \to \bA$ be $\cF$-functors.
+    Then the $\cF$-limit $\lim^W D$, if it exists, induces a 2-limit $(\lim^W D)_\lambda = \lim^{W_%
+    \lambda} D_\lambda$. Furthermore, for $x \in \bJ$ and $r \in W(x)$, the projection $\pi_{x,r}
+    : \lim^W D \loose Dx$ is tight precisely if $r$ is a tight object of $W(x)$. Moreover, for any
+    object $a \in \bA$ and cone $\alpha \in [J,\bF](W,\bA(a,D))$, the universal morphism
+    $h : a \loose \lim^W D$ is tight if and only if for all $x \in \bJ$ and tight $r \in W(x)$,
+    the maps $\alpha_{x,r} : W(r) \to \bA(a,Dx)$ are tight.
+  \end{theorem}
+
+  In this section we show explicitly several different classes of $\cF$-weight and their limits, to
+  help paint a better picture of the structure we wish to capture. 
+
+  \begin{example}[Tight limits]
+    Given any 2-category $J$ and weight $W : J \to 2\Cat$, we can consider the corresponding
+    chordate $\cF$-category $J^+$ and weight $W^+ : J^+ \to \cF\text-\Cat$ taking every object
+    $x$ of $J$ to the chordate $\cF$-category $W(x)^+$. 
+  \end{example}
+  
+  \begin{example}[Tight terminal object]
+    A \emph{tight terminal object} in an $\cF$-category $\bA$ is an object $t \in \bA$, such that for
+    every object $a \in \bA$ there exists a unique tight 1-cell $!_a : a \to t$, and the only 2-cell
+    $!_a \to\mathop{!}_a$ is identity. 
+  \end{example}
+
+
+  \begin{example}[Tight products]
+    Let $J$ be a discrete $\cF$-category, meaing it has only identity 1-cells and 2-cells, and thus all
+    morphisms are tight.
+  \end{example}
+
+
+
+  % As $\cF$-categories are simply enriched categories, we have a general notion of limits in $\cF$-%
+  % categories, as is described in \cref{sec:enriched/limits}. Here we show how limits are defined
+  % explicitly in $\cF$-categories.
 
 
   \section{Weak transformations of \texorpdfstring{$\cF$}{F}-functors}
@@ -88,10 +269,10 @@
   transformations. This notion, however, turns out to be too strict: it would require us to
   preserve all structure strictly. We will therefore define a weakened notion of transformations.
   \begin{definition}[{\cite[§4.1]{lack2012}}]
-    Let $w$ be a flavor of weakness $w \in \set{s,p,l,c}$ and $F, G : \bA \to \bB$ be $\cF$-functors.
-    A \emph{loose $w$-natural transformation} $F \to G$ is a $w$-natural transformation of 2-functors
-    $\alpha : F_\lambda \to G_\lambda$ such $\alpha J_\bA : F J_\bA \to G J_\bA$ is strictly
-    2-natural. A \emph{tight} $w$-natural transformation $F \to G$ is a loose $w$-natural
+    Let $w$ be a flavor of weakness $w \in \set{s,p,l,c}$ and $F, G : \bA \to \bB$ be $\cF$-%
+    functors. A \emph{loose $w$-natural transformation} $F \to G$ is a $w$-natural transformation
+    of 2-functors $\alpha : F_\lambda \to G_\lambda$ such $\alpha J_\bA : F J_\bA \to G J_\bA$ is
+    strictly 2-natural. A \emph{tight} $w$-natural transformation $F \to G$ is a loose $w$-natural
     transformation whose components are all tight.
 
     These determine an $\cF$-category $\bFun(\bA,\bB)$ whose objects are $\cF$-functors $\bA \to
@@ -102,7 +283,7 @@
     \todo{something about marked categories and marked lax transformations}
   \end{remark}
 
-  \section{Enhanced limit-sketches}
+  \section{Enhanced limit 2-sketches}
 
   \section{Examples of theories}
   \begin{example}
@@ -115,7 +296,6 @@
     The theory of tight morphisms is given by a singular tight morphism $A \to B$, with no cones.
   \end{example}
   
-  \newcommand{\bone}{{\mathbb{1}}}
   \begin{example}
     The theory of cartesian categories is given by two objects $A$, $\bone$, loose morphisms $A
     \to \bone$ and $\bone \to A$, the former tight and the latter loose and cones witnessing
