@@ -16,3 +16,4 @@ biber
 biblatex
 todonotes
 mathpartir
+latexmk
