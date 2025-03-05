@@ -20,11 +20,11 @@ jobs:
           package_file: thesis/tl_packages
       - run: echo $HOME/texlive/bin/x86_64-linux >> $GITHUB_PATH
       - name: Check `latexmk` version
-        run: latexmk --version
+        run: $HOME/texlive/bin/x86_64-linux/latex --version
       - name: Compile `thesis.tex`
         run: |
           cd thesis
-          latexmk thesis.tex
+          $HOME/texlive/bin/x86_64-linux/latexmk thesis.tex
       - name: Create a Release
         uses: softprops/action-gh-release@v2
         with:
