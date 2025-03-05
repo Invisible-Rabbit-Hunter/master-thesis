@@ -15,9 +15,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup TeX Live
-        uses: teatimeguest/setup-texlive-action@v3
+        uses: zauguin/install-texlive@v4
         with:
-          package-file: thesis/tl_packages
+          package_file: thesis/tl_packages
+      - run: echo $HOME/texlive/bin/x86_64-linux >> $GITHUB_PATH
       - name: Check `latexmk` version
         run: latexmk --version
       - name: Compile `thesis.tex`
