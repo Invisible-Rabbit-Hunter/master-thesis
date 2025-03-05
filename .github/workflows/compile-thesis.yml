@@ -14,8 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install TeX Live
-        uses: zauguin/install-texlive@v4
+      - name: Setup TeX Live
+        uses: teatimeguest/setup-texlive-action@v3
         with:
           package_file: thesis/tl_packages
       - name: Check `latexmk` version
