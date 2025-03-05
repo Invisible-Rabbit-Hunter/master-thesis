@@ -18,8 +18,8 @@ jobs:
         uses: teatimeguest/setup-texlive-action@v3
         with:
           package-file: thesis/tl_packages
-      - name: Check `latex` version
-        run: latex --version
+      - name: Check `latexmk` version
+        run: latexmk --version
       - name: Compile `thesis.tex`
         run: |
           cd thesis
