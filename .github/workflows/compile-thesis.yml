@@ -14,10 +14,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup TeX Live
-        uses: teatimeguest/setup-texlive-action@v3
+      - name: Install TeX Live
+        uses: zauguin/install-texlive@v4
         with:
-          package-file: thesis/tl_packages
+          package_file: thesis/tl_packages
       - name: Check `latexmk` version
         run: latexmk --version
       - name: Compile `thesis.tex`
