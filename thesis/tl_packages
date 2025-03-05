@@ -1,6 +1,6 @@
 subfiles
 amsmath
-amsthm
+amscls
 mathtools
 unicode-math
 cleveref
@@ -10,7 +10,7 @@ libertine
 libertinus-fonts
 libertinus-otf
 libertinus
-xr
+tools
 biber
 biblatex
 todonotes
