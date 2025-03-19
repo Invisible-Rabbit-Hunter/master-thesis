@@ -13,7 +13,15 @@
 \usepackage{tikz}
 \usepackage{tikz-cd}
 \pgfqkeys{/codi}{every arrow/.append style={/ektropi/add=/tikz/commutative diagrams}}
-
+\pgfqkeys{/codi/arrows}{
+-2>/.style={
+/tikz/commutative diagrams/Rightarrow ,
+/tikz/commutative diagrams/shorten=2pt,
+},
+≈>/.style={
+  /tikz/commutative diagrams/rightsquigarrow
+}
+}
 % \usepackage{libertinus} % Font
 
 \setmathfont{NewCMMath-Regular.otf}
@@ -80,6 +88,12 @@
 \newcommand\Cart{{\mathrm{Cart}}}
 \newcommand\Fib{{\mathrm{Fib}}}
 \newcommand\comma{\mathrel{\downarrow}}
+\newcommand\dom{{\mathrm{dom}}}
+\newcommand\cod{{\mathrm{cod}}}
+
+\newcommand\Comp{{\mathrm{Comp}}}
+\newcommand\Attr{{\mathrm{Attr}}}
+\newcommand\NM{{\mathrm{NM}}}
 
 \newcommand\bone{\mathbb{1}}
 \newcommand\btwo{{\mathbb{2}}}
@@ -170,6 +184,10 @@
 \DeclarePairedDelimiterX\set[1]{\{}{\}}{{\def\given{{\;\vert\;}}#1}}
 \DeclarePairedDelimiterX\seq[1]{\langle}{\rangle}{{\def\given{{\;\vert\;}}#1}}
 
+\ifSubfilesClassLoaded{%
+    \IfFileExists{references.bib}{}{\addbibresource{./references.bib}}
+  }{}
+
 \author{Jonathan Osser}
 \title{Enhanced Modeling of Type Theories}
 
@@ -181,6 +199,7 @@
 \subfile{chapters/1-introduction.tex}
 \subfile{chapters/2-preliminaries.tex}
 \subfile{chapters/3-logics.tex}
+\subfile{chapters/4-type-theories.tex}
 
 \printbibliography
 \end{document}
