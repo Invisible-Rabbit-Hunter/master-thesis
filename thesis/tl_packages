@@ -22,3 +22,5 @@ luacode
 luatexbase
 lualatex-math
 enumitem
+utfsym
+newunicodechar
