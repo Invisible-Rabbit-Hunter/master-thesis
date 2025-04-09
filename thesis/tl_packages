@@ -21,3 +21,4 @@ latexmk
 luacode
 luatexbase
 lualatex-math
+enumitem

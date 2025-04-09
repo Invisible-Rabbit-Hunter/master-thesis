@@ -155,17 +155,17 @@
     The cone $\alpha$ is \emph{tight} if, whenever $r \in W(x)$ is a tight object, the arrow
     $\alpha_{x,r} : a \to Dx$ is tight.
 
-    A morphism of two parallel cones $\alpha,\alpha' \in [\bJ,\bF](W,\bA(a,D))$ is a modification,
-    which explicitly works out to be a family $(m_x : \alpha_x \to \alpha'_x)_{x \in \bJ}$ such
+    A morphism of two parallel cones $\alpha,\beta \in [\bJ,\bF](W,\bA(a,D))$ is a modification,
+    which explicitly works out to be a family $(m_x : \alpha_x \to \beta_x)_{x \in \bJ}$ such
     that for any $f : x \loose y \in \bJ$, we have $m_y \star Wf = \bA(a,Df) \star m_x$. Concretely,
-    each $m_x : \alpha_x \to \alpha'_x$ is a 2-cell in $\bF$, and so an assignment for each
-    $r \in W(x)$ a morphism $m_{x,r} : \alpha_{x,r} \to \alpha'_{x,r}$ such that for every $p :
-    r \to s \in W(x)$, we have $m_{x,s} \circ \alpha_{x,p} = \alpha'_{x,p} \circ m_{x,r}$,
+    each $m_x : \alpha_x \to \beta_x$ is a 2-cell in $\bF$, and so an assignment for each
+    $r \in W(x)$ a morphism $m_{x,r} : \alpha_{x,r} \to \beta_{x,r}$ such that for every $p :
+    r \to s \in W(x)$, we have $m_{x,s} \circ \alpha_{x,p} = \beta_{x,p} \circ m_{x,r}$,
     and for every $f : x \loose y \in \bJ$, we have $m_y \star Wf = \bA(a,Df) \star m_x$
-    (where $m_y \star Wf : \alpha_y \circ Wf \to \alpha'_y \circ Wf$), which
+    (where $m_y \star Wf : \alpha_y \circ Wf \to \beta_y \circ Wf$), which
     works out to be for every $r \in W(x)$ the condition that
-    \[m_{y,Wf(r)} = Df \circ m_{x,r} : Df \circ \alpha_{x,r} = \alpha_{y,Wf(r)} \to \alpha'_{y,Wf(r)}
-    = Df \circ \alpha'_{x,r}.\]
+    \[m_{y,Wf(r)} = Df m_{x,r} : Df \circ \alpha_{x,r} = \alpha_{y,Wf(r)} \to \beta_{y,Wf(r)}
+    = Df \circ \beta_{x,r}.\]
   \end{definition}
 
   \begin{definition}[Pullback of cones]
@@ -193,7 +193,7 @@
     \[\bA(-,L) \cong [\bJ,\bF](W,\bA(-,D)).\]
   \end{definition}
 
-  \begin{proposition}
+  \begin{proposition}[prop:chr of limits]
     Given a weight $W : \bJ \to \sF$, a diagram $D : \bJ \to \bA$ has a limit in $\bA$ if and only if there
     exists an object $\ell \in \bA$ and cone $L : W \to \bA(\ell,D)$ (note the tightness) with the property that
     \begin{enumerate}

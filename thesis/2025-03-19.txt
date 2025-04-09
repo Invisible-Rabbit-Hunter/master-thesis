@@ -1,0 +1,5 @@
+PhD Positions:
+  - Stockholm
+  - Sussex
+
+Make connection to syntax more explicit.

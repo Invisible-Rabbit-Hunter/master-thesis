@@ -9,6 +9,7 @@
            {unicode-math}
 \usepackage[pdfencoding=unicode]{hyperref}
 \usepackage{cleveref}
+\usepackage{enumitem}
 \usepackage{commutative-diagrams}
 \usepackage{tikz}
 \usepackage{tikz-cd}
@@ -37,7 +38,6 @@
 
 \usepackage{todonotes}
 \usepackage{mathpartir}
-
 \usetikzlibrary{decorations.pathmorphing,shapes}
 
 \newcounter{sarrow}
@@ -48,6 +48,8 @@
 \draw[->,decorate] (\thesarrow.south west) -- (\thesarrow.south east);
 \end{tikzpicture}%
 }
+
+\usepackage{utfsym}
 
 \emergencystretch=1em
 
@@ -79,8 +81,8 @@
 \newcommand\Mod{{\mathrm{Mod}}}
 \newcommand\Fun{{\mathrm{Fun}}}
 \newcommand\bFun{{\mathbb{F}\mathrm{un}}}
-\newcommand\bzero{\mathbb{0}}
-\newcommand\id{\mathrm{id}}
+\newcommand\bzero{{\mathbb{0}}}
+\newcommand\id{{\mathrm{id}}}
 \newcommand\loose{\rightsquigarrow}
 \newcommand\embed{\hookrightarrow}
 \newcommand\into{\hookrightarrow}
@@ -180,6 +182,13 @@
 \newcommand\sX{{\mathscr{X}}}
 \newcommand\sY{{\mathscr{Y}}}
 \newcommand\sZ{{\mathscr{Z}}}
+
+\def\ctx{\operatorname{\mathbf{ctx}}}
+\def\sub{\operatorname{\mathrm{sub}}}
+\def\ty{\operatorname{\mathbf{ty}}}
+\def\rty{\operatorname{\mathrm{ty}}}
+\def\tm{\operatorname{\mathbf{tm}}}
+\def\rtm{\operatorname{\mathrm{tm}}}
 
 \DeclarePairedDelimiterX\set[1]{\{}{\}}{{\def\given{{\;\vert\;}}#1}}
 \DeclarePairedDelimiterX\seq[1]{\langle}{\rangle}{{\def\given{{\;\vert\;}}#1}}
