@@ -183,12 +183,27 @@
 \newcommand\sY{{\mathscr{Y}}}
 \newcommand\sZ{{\mathscr{Z}}}
 
-\def\ctx{\operatorname{\mathbf{ctx}}}
-\def\sub{\operatorname{\mathrm{sub}}}
-\def\ty{\operatorname{\mathbf{ty}}}
-\def\rty{\operatorname{\mathrm{ty}}}
-\def\tm{\operatorname{\mathbf{tm}}}
-\def\rtm{\operatorname{\mathrm{tm}}}
+\newcommand\ctx{\operatorname{\mathbf{ctx}}}
+\newcommand\sub{\operatorname{\mathrm{sub}}}
+\newcommand\ty{\operatorname{\mathbf{ty}}}
+\newcommand\rty{\operatorname{\mathrm{ty}}}
+\newcommand\tm{\operatorname{\mathbf{tm}}}
+\newcommand\rtm{\operatorname{\mathrm{tm}}}
+
+% \newcommand\bb[1]{{\mathbb{#1}}}
+% \newcommand\c[1]{{\mathcal{#1}}}
+% \newcommand\sc[1]{{\mathscr{#1}}}
+% \newcommand\fr[1]{{\mathfrak{#1}}}
+\newcommand\from{\leftarrow}
+
+\newcommand\pb[2][]{\mathop{{}_{#1}\times_{#2}}}
+\newcommand\ins{\mathop{\mathrm{ins}}}
+\newcommand\Path{\mathop{\mathrm{Path}}}
+\DeclarePairedDelimiter\card\vert\vert
+
+\newcommand\ind{\operatorname{\mathsf{ind}}}
+\newcommand\lock{\usym{1F512}}
+\newcommand\key{\usym{1F511}}
 
 \DeclarePairedDelimiterX\set[1]{\{}{\}}{{\def\given{{\;\vert\;}}#1}}
 \DeclarePairedDelimiterX\seq[1]{\langle}{\rangle}{{\def\given{{\;\vert\;}}#1}}

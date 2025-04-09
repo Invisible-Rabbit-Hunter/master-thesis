@@ -5,12 +5,6 @@
   \externaldocument{../build/3-logics}%
 }
 
-\def\bb#1{{\mathbb{#1}}}
-\def\c#1{{\mathcal{#1}}}
-\def\sc#1{{\mathscr{#1}}}
-\def\fr#1{{\mathfrak{#1}}}
-\def\from{\leftarrow}
-
 \begin{document}
 \chapter{Type Theories}
 
@@ -128,11 +122,6 @@ semantics of type theories.
   a_1 \to p a_2 : X \to B$ (with $a_1 : X \to B$ and $a_2 : X \to A$) there exists a $p$-cartesian morhism $\bar \phi :
   a_1' \to p a_2$ such that $\phi = p\bar\phi$.
 \end{definition}
-
-\def\pb[#1]#2{\mathop{{}_{#1}\times_{#2}}}
-\newcommand\ins{\mathop{\mathrm{ins}}}
-\newcommand\Path{\mathop{\mathrm{Path}}}
-\DeclarePairedDelimiter\card\vert\vert
 
 \begin{proposition}
   Let $p : A \to B$ be a tight morphism in an $\cF$-category $\bA$ with finite weighted limits. Then the
@@ -466,7 +455,6 @@ so we can freely generated a logic $\NM$ whose models in $\Cat$ are natural mode
 \section{Inductive Types}
 We will consider mainly natural models.
 \subsection{The empty type}
-\def\ind{\operatorname{\mathsf{ind}}}
 The empty type $\bzero$ is generally given by the following rules:
 \begin{mathpar}
   \infer{\Gamma \ctx}{\Gamma \vdash \bzero}
@@ -486,8 +474,6 @@ The computation rules are encoded as equalities on the morphisms.
 
 % using $\tm_\bzero$ to denote the pullback $\tm \times_\ty \bzero$, we encode the premise of the induction rule as the pullback $\times \tm_\bzero$ $\mathsf{ind}_{\bzero} : (\tm \pb[]{\ty} \bzero)$
 
-\def\lock{\usym{1F512}}
-\def\key{\usym{1F511}}
 \section{Multimode and Modal type theories}
 Multimode dependent type theory (MTT) was introduced in \cite{gratzer2021} to provide a general family of type theories
 with different modalities. MTT is parameterized by a 2-category $\cM$, a so-called mode-theory, where the objects are
