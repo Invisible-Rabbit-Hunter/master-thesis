@@ -8,8 +8,24 @@
 !_TAG_FIELD_DESCRIPTION	name	/tag name/
 !_TAG_FIELD_DESCRIPTION	pattern	/pattern/
 !_TAG_FIELD_DESCRIPTION	typeref	/Type and name of a variable or typedef/
+!_TAG_FIELD_DESCRIPTION!XML	uri	/uri associated with name prefix/
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_KIND_DESCRIPTION!BibTeX	B,booklet	/booklet/
+!_TAG_KIND_DESCRIPTION!BibTeX	I,incollection	/incollection/
+!_TAG_KIND_DESCRIPTION!BibTeX	M,mastersthesis	/mastersthesis/
+!_TAG_KIND_DESCRIPTION!BibTeX	P,proceedings	/proceedings/
+!_TAG_KIND_DESCRIPTION!BibTeX	a,article	/article/
+!_TAG_KIND_DESCRIPTION!BibTeX	b,book	/book/
+!_TAG_KIND_DESCRIPTION!BibTeX	c,conference	/conference/
+!_TAG_KIND_DESCRIPTION!BibTeX	i,inbook	/inbook/
+!_TAG_KIND_DESCRIPTION!BibTeX	j,inproceedings	/inproceedings/
+!_TAG_KIND_DESCRIPTION!BibTeX	m,manual	/manual/
+!_TAG_KIND_DESCRIPTION!BibTeX	n,misc	/misc/
+!_TAG_KIND_DESCRIPTION!BibTeX	p,phdthesis	/phdthesis/
+!_TAG_KIND_DESCRIPTION!BibTeX	s,string	/string/
+!_TAG_KIND_DESCRIPTION!BibTeX	t,techreport	/techreport/
+!_TAG_KIND_DESCRIPTION!BibTeX	u,unpublished	/unpublished/
 !_TAG_KIND_DESCRIPTION!Tex	B,bibitem	/bibliography items/
 !_TAG_KIND_DESCRIPTION!Tex	C,command	/command created with \\newcommand/
 !_TAG_KIND_DESCRIPTION!Tex	G,subparagraph	/subparagraphs/
@@ -25,11 +41,16 @@
 !_TAG_KIND_DESCRIPTION!Tex	s,section	/sections/
 !_TAG_KIND_DESCRIPTION!Tex	t,theorem	/theorem created with \\newtheorem/
 !_TAG_KIND_DESCRIPTION!Tex	u,subsection	/subsections/
+!_TAG_KIND_DESCRIPTION!XML	i,id	/id attributes/
+!_TAG_KIND_DESCRIPTION!XML	n,nsprefix	/namespace prefixes/
+!_TAG_KIND_DESCRIPTION!XML	r,root	/root elements/
 !_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
 !_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
 !_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
 !_TAG_OUTPUT_VERSION	0.0	/current.age/
+!_TAG_PARSER_VERSION!BibTeX	0.0	/current.age/
 !_TAG_PARSER_VERSION!Tex	0.0	/current.age/
+!_TAG_PARSER_VERSION!XML	0.0	/current.age/
 !_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
 !_TAG_PROC_CWD	/home/jonathan/Documents/Skola/master/thesis/repo/thesis/	//
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
@@ -39,18 +60,169 @@
 !_TAG_ROLE_DESCRIPTION!Tex!xinput	bibliography	/bibliography (.bib) file/
 !_TAG_ROLE_DESCRIPTION!Tex!xinput	included	/external input file specified with \\include/
 !_TAG_ROLE_DESCRIPTION!Tex!xinput	input	/external input file specified with \\input/
+Comprehension Categories and Categories with Attributes	chapters/4-type-theories.tex	/^\\section{Comprehension Categories and Categories with Attributes}$/;"	s	chapter:Type Theories
 Enhanced finite 2-limit theories	chapters/3-logics.tex	/^  \\chapter{Enhanced finite 2-limit theories}$/;"	c
+Enhanced finite limit 2-theories and sketches	chapters/3-logics.tex	/^  \\section{Enhanced finite limit 2-theories and sketches}$/;"	s	chapter:Enhanced finite 2-limit theories
+Enriched categories	chapters/2-preliminaries.tex	/^  \\section{Enriched categories}$/;"	s	chapter:Preliminaries
+Examples of theories	chapters/3-logics.tex	/^  \\section{Examples of theories}$/;"	s	chapter:Enhanced finite 2-limit theories
+Fibrations as algebraic structure	chapters/4-type-theories.tex	/^\\section{Fibrations as algebraic structure}$/;"	s	chapter:Type Theories
+From syntax to \\texorpdfstring{$\\cF$}{F}-logics	chapters/4-type-theories.tex	/^\\section{From syntax to \\texorpdfstring{$\\cF$}{F}-logics}$/;"	s	chapter:Type Theories
+Inductive Types	chapters/4-type-theories.tex	/^\\section{Inductive Types}$/;"	s	chapter:Type Theories
 Introduction	chapters/1-introduction.tex	/^  \\chapter{Introduction}$/;"	c
+Limits in \\texorpdfstring{$\\sF$}{F}-categories	chapters/3-logics.tex	/^  \\section{Limits in \\texorpdfstring{$\\sF$}{F}-categories}$/;"	s	chapter:Enhanced finite 2-limit theories
+Limits in enriched categories	chapters/2-preliminaries.tex	/^  \\subsection{Limits in enriched categories}$/;"	u	section:Preliminaries""Enriched categories
+Multimode and Modal type theories	chapters/4-type-theories.tex	/^\\section{Multimode and Modal type theories}$/;"	s	chapter:Type Theories
+Natural Models	chapters/4-type-theories.tex	/^\\section{Natural Models}$/;"	s	chapter:Type Theories
+Non-recursive inductive types	chapters/4-type-theories.tex	/^\\subsection{Non-recursive inductive types}\\todo{Figure out which maps are loose vs.\\ tight.}$/;"	u	section:Type Theories""Inductive Types
 Preliminaries	chapters/2-preliminaries.tex	/^  \\chapter{Preliminaries}$/;"	c
+The empty type	chapters/4-type-theories.tex	/^\\subsection{The empty type}$/;"	u	section:Type Theories""Inductive Types
+Type Theories	chapters/4-type-theories.tex	/^\\chapter{Type Theories}$/;"	c
+\\Alg	thesis.tex	/^\\newcommand\\Alg{\\mathrm{-Alg}}$/;"	C
+\\Attr	thesis.tex	/^\\newcommand\\Attr{{\\mathrm{Attr}}}$/;"	C
+\\Cart	thesis.tex	/^\\newcommand\\Cart{{\\mathrm{Cart}}}$/;"	C
 \\Cat	thesis.tex	/^\\newcommand\\Cat{{\\mathbf{Cat}}}$/;"	C
+\\Comp	thesis.tex	/^\\newcommand\\Comp{{\\mathrm{Comp}}}$/;"	C
+\\Fib	thesis.tex	/^\\newcommand\\Fib{{\\mathrm{Fib}}}$/;"	C
+\\Fun	thesis.tex	/^\\newcommand\\Fun{{\\mathrm{Fun}}}$/;"	C
+\\Mod	thesis.tex	/^\\newcommand\\Mod{{\\mathrm{Mod}}}$/;"	C
+\\NM	thesis.tex	/^\\newcommand\\NM{{\\mathrm{NM}}}$/;"	C
+\\Path	thesis.tex	/^\\newcommand\\Path{\\mathop{\\mathrm{Path}}}$/;"	C
+\\Set	thesis.tex	/^\\newcommand\\Set{{\\mathbf{Set}}}$/;"	C
+\\Th	thesis.tex	/^\\newcommand\\Th{{\\mathrm{Th}}}$/;"	C
 \\bA	thesis.tex	/^\\newcommand\\bA{{\\mathbb{A}}}$/;"	C
+\\bB	thesis.tex	/^\\newcommand\\bB{{\\mathbb{B}}}$/;"	C
+\\bC	thesis.tex	/^\\newcommand\\bC{{\\mathbb{C}}}$/;"	C
+\\bD	thesis.tex	/^\\newcommand\\bD{{\\mathbb{D}}}$/;"	C
+\\bE	thesis.tex	/^\\newcommand\\bE{{\\mathbb{E}}}$/;"	C
+\\bF	thesis.tex	/^\\newcommand\\bF{{\\mathbb{F}}}$/;"	C
+\\bFun	thesis.tex	/^\\newcommand\\bFun{{\\mathbb{F}\\mathrm{un}}}$/;"	C
+\\bG	thesis.tex	/^\\newcommand\\bG{{\\mathbb{G}}}$/;"	C
+\\bH	thesis.tex	/^\\newcommand\\bH{{\\mathbb{H}}}$/;"	C
+\\bI	thesis.tex	/^\\newcommand\\bI{{\\mathbb{I}}}$/;"	C
+\\bJ	thesis.tex	/^\\newcommand\\bJ{{\\mathbb{J}}}$/;"	C
+\\bK	thesis.tex	/^\\newcommand\\bK{{\\mathbb{K}}}$/;"	C
+\\bL	thesis.tex	/^\\newcommand\\bL{{\\mathbb{L}}}$/;"	C
+\\bM	thesis.tex	/^\\newcommand\\bM{{\\mathbb{M}}}$/;"	C
+\\bN	thesis.tex	/^\\newcommand\\bN{{\\mathbb{N}}}$/;"	C
+\\bO	thesis.tex	/^\\newcommand\\bO{{\\mathbb{O}}}$/;"	C
+\\bP	thesis.tex	/^\\newcommand\\bP{{\\mathbb{P}}}$/;"	C
+\\bQ	thesis.tex	/^\\newcommand\\bQ{{\\mathbb{Q}}}$/;"	C
+\\bR	thesis.tex	/^\\newcommand\\bR{{\\mathbb{R}}}$/;"	C
+\\bS	thesis.tex	/^\\newcommand\\bS{{\\mathbb{S}}}$/;"	C
+\\bT	thesis.tex	/^\\newcommand\\bT{{\\mathbb{T}}}$/;"	C
+\\bU	thesis.tex	/^\\newcommand\\bU{{\\mathbb{U}}}$/;"	C
+\\bV	thesis.tex	/^\\newcommand\\bV{{\\mathbb{V}}}$/;"	C
+\\bW	thesis.tex	/^\\newcommand\\bW{{\\mathbb{W}}}$/;"	C
+\\bX	thesis.tex	/^\\newcommand\\bX{{\\mathbb{X}}}$/;"	C
+\\bY	thesis.tex	/^\\newcommand\\bY{{\\mathbb{Y}}}$/;"	C
+\\bZ	thesis.tex	/^\\newcommand\\bZ{{\\mathbb{Z}}}$/;"	C
+\\bfive	thesis.tex	/^\\newcommand\\bfive{{\\mathbb{5}}}$/;"	C
+\\bfour	thesis.tex	/^\\newcommand\\bfour{\\mathbb{4}}$/;"	C
+\\bone	thesis.tex	/^\\newcommand\\bone{\\mathbb{1}}$/;"	C
+\\bthree	thesis.tex	/^\\newcommand\\bthree{\\mathbb{3}}$/;"	C
 \\btwo	thesis.tex	/^\\newcommand\\btwo{{\\mathbb{2}}}$/;"	C
-\\cF	thesis.tex	/^\\newcommand\\cF{{\\mathscr{F}}}$/;"	C
+\\bzero	thesis.tex	/^\\newcommand\\bzero{{\\mathbb{0}}}$/;"	C
+\\cA	thesis.tex	/^\\newcommand\\cA{{\\mathcal{A}}}$/;"	C
+\\cB	thesis.tex	/^\\newcommand\\cB{{\\mathcal{B}}}$/;"	C
+\\cC	thesis.tex	/^\\newcommand\\cC{{\\mathcal{C}}}$/;"	C
+\\cD	thesis.tex	/^\\newcommand\\cD{{\\mathcal{D}}}$/;"	C
+\\cE	thesis.tex	/^\\newcommand\\cE{{\\mathcal{E}}}$/;"	C
+\\cF	thesis.tex	/^\\newcommand\\cF{{\\mathcal{F}}}$/;"	C
+\\cG	thesis.tex	/^\\newcommand\\cG{{\\mathcal{G}}}$/;"	C
+\\cH	thesis.tex	/^\\newcommand\\cH{{\\mathcal{H}}}$/;"	C
+\\cI	thesis.tex	/^\\newcommand\\cI{{\\mathcal{I}}}$/;"	C
+\\cJ	thesis.tex	/^\\newcommand\\cJ{{\\mathcal{J}}}$/;"	C
+\\cK	thesis.tex	/^\\newcommand\\cK{{\\mathcal{K}}}$/;"	C
+\\cL	thesis.tex	/^\\newcommand\\cL{{\\mathcal{L}}}$/;"	C
+\\cM	thesis.tex	/^\\newcommand\\cM{{\\mathcal{M}}}$/;"	C
+\\cN	thesis.tex	/^\\newcommand\\cN{{\\mathcal{N}}}$/;"	C
+\\cO	thesis.tex	/^\\newcommand\\cO{{\\mathcal{O}}}$/;"	C
+\\cP	thesis.tex	/^\\newcommand\\cP{{\\mathcal{P}}}$/;"	C
+\\cQ	thesis.tex	/^\\newcommand\\cQ{{\\mathcal{Q}}}$/;"	C
+\\cR	thesis.tex	/^\\newcommand\\cR{{\\mathcal{R}}}$/;"	C
+\\cS	thesis.tex	/^\\newcommand\\cS{{\\mathcal{S}}}$/;"	C
+\\cT	thesis.tex	/^\\newcommand\\cT{{\\mathcal{T}}}$/;"	C
+\\cU	thesis.tex	/^\\newcommand\\cU{{\\mathcal{U}}}$/;"	C
+\\cV	thesis.tex	/^\\newcommand\\cV{{\\mathcal{V}}}$/;"	C
+\\cW	thesis.tex	/^\\newcommand\\cW{{\\mathcal{W}}}$/;"	C
+\\cX	thesis.tex	/^\\newcommand\\cX{{\\mathcal{X}}}$/;"	C
+\\cY	thesis.tex	/^\\newcommand\\cY{{\\mathcal{Y}}}$/;"	C
+\\cZ	thesis.tex	/^\\newcommand\\cZ{{\\mathcal{Z}}}$/;"	C
+\\cod	thesis.tex	/^\\newcommand\\cod{{\\mathrm{cod}}}$/;"	C
+\\comma	thesis.tex	/^\\newcommand\\comma{\\mathrel{\\downarrow}}$/;"	C
+\\ctx	thesis.tex	/^\\newcommand\\ctx{\\operatorname{\\mathbf{ctx}}}$/;"	C
+\\dom	thesis.tex	/^\\newcommand\\dom{{\\mathrm{dom}}}$/;"	C
+\\elim	thesis.tex	/^\\newcommand\\elim{\\operatorname{{\\mathrm{elim}}}}$/;"	C
+\\embed	thesis.tex	/^\\newcommand\\embed{\\hookrightarrow}$/;"	C
+\\from	thesis.tex	/^\\newcommand\\from{\\leftarrow}$/;"	C
+\\given	thesis.tex	/^\\DeclarePairedDelimiterX\\seq[1]{\\langle}{\\rangle}{{\\def\\given{{\\;\\vert\\;}}#1}}$/;"	C
+\\given	thesis.tex	/^\\DeclarePairedDelimiterX\\set[1]{\\{}{\\}}{{\\def\\given{{\\;\\vert\\;}}#1}}$/;"	C
+\\id	thesis.tex	/^\\newcommand\\id{{\\mathrm{id}}}$/;"	C
+\\ind	thesis.tex	/^\\newcommand\\ind{\\operatorname{\\mathsf{ind}}}$/;"	C
+\\ins	thesis.tex	/^\\newcommand\\ins{\\mathop{\\mathrm{ins}}}$/;"	C
 \\into	thesis.tex	/^\\newcommand\\into{\\hookrightarrow}$/;"	C
+\\key	thesis.tex	/^\\newcommand\\key{\\usym{1F511}}$/;"	C
+\\lock	thesis.tex	/^\\newcommand\\lock{\\usym{1F512}}$/;"	C
 \\loose	thesis.tex	/^\\newcommand\\loose{\\rightsquigarrow}$/;"	C
-definition	thesis.tex	/^\\newtheorem{definition}{Definition}$/;"	t
-lemma	thesis.tex	/^\\newtheorem{lemma}{Lemma}$/;"	t
-notation	thesis.tex	/^\\newtheorem{notation}{Notation}$/;"	t
-proposition	thesis.tex	/^\\newtheorem{proposition}{Proposition}$/;"	t
-remark	thesis.tex	/^\\newtheorem{remark}{Remark}$/;"	t
+\\pb	thesis.tex	/^\\newcommand\\pb[2][]{\\mathop{{}_{#1}\\times_{#2}}}$/;"	C
+\\rtm	thesis.tex	/^\\newcommand\\rtm{\\operatorname{\\mathrm{tm}}}$/;"	C
+\\rty	thesis.tex	/^\\newcommand\\rty{\\operatorname{\\mathrm{ty}}}$/;"	C
+\\sA	thesis.tex	/^\\newcommand\\sA{{\\mathscr{A}}}$/;"	C
+\\sB	thesis.tex	/^\\newcommand\\sB{{\\mathscr{B}}}$/;"	C
+\\sC	thesis.tex	/^\\newcommand\\sC{{\\mathscr{C}}}$/;"	C
+\\sD	thesis.tex	/^\\newcommand\\sD{{\\mathscr{D}}}$/;"	C
+\\sE	thesis.tex	/^\\newcommand\\sE{{\\mathscr{E}}}$/;"	C
+\\sF	thesis.tex	/^\\newcommand\\sF{{\\mathscr{F}}}$/;"	C
+\\sG	thesis.tex	/^\\newcommand\\sG{{\\mathscr{G}}}$/;"	C
+\\sH	thesis.tex	/^\\newcommand\\sH{{\\mathscr{H}}}$/;"	C
+\\sI	thesis.tex	/^\\newcommand\\sI{{\\mathscr{I}}}$/;"	C
+\\sJ	thesis.tex	/^\\newcommand\\sJ{{\\mathscr{J}}}$/;"	C
+\\sK	thesis.tex	/^\\newcommand\\sK{{\\mathscr{K}}}$/;"	C
+\\sL	thesis.tex	/^\\newcommand\\sL{{\\mathscr{L}}}$/;"	C
+\\sM	thesis.tex	/^\\newcommand\\sM{{\\mathscr{M}}}$/;"	C
+\\sN	thesis.tex	/^\\newcommand\\sN{{\\mathscr{N}}}$/;"	C
+\\sO	thesis.tex	/^\\newcommand\\sO{{\\mathscr{O}}}$/;"	C
+\\sP	thesis.tex	/^\\newcommand\\sP{{\\mathscr{P}}}$/;"	C
+\\sQ	thesis.tex	/^\\newcommand\\sQ{{\\mathscr{Q}}}$/;"	C
+\\sR	thesis.tex	/^\\newcommand\\sR{{\\mathscr{R}}}$/;"	C
+\\sS	thesis.tex	/^\\newcommand\\sS{{\\mathscr{S}}}$/;"	C
+\\sT	thesis.tex	/^\\newcommand\\sT{{\\mathscr{T}}}$/;"	C
+\\sU	thesis.tex	/^\\newcommand\\sU{{\\mathscr{U}}}$/;"	C
+\\sV	thesis.tex	/^\\newcommand\\sV{{\\mathscr{V}}}$/;"	C
+\\sW	thesis.tex	/^\\newcommand\\sW{{\\mathscr{W}}}$/;"	C
+\\sX	thesis.tex	/^\\newcommand\\sX{{\\mathscr{X}}}$/;"	C
+\\sY	thesis.tex	/^\\newcommand\\sY{{\\mathscr{Y}}}$/;"	C
+\\sZ	thesis.tex	/^\\newcommand\\sZ{{\\mathscr{Z}}}$/;"	C
+\\sub	thesis.tex	/^\\newcommand\\sub{\\operatorname{\\mathrm{sub}}}$/;"	C
+\\tm	thesis.tex	/^\\newcommand\\tm{\\operatorname{\\mathbf{tm}}}$/;"	C
+\\ty	thesis.tex	/^\\newcommand\\ty{\\operatorname{\\mathbf{ty}}}$/;"	C
+\\typ	thesis.tex	/^\\newcommand\\typ{{{\\mathrm{typ}}}}$/;"	C
+\\var	thesis.tex	/^\\newcommand\\var{{{\\mathrm{var}}}}$/;"	C
+\\wlim	thesis.tex	/^\\newcommand\\wlim{{\\texstyle\\lim}}$/;"	C
+\\xrightsquigarrow	thesis.tex	/^\\newcommand\\xrightsquigarrow[1]{%$/;"	C
+ahrens2024	references.bib	/^@inbook{ahrens2024,$/;"	i
+arkor2024	references.bib	/^@misc{arkor2024,$/;"	n
+borceux1975	references.bib	/^@article{borceux1975,$/;"	a
+coraglia20242b	references.bib	/^@misc{coraglia20242b,$/;"	n
+coraglia2024a	references.bib	/^@misc{coraglia2024a,$/;"	n
+corollary	thesis.tex	/^\\newtheorem{corollary}[theorem]{Corollary}$/;"	t
+definition	thesis.tex	/^\\newtheorem{definition}[theorem]{Definition}$/;"	t
+ex:fib	chapters/3-logics.tex	/^  \\begin{example}\\label{ex:fib}$/;"	l
+example	thesis.tex	/^\\newtheorem{example}[theorem]{Example}$/;"	t
+gratzer2021	references.bib	/^@article{gratzer2021,$/;"	a
+kelly1982a	references.bib	/^@book{kelly1982a,$/;"	b
+kelly1982b	references.bib	/^@article{kelly1982b,$/;"	a
+lack2012	references.bib	/^@article{lack2012,$/;"	a
+lemma	thesis.tex	/^\\newtheorem{lemma}[theorem]{Lemma}$/;"	t
+notation	thesis.tex	/^\\newtheorem{notation}[theorem]{Notation}$/;"	t
+prop:cartesian by limit	chapters/4-type-theories.tex	/^\\begin{proposition}\\label{prop:cartesian by limit}$/;"	l
+proposition	thesis.tex	/^\\newtheorem{proposition}[theorem]{Proposition}$/;"	t
+remark	thesis.tex	/^\\newtheorem{remark}[theorem]{Remark}$/;"	t
+requests	build/3-logics.run.xml	/^<!DOCTYPE requests [$/;"	r
+requests	build/4-type-theories.run.xml	/^<!DOCTYPE requests [$/;"	r
+requests	build/thesis.run.xml	/^<!DOCTYPE requests [$/;"	r
+sarrow	thesis.tex	/^\\newcounter{sarrow}$/;"	N
+sec:enriched	chapters/2-preliminaries.tex	/^  \\label{sec:enriched}$/;"	l
+sec:enriched/limits	chapters/2-preliminaries.tex	/^  \\label{sec:enriched\/limits}$/;"	l
 theorem	thesis.tex	/^\\newtheorem{theorem}{Theorem}$/;"	t
+thm:free completion	chapters/3-logics.tex	/^  \\begin{theorem}\\label{thm:free completion}$/;"	l
