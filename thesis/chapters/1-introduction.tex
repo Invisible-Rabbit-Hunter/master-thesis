@@ -2,4 +2,44 @@
 
 \begin{document}
   \chapter{Introduction}
+  This thesis was inspired by the judgemental theories of \cite{coraglia2024a}. Judgemental theories consist of
+  a category (the category of contexts), two collections of functors, the judgements and the rules, and a
+  collection of \emph{policies}, which are 2-cells satisfying a certain property. The first thing to note
+  is that, really, there is no greater distinction between the judgements and the rules. In particular, there
+  is no reason to single out a singular category of contexts, which was already noted as a potential
+  generalisation in \emph{op.\ cit.} Removing the distinction between rules and judgements completely, we
+  can view a theory as a \emph{strict} 2-functor to $\Cat$, with the domain being the free 2-category with
+  the rules and policies. The final step is to note that much of the structure, such as fibrations, we desire
+  from judgemental theories can be captured by finite 2-limits. Restricting to only constructions involving
+  finite 2-limits, we can thus simplify the notion of theory to be some notion of 2-dimensional finite limit
+  theory.
+
+  \begin{remark}
+    There is a stark difference between 2-dimensional finite limit theories and judgemental theories. The finite
+    limit theories behave more like a class of judgemental theories, and the judgemental theories behave more
+    like the models of finite limit theories. For example, in \cite{coraglia2024a} they specify a class of
+    judgemental theories, the plain dependent type theories, which we will show are the models of a specific
+    finite 2-limit theory.
+  \end{remark}
+
+  There have been several 2-dimensional generalisations of finite limit theories and finite limit sketches. In
+  the strictest sense, we may consider the enriched finitary essentially algebraic theories and sketches of
+  \cite{kelly1982b} in the special case of enrichment over $\Cat$. However, while these allow to describe the
+  \emph{structures} we're after, the homomorphisms are generally too strict. In this framework, the theory of
+  cartesian categories has as models (in $\Cat$) categories with chosen finite products, but the homomorphisms
+  must preserve these products on the nose, rather than only up to isomorphism. 
+  
+  \todo[inline]{Figure out how to tie in type theory. In my mind, this is harder than I expected, since while
+  this thesis is about describing different models of type theory in terms of finite 2-limit theories, it feels
+  more like an application of the framework and my understanding of it.} 
+  % A timeline for the history of categorical semantics for type dependency:
+  % \begin{itemize}
+  %   \item[1984] \citeauthor{cartmell1984}'s \citetitle{cartmell1984} 
+  %   \item[1993] \citeauthor{jacobs1993}'s \citetitle{jacobs1993} 
+  % \end{itemize}
+  %
+  % For 2-dimensional theories:
+  % \begin{itemize}
+  %   \item 2-Lawvere theories \cite{}.
+  % \end{itemize}
 \end{document}

@@ -9,19 +9,56 @@
 
 \begin{document}
   \chapter{Enhanced finite 2-limit theories}
-  In this chapter we generalize the notion of finite limit theories to two dimensions. We want
-  to define a theory $T$ to be a 2-category with finite 2-limits, and its 2-categories of models
-  $\Mod(T)$ to be finite 2-limit preserving functors $T \to \Cat$. However, with this naive
-  definition, the homomorphisms of models turn out to be either too strict or too loose. If we
-  consider strict 2-natural transformations, then all structure has to be preserved on the nose.
-  For example, consider a theory of cartesian categories; in the strict case, its homomorphisms
-  must preserve the choices of products and terminal objects exactly. On the other hand, if we take
-  morphisms to be for example pseudonatural transformations, then the morphisms need only preserve
-  the cartesian structure up to isomorphism, aligning with the standard definition of preservation
-  of products. However, in a theory of (discrete) fibrations, morphisms would be squares commuting 
-  only up to isomorphism, rather than the standard strict equality. It is this issue we aim to
-  resolve, as this fine control over strictness of models will be very relevant in describing
-  sketches of type theories in later chapters.
+  In this chapter we introduce the notion of theories and models that underlie our treatment of
+  the semantics of type theory in the subsequent chapter. Since the models of our theories ought
+  to be categories equipped with some structure, it is sensible take take a 2-dimensional approach.
+
+  There are several possible notions in the literature that would apply, notably the various 2-dimensional
+  generalizations of Lawvere theories as found in \cite{gray1973, nishizawa2009}. However,
+  as weill see later, we will generally require more 2-limits than simply finite products and cotensor.
+  In particular, we will make extensive use of 2-pullbacks, comma objects, and equalizers. Rather than
+  Lawvere theories, we thus want to consider 2-dimensional limit theories, such as the enriched limit
+  theories of \cite{kelly1982a} in the special case of enrichement in $\Cat$. A useful consequence of
+  using enriched limit theories, that would also apply to Lawvere theories, is that we can present
+  the theories using \emph{limit sketches}, and from that generate the theory we expect. 
+
+  \begin{remark}
+  One issue that arises when considering enriched limit theories, however, is that generally the
+  homomorphisms will be either too strict or too weak. If we take the notion of homomorphisms to
+  be what falls out directly from the notion of enriched limit theories, enriched natural
+  transformations, we find that the homomorphisms are too strict.
+
+  Consider, for example, a theory for categories with finite products. In this case, the models are
+  categories equipped with a choice of finite products, and homomorphisms are 2-natural transformations
+  strictly preserving them. This suggests that we ought to use pseudonatural transformations, rather than
+  strict 2-natural transformations, as homomorphisms, as then the homomorphisms are functors 
+  preserving products in the traditional sense.
+
+  However, now we instead suffer from the opposite problem: in the theory of functors, whose models are
+  pairs of categories with a functor between them, we would expect the morphisms to be commuting squares
+  of functors, but with pseudonatural transformations they would only be squares commuting up to isomorphism.
+  \end{remark}
+
+  Given the issues of having the right strictness of morphisms when considering $\Cat$-enriched finite
+  limit theories, we will instead be following \cite{arkor2024}, where they replace $\Cat$ with $\sF$,
+  the full subcategory of $\Cat^\to$ on fully faithful and injective-on-objects functors. The objects
+  of $\sF$ are essentially categories equipped with a class of objects, called the tight objects, and
+  thus a $\sF$-enriched category is essentially a 2-category equipped with a class of 1-cells, the
+  tight morphisms, and this class is closed under identities and composition. The $\sF$-enriched
+  functors preserve tight morphisms, and $\sF$-enriched natural transformations have all components
+  tight.
+  \begin{remark}
+    $\sF$-categories were first introduced in \cite{lack2012}, where they were used to study what 2-limits
+    lifted to different 2-categories of algebras for 2-monads.
+  \end{remark}
+
+  In conclusion, our theories will then be $\sF$-enriched finite limit theories, the models finite $\sF$-limit
+  preserving functors, and the homomorphisms pseudonatural transformations whose naturality 2-cells are
+  identities on tight morphisms. This gives the specific theory control over the strictness of morphisms. For
+  example, in the theory of categories with finite products, we take the maps giving finite products to be loose,
+  in other words to not be tight, so that homomorphisms preserve these maps only up to isomorphism, whereas
+  in the theory of functors we take the one generating morphism to be tight, forcing homomorphisms to preserve
+  it strictly.
 
   We denote by $\sF$ the full subcategory of $\Cat^\to$ on full embeddings, where a functor is a
   full embedding if it is fully faithful and injective on objects. Thus the objects of $\sF$ are
@@ -35,31 +72,13 @@
   \end{codi}\]
   where $A_\tau$ denotes the domain of $A$ and $A_\lambda$ the codomain. 
   \begin{remark}
-    An object of $\sF$ is in equivalently a category $A_\lambda$ equipped with a class $A_\tau$ of
+    An object of $\sF$ is equivalently a category $A_\lambda$ equipped with a class $A_\tau$ of
     objects. We call the objects of $A_\lambda$ loose and the objects in $A_\tau$ tight. Taking this
     perspective, we find that a lot of structure will be uniqely determined by $A_\lambda$, with
-    $A_\tau$ placing restrictions on what structure is allowed. For example, a morphism in $\sF$
-    is simply a functor $F : A_\lambda \to B_\lambda$ with the restriction that if $f \in A_\tau$,
-    then $Ff \in B_\tau$, and so $\sF$-morphisms are uniquely determined by their action on the
-    loose morphisms.
+    $A_\tau$ placing restrictions on the structure. For example, a morphism in $\sF$ is simply a
+    functor $F : A_\lambda \to B_\lambda$ with the restriction that if $a \in A_\tau$, then $Fa \in
+    B_\tau$, and so $\sF$-morphisms are uniquely determined by their action on the loose part $A_\lambda$.
   \end{remark}
-  
-  \todo{Move the following lemma to preliminaries.}
-  \begin{lemma}
-    The full embeddings are the right class of an orthogonal factorisation system on $\Cat$, where
-    the left class are surjective-on-objects functors.
-  \end{lemma}
-  \begin{proof}
-    Given any functor $F : A \to B$, let $A'$ denote the full subcategory of $B$ spanned by the
-    objects in the image of $F$. Clearly $F$ then factors through $A'$ as
-    \[\begin{codi}
-      \obj {A & & B \\
-            & A' & \\ };
-      \mor A F:-> B;
-      \mor A G:-> A' H:-> B;
-    \end{codi}\]
-    where $G$ is surjective on objects and $H$ is fully faithful and injective on objects.
-  \end{proof}
 
   \begin{corollary}
     $\sF$ is a reflective subcategory of $\Cat^\to$.
@@ -101,11 +120,10 @@
     $A \to B$ to denote tight morphisms, i.e\ morphisms in $\bA_\tau$.
   \end{notation}
   \begin{remark}
-    Since an object of $\sF$ is essentially a category equipped with a class of tight objects, we
-    can equivalently view an $\sF$-category as a 2-category equipped with a class of tight morphisms
-    which is closed under identity (as the identity assigning functors preserve tightness and in the
-    terminal object of $\sF$ all morphisms are tight) and composition (for similar reasons regarding
-    the composition functor).
+    Since an object of $\sF$ is equivalently a category equipped with a class of tight objects, we
+    can  view an $\sF$-category as a 2-category equipped with a class of tight morphisms closed under
+    identities (as the identity assigning functors preserve tightness and in the terminal object of
+    $\sF$ all morphisms are tight) and composition (for similar reasons regarding the composition functor).
   \end{remark}
 
   Any $\sF$-category $\bA$ gives rise two 2-categories: the 2-category of tight morphisms $\bA_
@@ -130,12 +148,16 @@
 
 
   \section{Limits in \texorpdfstring{$\sF$}{F}-categories}
-  % In this section we develop \emph{weighted limits}, a generalization of the classical conical
-  % limits that behave much more nicely in enriched categories, in the specific context of $\sF$%
-  % -categories. These weighted limits are fundamental for the enhanced limit 2-sketches we will
-  % define later, and those will serve as the main method with which we later describe logics, for
-  % example giving us a nice theory of dependent type theories, whose models are exactly the natural
-  % models of Awodey.
+  Since we will be considering $\sF$-enriched finite limit theories, it will be helpful to have an
+  explicit description of $\sF$-enriched limits. The goal of this section is therefore to provide
+  such an explicit description, unfolding the notions of weighted limits in enriched categories in
+  the special case of enrichment in $\sF$. This is also useful in understanding how to find the
+  correct weights for the different limits we will construct. For example, we will see later how
+  cartesian morphisms, in the context of fibrations, can be described in terms of a certain weighted
+  cone being a limiting cone, similar to how monomorphisms can be described in terms of a certain
+  square being a pullback. Finding the correct weight for this limit is however not immediately
+  obvious, and the explicit description is helpful also in proving the proposition that morphisms
+  for which this weighted cone is limiting is in fact cartesian, and vice versa.
 
   \begin{definition}
     Let $\bJ$ be an $\sF$-category. A $\bJ$-shaped weight is a functor $W : \bJ \to \bF$, where $\bF$
@@ -193,12 +215,12 @@
     \[\bA(-,L) \cong [\bJ,\bF](W,\bA(-,D)).\]
   \end{definition}
 
-  \begin{proposition}[prop:chr of limits]
+  \begin{proposition}\label{prop:chr of limits}
     Given a weight $W : \bJ \to \sF$, a diagram $D : \bJ \to \bA$ has a limit in $\bA$ if and only if there
-    exists an object $\ell \in \bA$ and cone $L : W \to \bA(\ell,D)$ (note the tightness) with the property that
+    exists an object $\ell \in \bA$ and a tight cone $L : W \to \bA(\ell,D)$ with the property that
     \begin{enumerate}
-      \item for every cone $\alpha : W \loose \bA(a,D)$, there exists a unique morphism $h_\alpha : a \loose \ell$
-        such that $\alpha = h_\alpha^*L$, and $h_\alpha$ is tight if and only if $\alpha$ is tight,
+      \item for every cone $\alpha : W \loose \bA(a,D)$, there exists a unique morphism $h_\alpha : a \loose
+        \ell$ such that $\alpha = h_\alpha^*L$, and $h_\alpha$ is tight if and only if $\alpha$ is tight,
       \item for every modification $m : \alpha \to \alpha' : W \loose \bA(a,D)$ there exists a unique 2-cell
         $h_m : h_\alpha \to h_{\alpha'}$ such that $h_m^*\ell = m$.
     \end{enumerate}
@@ -282,15 +304,16 @@
     every weight $W \in \Phi$ all diagrams $\bJ_W \to \bA$ have a limit.
   \end{definition}
 
-  \todo{Maybe need to refine this theorem a bit, not quite sure yet.}
   \begin{theorem}\label{thm:free completion}
-    Let $\Phi$ be a set of weights. For any $\sF$-category $\bA$, we can freely complete a under $\sF$-limits,
-    in the sense that there exists an $\sF$-category $\hat\bA$ and fully faithful $\sF$-functor $\iota : \bA
-    \into \hat \bA$, with the universal property that for any $\Phi$-complete $\sF$-category $\bB$ and $\sF$-%
-    functor $F : \bA \to \bB$, there exists a unique (up to isomrphism) $\sF$-functor $\hat F : \hat\bA \to \bB$
-    such that $\hat F \circ \iota \cong F$.
+    Let $\Phi$ be a set of weights with small domain. We can freely complete any $\sF$-category $\bA$ under
+    $\sF$-limits, in the sense that there exists an $\sF$-category $\hat\bA$ and fully faithful $\sF$-%
+    functor $\iota : \bA \into \hat \bA$, with the universal property that for any $\Phi$-complete $\sF$-%
+    category $\bB$ and $\sF$-functor $F : \bA \to \bB$, there exists a unique (up to isomrphism) $\sF$-functor
+    $\hat F : \hat\bA \to \bB$ such that $\hat F \circ \iota \cong F$.
   \end{theorem}
-
+  \begin{proof}
+    See theorem 5.35 of \cite{kelly1982a}.
+  \end{proof}
 
   % As $\sF$-categories are simply enriched categories, we have a general notion of limits in $\sF$-%
   % categories, as is described in \cref{sec:enriched/limits}. Here we show how limits are defined
@@ -338,31 +361,56 @@
     cone in $\cC$ is mapped to a cone in $\cD$.
   \end{definition}
 
-  Every $\cF$-category $\bA$ gives rise to a $\Phi$-limit sketch by taking $\cC$ to be the class of
+  Every $\sF$-category $\bA$ gives rise to a $\Phi$-limit sketch by taking $\cC$ to be the class of
   $\Phi$-weighted limit cones in $\bA$. We shall denote this sketch by $\sS_\Phi(\bA)$.
   
   \todo{Remark on size issues and explain concretely what smallness means in this context.}
   \begin{theorem}
     Let $\Phi$ be a class of weights and $(\bA,\cC)$ be a small sketch. Then there exists a $\Phi$-complete
     $\sF$-category $\Th(\bA,\cC)$ and faithful $\sF$-functor $\iota : \bA \to \Th(\bA,\cC)$ taking the cones
-    in $\cC$ to limit cones in $\Th(\bA,\cC)$, and for every $\Phi$-complete $\cF$-category $\bB$, there exists
-    an $\cF$-equivalence
+    in $\cC$ to limit cones in $\Th(\bA,\cC)$, and for every $\Phi$-complete $\sF$-category $\bB$, there exists
+    an $\sF$-equivalence
     \[\Mod_w(\Th(\bA,\cC),\bB) \simeq [(\bA,\cC), \sS_\Phi(\bB)]_w,\]
-    where $[(\bA,\cC), \sS_\Phi(\bB)]_w$ denotes the $\cF$-category of sketch-homomorphisms, $w$-natural
+    where $[(\bA,\cC), \sS_\Phi(\bB)]_w$ denotes the $\sF$-category of sketch-homomorphisms, $w$-natural
     transformations, and modifications. Furthermore, this equivalence natural in $\bB$.
   \end{theorem}
   \todo{Check that this is actually fully correct, and maybe write down a proof.}
+  \begin{remark}
+    In the strict case, this is proven as theorem 6.23 in \cite{kelly1982a} for general enriched categories.
+    A proof for the weak case generalizes relatively straightforwardly from this, though is quite invloved
+    and so is omitted here.
+  \end{remark}
+
 
   \section{Examples of theories}
+  To get a better understanding of how these theories work, and what their 2-categories of models look like,
+  we present a few examples of $\sF$-sketches and $\sF$-logics.
+
   \begin{example}
-    The simples theory is the theory of a single category: the sketch consists of the terminal
+    The simplest theory is the theory of a single category: the sketch consists of the terminal
     $\sF$-category, with no cones. Models of this theory in $\Cat$ are exactly categories,
-    morphisms of models are functors, and the transformations are exactly natural transformations.
+    homomorphisms are functors, and the transformations are exactly natural transformations.
   \end{example}
 
   \begin{example}
-    The theory of tight morphisms is generated by a singular tight morphism $A \to B$, with no additional
-    data.
+    There are two theories of morphisms, both of which are generated by a sketch with only a single morphism.
+    The difference is whether this morphism is tight or loose. In the theory of tight morphisms, models are
+    categories $A,B$ with a functor $f : A \to B$ between them, and homomorphisms $f \to f'$ are strictly
+    commuting squares
+    \[\begin{codi}
+      \obj {A & A' \\ B & B' \\};
+      \mor A -> A' f':-> B';
+      \mor[swap] A f:-> B :-> B';
+    \end{codi}\]
+    Meanwhile, in the theory of loose morphisms, the models are the same, but the homomorphisms are squares 
+    \[\begin{codi}
+      \obj {A & A' \\ B & B' \\};
+      \mor A -> A' f':-> B';
+      \mor[swap] A f:-> B :-> B';
+      \mor[mid] A \cong:phantom B';
+    \end{codi}\]
+    commuting up to isomorphism. This illustrates what the additional data of the class of tight morphisms
+    provides: they allow us to control the strictness of the \emph{homomorphisms} of models.
   \end{example}
 
   \begin{example}
@@ -371,9 +419,19 @@
     and $A \times A$ as the product of $A$ with itself, and 2-cells witnessing $e$ (resp. $p$)
     right adjoint to the universal map $A \to 1$ (resp. $\seq{\id_A, \id_A} : A \to A \times A$).
 
-    The 2-category $\Mod_p(\Cart,\Cat^+)_\lambda$ of models of $\Cart$ in $\Cat$ and loose pseudonatural
-    transformations is equivalent to the 2-category of cartesian categories. \todo{Verify, but it should
-    be true.}
+    A model of $\Cart$ consists of a category $\cC$ together with adjunctions $\Delta_\cC \dashv \times_\cC
+    : \cC \times \cC \to \cC$ and $!_\cC \dashv 1_\cC : 1 \to \cC$, where $\Delta_\cC : \cC \to \cC \times
+    \cC$ is the diagonal and $!_\cC : \cC \to 1$ is the universal map. Thus we see that a model is exactly
+    a category with (chosen) finite products, a cartesian category. Furthermore, a homomorphism of models
+    $(\cC,\times_\cC,1_\cC) \to (\cD, \times_\cD, 1_\cD)$ consists of a functor $F : \cC \to \cD$ preserving
+    these adjunctions \emph{up to isomorphism}. Thus these are the expected, non-strict, maps of cartesian
+    categories.
+  \end{example}
+  \begin{example}
+    Dually to the previous example, taking $\Cocart$ be the theory generated by the same data as $\Cart$,
+    except taking $e,p$ to be \emph{left} adjoints rather than right adjoints, we find that the models
+    are exactly cocartesian categories, and the homomorphisms are functors preserving finite coproducts
+    only up to isomorphism.
   \end{example}
   \begin{example}\label{ex:fib}
     The theory of fibrations $\Fib$ is generated by a tight morphism $p : \bE \to \bB$, a loose adjunction $
@@ -382,6 +440,6 @@
     adjunction $\eta : 1_{p \comma \bB} \to rt$ is further specified to be the identity, so that $rt = \id_%
     {\bP^\to}$, we have the theory of discrete fibrations.
   \end{example}
-
+  
   \ifSubfilesClassLoaded{\printbibliography}{}
 \end{document}
