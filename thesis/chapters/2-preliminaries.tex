@@ -20,7 +20,8 @@
     \end{codi}\]
     where $G$ is surjective on objects and $H$ is fully faithful and injective on objects.
   \end{proof}
-
+  
+  \section{Finite limit theories}
 
   \section{enriched categories}
   \label{sec:enriched}
@@ -244,77 +245,4 @@
     as in (2), and any object $X$ and morphisms $a : X \to A$, $b : X \to B$, and $\sigma : b \to pa$, we write
     $A[\sigma] \coloneq \ell\bar\sigma$, where $\bar \sigma : X \to B \comma p$ is the map induced by $\sigma$.
   \end{notation}
-
-  \section{From syntax to \texorpdfstring{$\cF$}{F}-logics}
-  In this section we show a correspondence between the syntax of a deductive theory, presented by judgements and
-  inference rules, and finite limit $\cF$-logics. The connection is generally as follows: a (dependent) judgement
-  $d\;\cD \vdash j\;\cJ$ is interpreted is a tight morphism $j : \cJ \to \cD$, with the idea that the fibers of
-  $j$ over any instance $d\;\cD$ corresponds to $d\;\cD \vdash j\;\cJ$. A non-dependent judgement can then be
-  viewed as a judgement over the terminal object $1$, so that the dependency is trival. Equivalently a non-dependent
-  judgement is just an object. The 2-categorical structure gives us, for each judgement $\cJ$, a judgement of
-  morphisms $\cJ^\to$. In modelling type theory, we would for example have a judgement of contexts $\vdash \ctx$,
-  and then a judgement of substitions $\Gamma\ctx, \Delta\ctx \vdash \sigma \ctx^\to$. Given a (dependent) judgement
-  of types over contexts $\rty : \ty \to \ctx$, we would then want to formulate a rule for stability under such
-  substitutions:
-  \begin{mathpar}
-    \infer{\Gamma\ctx,\Delta\ctx \vdash {{\sigma \ctx^\to}} \\ \Delta \ctx \vdash A\ty}{\Gamma \ctx \vdash
-    \sub(A,\sigma) \ty}
-  \end{mathpar}
-  We capture this rule as a loose morphism $\sub : \ctx^\to \pb[\cod]{\rty} \ty \to \ty$ for which the following
-  triangle commutes.
-  \[\begin{codi}[tetragonal=base 4.5em height 4.5em]
-    \obj {|(P)| \ctx^\to \pb[\cod]{\rty} \ty & & \ty \\ & \ctx \\};
-    \mor ctx \dom\pi_1:<- P \sub:-> ty \rty:-> ctx; 
-  \end{codi}\]
-  If we now note that $\ctx^\to \pb[\cod]{\rty} \ty \cong \ctx \comma \rty$, we see that $\sub$ is exactly as the
-  morphism $\ell : \ctx \comma \rty \to \rty$ specifying the domain of the lifting in a fibration $\ty \to \ctx$.
-
-
-  \begin{proposition}
-    Let $A$ be any object of an $\cF$-category $\bA$ with finite weighted $\cF$-limits. Then any 2-cell $\rho : a
-    \to b : X \to A^\to$ is $\cod$-cartesian if and only if the following square is a pullback in $\bA(X,A)$
-    \[\begin{codi}[tetragonal=base 5.5em height 4.5em]
-      \obj {\dom a & \dom b \\ \cod a & \cod b \\};
-      \mor (dom a) \dom\rho:-> (dom b) \lambda b:-> (cod b);
-      \mor[swap] (dom a) \lambda a:-> (cod a) \cod\rho:-> (cod b);
-    \end{codi}\]
-  \end{proposition}
-
-  \begin{proposition}
-    Let $f : A \to B^\to$ be a morphism in an $\cF$-category $\bA$ with finite weighted $\cF$-limits. Then for any
-    2-cell $\rho : a \to b : X \to A$, the whiskering $f\rho$ corresponds to the commuting square
-    \[\begin{codi}[tetragonal=base 6.5em height 4.5em]
-      \obj {\dom fa & \dom fb \\ \cod fa & \cod fb \\};
-      \mor (dom fa) \dom f\rho:-> (dom fb) \lambda fb:-> (cod fb);
-      \mor[swap] (dom fa) \lambda fa:-> (cod fa) \cod f\rho:-> (cod fb);
-    \end{codi}\]
-  \end{proposition}
-
-  \begin{lemma}
-    For any fibration $p : A \to B$ and 2-cells $a \xrightarrow{n} b \xrightarrow{m} c : X \to A$, if $m\circ n$
-    and $m$ are $p$-cartesian, then so is $n$.
-  \end{lemma}
-  \begin{proof}
-    Suppose we are given a $p$-cartesian cone over $n$:
-    \[\begin{codi}[tetragonal=base 5.5em height 3.5em]
-      \obj { |(Y)| Y & |(X)| X & |(A)| A \\ & & |(B)| B \\};
-      \mor X ["b",name=x]:[->,bend left] A ["p",name=p]:-> B;
-      \mor X ["a",name=y,swap]:[->,bend right] A;
-      \mor y n:[-2>] x;
-      \mor Y ["x",name=a]:[->, bend left=5em] A;
-      \mor Y ["g",name=g]:-> X;
-      \mor Y ["pc",name=pa,swap]:[->, bend right=2em] B;
-      \mor[swap] a {{k}}:[-2>,slide=0.1em] X;
-      \mor[swap] pa {{l}}:[-2>,slide=0.4em, shorten=0.4em] X;
-    \end{codi}\]
-    Then we have that
-    \[p(mg \circ k) = pmg \circ pk = pmg \circ png \circ l = p(m \circ n)g \circ l,\]
-    so since $m \circ n$ is $p$-cartesian, there exists a unique map $\gamma : x \to a$ such that $p\gamma = l$
-    and $(m \circ n)g \circ \gamma = mg \circ k$. We still need to show that $ng \circ \gamma = k$, but this
-    follows from $m$ being $p$-cartesian, since $k$ is the unique map $\gamma'$ such that $mg \circ \gamma' = mg
-    \circ k$ and $p\gamma' = pk$. Since $mg \circ ng \circ \gamma = mg \circ k$ and $p(ng \circ \gamma) =
-    png \circ p\gamma = png \circ l = pk$, we see that $ng \circ \gamma$ also satisfies the properties of
-    $\gamma'$, and so we conclude that by uniqueness that $ng \circ \gamma = k$.
-  \end{proof}
-  \section{Finite limit theories}
   \end{document}
