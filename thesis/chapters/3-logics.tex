@@ -12,6 +12,8 @@
   In this chapter we introduce the notion of theories and models that underlie our treatment of
   the semantics of type theory in the subsequent chapter. Since the models of our theories ought
   to be categories equipped with some structure, it is sensible take take a 2-dimensional approach.
+  The main notion underlying our treatment will be that of $\cF$-categories (\cref{def:F-category}),
+  as these will allow fine-grained control of the strictness of homomorphisms.
 
   There are several possible notions in the literature that would apply, notably the various 2-dimensional
   generalizations of Lawvere theories as found in \cite{gray1973, nishizawa2009}. However,
@@ -25,8 +27,8 @@
   \begin{remark}
   One issue that arises when considering enriched limit theories, however, is that generally the
   homomorphisms will be either too strict or too weak. If we take the notion of homomorphisms to
-  be what falls out directly from the notion of enriched limit theories, enriched natural
-  transformations, we find that the homomorphisms are too strict.
+  be what falls out directly from the notion of enriched limit theories as presented in \cite{kelly1982a},
+  enriched natural transformations, we find that the homomorphisms are too strict.
 
   Consider, for example, a theory for categories with finite products. In this case, the models are
   categories equipped with a choice of finite products, and homomorphisms are 2-natural transformations
@@ -111,7 +113,7 @@
     \lambda)$.
   \end{proof}
   
-  \begin{definition}[{\cite[§3.1]{lack2012}}]
+  \begin{definition}[{\cite[§3.1]{lack2012}}]\label{def:F-category}
     An \emph{enhanced 2-category}, or $\sF$-category, is a category enriched in $\sF$.
   \end{definition}
   \begin{notation}

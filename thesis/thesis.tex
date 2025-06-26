@@ -40,6 +40,10 @@
 \usepackage{mathpartir}
 \usetikzlibrary{decorations.pathmorphing,shapes}
 
+% \usetikzlibrary{external}
+% \tikzset{external/system call={lualatex \tikzexternalcheckshellescape -halt-on-error -interaction=batchmode -jobname "\image" "\texsource"}}
+% \tikzexternalize
+
 \newcounter{sarrow}
 \newcommand\xrightsquigarrow[1]{%
 \stepcounter{sarrow}%
@@ -222,7 +226,7 @@
   }{}
 
 \author{Jonathan Osser}
-\title{Enhanced Modeling of Type Theories}
+\title{Sketching Type Theories in Two Dimensions}
 
 \begin{document}
 \maketitle

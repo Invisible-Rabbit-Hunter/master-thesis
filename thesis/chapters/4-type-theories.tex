@@ -7,23 +7,46 @@
 
 \begin{document}
 \chapter{Type Theories}
-
-
-The goal of this chapter is to show that the common categorical models for type-dependency are expressible
-in term of purely finite 2-limits, and so in our context the language of $\cF$-sketches and $\cF$-theories.
-We show this for two such models:
+Throughout the literature, a whole host of different categorical structure have been introduced to model
+type dependency and type theories, ranging from display map categories to comprehension categories to
+categories with families and natural models. A good overview of the relationship between these different
+structures can be found in \cite{ahrens2024}. The goal of this chapter is to show how such structures in
+can in fact be described as finite 2-limit theories. Since there are so many different models, and covering
+them all would be both time consuming and reduntant, we will focus only on two sorts of models:
 \begin{enumerate}
-  \item Comprehension categories, which were introduced in \cite{jacobs1993} as a minimal categorical model for
-    type dependency.
-  \item Natural models, which were discovered independently by \cite{awodey2017} and \cite{fiore2012} as a reformulation
-    of the Categories with Families of \cite{dybjer1996}
+  \item Comprehension categories and categories with attributes. The former was introduced by \citeauthor{jacobs1993}
+    in \cite{jacobs1993} as a minimal categorical model for type dependency, and was there also shown to generalize
+    the latter. The latter was introduced by \citeauthor{cartmell1984} in \cite{cartmell1984}.
+  \item Categories with Families and Natural Models, which are really two different presentations of the same data.
+    The former were introduced by \citeauthor{dybjer1996} as an alternative to categories with attributes which was
+    closer to the syntax of type theory, and the latter introduced by \citeauthor{awodey2017} as a reformulation of
+    categories with families to make formulating the rules of type theory easier in terms of universal properties.
 \end{enumerate}
-The additional data of tight morphisms in $\cF$-categories is we recover the standard notions of homomorphism of models.
-Finally, to show the utility of this approach, we further show how to model more complex features of type theory, such
-as inductive types and multimode type theories.
+
+In essence, what we aim to show here is that models of type theories can be identified with 2-functors from a
+2-category describing the theory into $\Cat$, and that the homomorphisms can be identified certain pseudo-natural
+transformations between these functors. This is similar in spirit to \cite{uemura2023}, where \citeauthor{uemura2023}
+introduced categories with representable maps for a similar aim. The idea there was that, since representable maps of
+discrete fibrations are natural models, we can describe our type theory abstractly as a finitely complete
+category equipped with an additional class of maps closed under certain constructions mimicing that of
+the representable maps. Then a model is category of contexts $\cC$ and a finite limit preserving functor
+into the discrete fibrations over $\cC$ mapping the representable maps of the theory to representable
+maps of fibrations. 
+
+In contrast, our here theories are finitely $\cF$-complete $\cF$-categories, the models are $\cF$-functors into
+$\Cat^+$ preserving finite $\cF$-limits, and the homomorphisms are certain transformatons. The additional data
+$\cF$-categories over 2-categories allows us finer control over the strictness of homomorphisms, which is what
+allows us to recover the standard notions of homomorphisms of, for example, comprehension categories.
+Note that an $\cF$-limit theory is a 2-theory, but the additional data of tight morphisms in $\cF$-categories allows
+us fine control of the strictness of the homomorphisms. We will use this to show how we can recover the standard
+notions of homomorphism of models, such as the pseudo morphisms of comprehension categories, just from the $\cF$-limit
+theory. To further show the utility of this approach, we further show how to model more complex features of type
+theory, such as inductive types and the modes and modal types of multimode type theory. Note that the latter is
+not readily modeled in categories with representable maps, due to the requirement of multiple categories of contexts,
+one for each mode.
 
 \section{Comprehension Categories and Categories with Attributes}
-The notion of comprehension categories was introduced \cite{jacobs1993} to provide a minimal categorical
+The notion of comprehension categories was introduced in \cite{jacobs1993} to provide a minimal categorical
 description of type dependency. They concist of a commutative triangle in $\Cat$ of the following form:
 \[\begin{codi}[hexagonal=horizontal side 6em angle 45] 
   \obj{\cU &   \cC^\to \\
@@ -31,26 +54,32 @@ description of type dependency. They concist of a commutative triangle in $\Cat$
   \mor  cU \chi:-> (cC ^to) \cod:-> cC;
   \mor[swap] cU u:-> cC;
 \end{codi}\]
-where $u: \cU \to \cC$ is a fibration, $\cC^\to$ is the arrow category of $\cC$, and $\chi$ preserves
-cartesian morphisms. The idea is that $\cU$ is a category of types, with the fibration $u$ capturing the
-substitutions of type theory. The map $\chi : \cU \to \cC^\to$ takes a type $\Gamma \vdash A\;\cU$ to
-the context projection $\pi A : \Gamma.A \to A$, and preservation of cartesian morphisms tells us that
-these projections behave well with respect to substitution, in the sense that for any $\sigma : \Delta
-\to \Gamma$, the following is a pullback square:
+where $u: \cU \to \cC$ is a fibration, $\cC^\to$ is the arrow category of $\cC$, and $\chi$ preserves cartesian
+morphisms. As a model of type theory, we want to think of the fiber $u_\Gamma$ of $u$ at a context $\Gamma \in
+\cC$ as the category of types in the context $\Gamma$, so the objects are types $\Gamma \vdash A\;\cU$. The
+reindexing provided by $u$ being a fibration then models the substitution of types, and the comprehension map
+$\chi$ models context extension, with the preservation of cartesian morphisms giving the expected universal
+property thereof, in the sense that for any type $\Gamma \vdash A\;\cU$ and substitution $\sigma : \Delta \to
+\Gamma$, the following is a pullback square in $\cC$:
 \[\begin{codi}
   \obj { \Delta.A[\sigma] & \Gamma.A \\ \Delta & \Gamma \\ };
   \mor (Delta A[sigma ]) \bar \sigma.A:-> (Gamma A) \pi A:-> Gamma;
   \mor[swap] (Delta A[sigma ]) {{\pi A[\sigma]}}:-> Delta \sigma:-> Gamma;
 \end{codi}\]
-where $\bar \sigma : A[\sigma] \to A$ is the cartesian lift of $\sigma : \Delta \to \Gamma = uA$ and
-$\bar \sigma.A : \Delta.A[\sigma] \to \Gamma.A$ is the first component of the map $\chi\bar\sigma :
-\chi A[\sigma] \to \chi A$.
+where we write $\pi$ for the 2-cell $\lambda\chi : \dom\chi \to u$ induced by $\chi$.
 
-To axiomatise this as a finite $\cF$-limit theory, we consider the sketch whose underlying $\cF$-category is
-generated by a diagram as above, with $\chi$ loose and $u$ and $\cod$ tight. Further, we want $u$ to be a
-fibration, and to state that $\chi$ preserves cartesian morphisms, it suffices to say that the image of
-the chosen cartesian lifts under $\chi$ are cartesian as well.
-
+To axiomatise this as a finite $\cF$-limit theory, we first consider the 2-categorical structure and limits that
+are relevant. We already have a characterisation of fibrations in terms of finite 2-limits, and since $\chi$ is
+supposed to preserve cartesian morphisms, it suffices to only ask for preservation of the cartesian lifts; any
+cartesian morphism is, after all, isomorphic to a cartesian lift. This can be captured by asking that $\chi\ell$
+is cartesian, where $\ell$ is the generic cartesian lift, or cleavage, specified by $u$ being a fibration. We can
+thus see that all data in the structure of a comprehension category can be described in terms of finite 2-limits.
+Next we consider the homomorphisms. In general, maps of fibrations are strict commuting squares, which tells us
+that in our theory, $u$ should be a tight map. By simlar reasoning, we find that $\cod$ also should be tight, which
+is further supported by taking $\cC^\to$ to be the corresponding tight limit, for which the codomain projection is
+necessarily tight. However, there
+is no reason to ask that homomorphisms preserve context extension strictly; it suffices to ask for preservation
+only up to isomorphism. This leads us to the following $\cF$-sketch for comprehension categories:
 \begin{definition}
   We define $\Comp$ to be the finite $\cF$-limit theory generated by sketch consisting of diagrams
   \begin{mathpar}
@@ -130,6 +159,18 @@ the chosen cartesian lifts under $\chi$ are cartesian as well.
   the comma object of $\cC^\to \comma \chi r$, and the cones making $\ell$ and $\chi \ell$ cartesian morphisms,
   i.e. the last two diagrams above.
 \end{definition}
+\begin{remark}
+  In this definition, we do not require homomorphisms to preserve cartesian lifts strictly, since the lifting map
+  $r : \cC \comma u \to \cU$ is loose. This aligns with the traditional definition of maps of fibrations, where
+  we only ask for preservation of cartesian maps, and so only that the image of a carteisan lift under the
+  homomorphisms is isomorphic to a cartesian lift in the codomain. However, if we choose to make $r$ tight
+  isntead, the homomorphisms to strictly preserve the choice of cartesian lifts, and so in the language of
+  models of type theory, to strictly preserve substitution.
+
+  This shows the flexibility that $\cF$-limit theories provide in the 2-categories of models: we have precise control
+  over what parts of the theory are preserved strictly by homomorphisms, and what parts are only up to isomorphism,
+  without ad hoc definitions for every possible theory we could come up with.
+\end{remark}
 
 A model for $\Comp$ in $\Cat$ is exactly a (cloven) comprehension category, and given two comprehension categories
 $(\cC, \cU, u, \chi)$ and $(\cD, \cV, v, \psi)$, a homomorphism $f : (\cC, \cU, u, \chi) \to (\cD, \cV, v, \psi)$
@@ -184,27 +225,22 @@ attributes.
 \end{proof}
 
 \newcommand\GNM{\mathrm{GNM}}
-\section{Natural Models}
-Similarly to comprehension categories, natural models are defined as certain fibrations over a base category.
-Formally, they consist of a diagram in $\Cat$ of the shape:
-\[\begin{codi}[hexagonal=horizontal side 6em angle 45] 
-  \obj{\dot\cU &   \cU \\ & \cC \\};
-  \mor  (dot cU) ["\typ",swap]:-> cU u:-> cC;
-  \mor[swap] (dot cU) \dot u:-> cC;
-  \mor[swap] cU \var:[bend right,->] (dot cU);
-  \mor typ [shorten=0.3em, |-] var;
-\end{codi}\]
-where the triangle commutes, and $u, \dot u$ are discrete fibrations. These correspond to categories with
-attributes, but can be generalized by asking $u, \dot u$ to be possibly non-discrete fibrations, that $\typ$
-be a morphism of fibrations and $\var$ preserves cartesian morphisms (though is not necessarily a morphism of
-fibrations), and that the unit and counit of the adjunction $\typ \dashv \var$ be $\dot u$-cartesian and
-respectively. We shall call these diagrams generalized natural models, and we will show that they are
-essentially equivalent to comprehension categories. Furthermore, as we have shown with comprehension categories,
-all the data in this diagram can be specified in terms of a $\cF$-sketch, so that we have $\cF$-logics for
-(generalized) natural models. We shall denote these by $\GNM$ and $\NM$ respectively.
+\section{Categories with Families}
+The second semantics we will fit into our framework is categories with families, which were introduced by
+\citeauthor{dybjer1996} in \cite{dybjer1996} as a variant of Cartmell's categories with attributes with
+closer ties to the syntax of type theory, in particular modeling terms as a presheaf by themselves, rather
+than as a certain class of context maps. A further reformulation of CwFs, found independently by \citeauthor{
+fiore2012} \cite{fiore2012} and \citeauthor{awodey2017} \cite{awodey2017}, gives context extension as a
+representable map of presheaves between the presheaves of terms the presheaf of types, rather than as a
+direct universal property as in \cite{dybjer1996}.  This reformulation, dubbed natural models in \cite{
+awodey2017}, allows for one final change to fit into our framework: we replace the presheaves by discrete
+fibrations. One advantage of this step is that representability of a map of presheaves is equivalent to the
+existence of a right adjoint to the typing map between the categories of elements of the type and term
+fibrations (as already noted in \cite{awodey2017}), which is easily axiomatized in our framework.
 
-\begin{definition}[{\cite[Definition 3.0.1]{coraglia2024a}}]
-  A generalized natural model is a diagram
+\begin{definition}[Natural models of type theory]
+  A \emph{natural model of type theory}, in the sense of \cite{awodey2017}, is a diagram in $\Cat$ of the
+  form
   \[\begin{codi}[hexagonal=horizontal side 6em angle 45] 
     \obj{\dot\cU &   \cU \\ & \cC \\};
     \mor  (dot cU) ["\typ",swap]:-> cU u:-> cC;
@@ -212,58 +248,216 @@ all the data in this diagram can be specified in terms of a $\cF$-sketch, so tha
     \mor[swap] cU \var:[bend right,->] (dot cU);
     \mor typ [shorten=0.3em, |-] var;
   \end{codi}\]
-  in $\Cat$ for which $\typ$ and $\var$ preserve cartesian morphisms and the unit and counit of the adjunction
-  $\typ \dashv \var$ are cartesian.
+  where $u, \dot u$ are discrete fibrations and $\typ$ is a map of discrete fibrations, so that $\typ u = \dot u$.
+  Note that $\var$ need not be, and generally is not, a map of fibrations.
+\end{definition}
+\begin{remark}
+  In \cite{coraglia2024a}, the natural models are further generalized by weakening the discrete fibrations to
+  arbitrary fibrations, and thus also asking that $\typ$ preserves cartesian morphisms and that the unit and
+  counit of the adjunction $\typ \dashv \var$ are cartesian. In \cite{coraglia2024b}, these generalized natural
+  models, there dubbed generalized categories with families, are shown to be biequivalent with comprehension
+  categories. I conjecture that one can show the $\cF$-theory of these generalized categories with families is
+  biequivalent to the one for comprehension categories introduced earlier, with a proof similar to the one found
+  in \emph{op.\ cit.} For now we treat only the case with discrete fibrations, as the theory of those is more
+  developed.
+\end{remark}
+
+As with comprehension categories, we already know how to specify the data for a natural model in an $\cF$-limit
+sketch. For example, the 2-cell $u : \cU \to \cC$ is a discrete fibration precisly if the map $t : \cU^\to \to
+\cC \comma u$ induced by $u \lambda_\cU : u\dom_\cU \to u\cod_\cU$ has an inverse $r : \cC \comma u \to \cU^\to$
+satisfying $\cod_\cU r = \cod_\cC^u$, which is evidently describable by an $\cF$-sketch. We denote the $\cF$-%
+theory induced by this sketch by $\NM$.
+\begin{remark}
+  Note that there are multiple equivalent ways of describing discrete fibrations in terms of finite 2-limits, and
+  so multiple $\cF$-sketches for natural models. However, these $\cF$-sketches all induce equivalent $\cF$-theories,
+  and so we speak of \emph{the} theory of natural models $\NM$.
+\end{remark}
+
+With the basic theory of natural models at hand, we will spend the remainder of this section showing how further
+structure and properties, in particular dependent sum and product types, unit types, and identity types, can
+be similarly described in terms of finite 2-limits. This allows us to construct finite $\cF$-limit theories
+for any type theory with these features, whose models are the natural models with these features. The specific
+constructions we use are based on \cite{coraglia2024a}, rather than \cite{awodey2017}, as we have free access
+to 2-pullbacks and similar 2-limits, but not the representable discrete fibrations.
+
+Before we can show how to model the rules for these different type constructors, we will need a few useful definitions.
+First, we will need a the map corresponding to context extension. In analogy to comprehension categories, we will denote
+this morphism by $\set{-} : \cU \to \cC$, and we define it by $\set{-} \coloneq \dot u \var$. The counit of the adjunction
+$\typ \dashv \var$ then gives us the expected projection map $\pi \coloneq u \epsilon : \set{-} = u\typ\var \to u$. We also
+want to relate the terms $\dot\cU$ to substitutions. Specifically, we have that every term $t : X \to \dot\cU$ with
+$A \coloneq \typ t$ has a corresponding substitution $\id_{u A},t \coloneq \dot u \eta t : uA = \dot u t \to \dot u \var\typ t =
+\set{A}$, and this substitution satisfies
+\[\pi A \circ \id_{uA},t = u(\epsilon\var \circ \typ \eta \circ)t = 1_{u A},\]
+so that $\id_{uA},t$ is a section of $\pi A$, which is expected of the substitution corresponding to a term, and also motivates
+the chosen notation.
+
+\subsubsection{Dependent products}
+Recall the formation and introduction rules for dependent product types:
+\begin{mathpar}
+  \inferrule{\Gamma \vdash A\;\cU \\ \Gamma.A \vdash B\;\cU}{\Gamma \vdash \Pi(A, B)\;\cU} \and
+  \inferrule{\Gamma \vdash A\;\cU \\ \Gamma.A \vdash b : B}{\Gamma \vdash \lambda(A,b) : \Pi(A,B)}
+\end{mathpar}
+The formation rule tells us that given any type $A$ and type $B$ dependent on $A$, we can form the product type
+$\Pi(A,B)$. We model this as a morphism from some premise judgement $P$, corresponding to the pair $A$ and $A \vdash B$,
+to the judgement of types $\cU$. More formally, the premise is a judgement $p : P \to \cC$ over contexts, since $A$ and
+$B$ are types lying over some context, and the formation rule is a map $\Pi : P \to \cU$ such that $u\Pi = p$. To see
+what the premise $P$ should be, note that a type $B$ is dependent over $A$ if $uB = \set{A}$, so we should take $P$
+to be the pullback
+\[\begin{codi}[tetragonal=base 5em height 4.5em]
+  \obj {|(tl)| \cU \pb[\set{-}]{u} \cU & |(tr)| \cU \\ |(bl)| \cU & |(br)| \cC \\};
+  \mor[swap] tl A_F:-> bl {{\set{-}}}:-> br;
+  \mor tl B_F:-> tr u:-> br;
+\end{codi}\]
+with $p = uA_F$ picking the underlying context $\Gamma$ of $A$. In this way, a generalized element $H : X \to P$ is the same
+as a pair $H_1, H_2 : X \to \cU$ with $uH_2 = \set{H_1}$, as desired, vice versa. In particular, the formation rule then
+says that given any pair of types $\alpha, \beta : X \to \cU$ with $u\beta = \set{\alpha}$, we have $\Pi(\alpha,\beta) :
+X \to \cU$, as expected.
+
+Similarly, the introduction rule tells us that, given a type $A$ and a term $A \vdash b : B$, we have a term
+$\lambda(A,b) : \Pi(A,B)$. This rule is also captured by a morphism, this time of the form $\lambda : P' \to \dot\cU$ for
+an appropriate $P$. This time $P$ consists of a pair of a type $A$ and a term $b$, such that $\dot u b = \set{A}$, and
+so is captured by the pullback
+\[\begin{codi}[tetragonal=base 5em height 4.5em]
+  \obj {|(tl)| \cU \pb[\set{-}]{\dot u} \dot \cU & |(tr)| \dot \cU \\ |(bl)| \cU & |(br)| \cC \\};
+  \mor[swap] tl A':-> bl {{\set{-}}}:-> br;
+  \mor tl b:-> tr \dot u:-> br;
+\end{codi}\]
+To capture the typing of the $\lambda$-term, we need to ask that the following square commutes:
+\[\begin{codi}[tetragonal=base 6em height 4.5em]
+  \obj {|(tl)| \cU \pb[\set{-}]{\dot u} \dot\cU & |(tr)| \dot \cU \\ |(bl)| \cU \pb[\set{-}]{u} \cU & |(br)| \cU \\};
+  \mor tl \lambda:-> tr \typ:-> br;
+  \mor[swap] tl {{(A', \typ b)}}:-> bl \prod:-> br;
+\end{codi}\]
+where $(A',\typ B)$ is the unique map into the pullback $\cU \pb[\set{-}]{u} \cU$ given by the equation $\set{A'} = \dot u b =
+u\typ b$ holding.
+
+Finally, using the fact that terms of a dependent product $\Gamma \vdash t : \Pi(A,B)$ ought to be in 1-1 correspondence with
+terms $\Gamma . A \vdash t' : B$, we see that asking that the above square be a pullback gives us the expected inverse of the
+lambda rule; A term $t : X \to \dot\cU$ with $\typ t = \Pi(\alpha,\beta)$ for some adequate $\alpha,\beta : X \to \cU$, we have
+a unique map $\bar t : X \to \cU \pb[\set{-}]{\dot u} \dot \cU$ with $\lambda \bar t = t$, and vice versa. To capture the
+elimantion rule
+\[\inferrule{\Gamma \vdash t : \Pi(A,B) \\ \Gamma \vdash u : A}{\Gamma\vdash t\cdot u : B[\id_\Gamma,u]},\]
+we see that the definition $t\cdot u \coloneq \bar t [\id_\Gamma,u]$ has the expected type, and by this definition for any
+term $\bar t : X \to \cU \pb[\set{-}]{\dot u}$, we find that $\lambda(\bar t)\cdot u = \bar t[\id_\Gamma,u]$, so that
+we validate the computation rule for dependent product types as well.
+
+Putting all of this together, we have the following definition:
+\begin{definition}
+  A natural model $(\cC, \cU, \dot\cU)$ has dependent products if there exists a pullback square of the form
+  \[\begin{codi}[tetragonal=base 6em height 4.5em]
+    \obj {|(tl)| \cU \pb[\set{-}]{\dot u} \dot\cU & |(tr)| \dot \cU \\ |(bl)| \cU \pb[\set{-}]{u} \cU & |(br)| \cU \\};
+    \mor tl \lambda:-> tr \typ:-> br;
+    \mor[swap] tl {{(A', \typ b)}}:-> bl \prod:-> br;
+  \end{codi}\]
 \end{definition}
 
-\begin{notation}
-  We use $\set{-} : \cU \to \cC$ to denote the composite $\dot u\var$, and call this the comprehension map.
-  Using $\epsilon : \typ\,\var \to 1_{\cU}$ and $\eta : 1_{\dot\cU} \to \var\,\typ$ to denote the unit
-  and counit of the adjunction $\typ \dashv \var$, we use $\pi : \set{-} \to u$ to denote the 2-cell
-  $u\epsilon : \set{-} = \dot u\var = u\,\typ\,\var \to u$, which intuitively corresponds to the projection
-  given by context extension; for $\Gamma$ a context and $\Gamma \vdash A\;\cU$ a type, we have $\pi A :
-  \Gamma.A \to A$.
+Since all data here is describable by finite 2-limits, we can simply add this to the sketch for natural models to obtain
+the theory of natural models with dependent product types.
 
-  We will use $\tau : \dot u \to \dot u\var = \set{\typ}$ to denote $\dot u\eta$, with the idea that this
-  corresponds to the substitution $\Gamma \to \Gamma.A$, for a term $\Gamma \vdash a : A$. Note that we have
-  \[
-    \pi{\typ} \circ \tau = u\epsilon\typ \circ \dot u\tau = u\epsilon\typ \circ u\typ\tau =
-    u(\epsilon\typ \circ \typ\tau) = 1_u,
-  \]
-  where the last equality holds by the one of the triangle identities of the adjunction $\typ \dashv \var$.
-  This notion of terms thus aligns with the standard one of terms being sections of the context projection.
+\subsubsection{Dependent sums}
+As with dependent product types, the type former for dependent sum types is modeled by a morphism $\Sigma : \cU \pb[\set{-}]{u}
+\cU \to \cU$. However, the introduction rule is more complicated:
+\[\inferrule{\Gamma \vdash t : A \\ \Gamma \vdash u : B[\id_\Gamma, t]}{\Gamma \vdash \seq{t,u} : \Sigma(A,B)}\]
+In particular, the premise requires a term $u$ depending on the \emph{substitution} of a term $t$. We construct the
+object corresponding to the premise in steps. First we take
 
-  For $f : A \to \var B : X \to \dot\cU$, we use $f^\sharp$ to denote the adjoint conjugate of $f$, defined by
-  $f^\sharp = \epsilon B \circ \typ f$, and for $g : \typ A \to B$, we denote the adjoint conjungate by
-  $g_\sharp = \var g \circ \eta A$. The triangle identities of the adjuntion implies that $(f^\sharp)_\sharp
-  = f$ and $(g_\sharp)^\sharp = g$. We also have that $u f^\sharp = \pi B \circ \dot u f$ and $\dot u g_\sharp
-  = \set{g} \circ \tau A$.
+\begin{definition}
+  A natural model $(\cC, \cU, \dot\cU)$ has depedent sums if there exists a pullback square of the form
+  \[\begin{codi}[tetragonal=base 6em height 4.5em]
+    \obj {|(tl)| \dot\cU \pb[\set{-}\typ]{\dot u} \dot\cU & |(tr)| \dot \cU \\ |(bl)| \cU \pb[\set{-}]{u} \cU & |(br)|
+        \cU \\};
+    \mor tl p:-> tr \typ:-> br;
+    \mor[swap] tl {{\cU \pb[\set{-}]{\typ} \typ}}:-> bl \prod:-> br;
+  \end{codi}\]
+\end{definition}
+\todo{Finish writing this subsubsection.}
+
+\subsubsection{Extensional identity types}
+Let $\delta : \cU \to \cU$ denote the lift of $\pi : \set{-} \to u$, so that for an arbitrary type $A : X \to \cU$, we have
+that $\delta A = A[\pi A]$ is the weaking of $A$. The dependent 
+\todo{Finish writing this subsubsection.}
 
 
-  Finally, we will use $W \coloneq \typ\var$ to denote the comonad induced by the adjunction $\typ \dashv \var$,
-  which has counit $\epsilon : W \to 1_\cU$ and comultiplication $\delta \coloneq \typ\eta\var : W \to W^2$.
-\end{notation}
 
-\begin{proposition}
-  For any $b : X \to \dot\cU$, the arrow $\eta b : b \to \var\typ b$ is monic.
-\end{proposition}
-\begin{proof}
-  Let $f,g : a \to b : X \to \dot\cU$ be given such that $\eta b \circ f = \eta b \circ g$. Then 
-  \[\dot u f = u\typ f = u(\epsilon\typ b \circ \typ\eta b \circ \typ f) = 
-  u(\epsilon\typ b \circ \typ\eta b \circ \typ g) = u\typ g = \dot u g.\]
-  Since $\eta$ is cartesian and $(b,a,\eta b \circ f = \eta b \circ g, \dot u f = \dot u g)$ is a certesian
-  cone with both $f,g$ universal arrows, uniqueness of th euniversal arrow tells us that $f = g$.
-\end{proof}
+% Similarly to comprehension categories, natural models are defined as certain fibrations over a base category.
+% Formally, they consist of a diagram in $\Cat$ of the shape:
+% \[\begin{codi}[hexagonal=horizontal side 6em angle 45] 
+%   \obj{\dot\cU &   \cU \\ & \cC \\};
+%   \mor  (dot cU) ["\typ",swap]:-> cU u:-> cC;
+%   \mor[swap] (dot cU) \dot u:-> cC;
+%   \mor[swap] cU \var:[bend right,->] (dot cU);
+%   \mor typ [shorten=0.3em, |-] var;
+% \end{codi}\]
+% where the lower triangle commutes, and $u, \dot u$ are discrete fibrations. These correspond to categories with
+% attributes, but can be generalized by asking $u, \dot u$ to be possibly non-discrete fibrations, that $\typ$
+% be a morphism of fibrations and $\var$ preserves cartesian morphisms (though is not necessarily a morphism of
+% fibrations), and that the unit and counit of the adjunction $\typ \dashv \var$ be $\dot u$-cartesian and
+% respectively. We shall call these diagrams generalized natural models, and we will show that they are
+% essentially equivalent to comprehension categories. Furthermore, as we have shown with comprehension categories,
+% all the data in this diagram can be specified in terms of a $\cF$-sketch, so that we have $\cF$-logics for
+% (generalized) natural models. We shall denote these by $\GNM$ and $\NM$ respectively.
 
-\begin{proposition}
-  The map $\typ : \dot\cU \to \cU$ is faithful, in the sense that for any pair of 2-cells $f,g : a \to b
-  : X \to \dot\cU$, if $\typ f = \typ g$, then $f = g$. 
-\end{proposition}
-\begin{proof}
-  Note that
-  \[\eta b \circ f = \var\typ f \circ \eta a = \var\typ g \circ \eta a = \eta b \circ g\]
-  by the interchange property, so by the previous proposition we conclude $f = g$.
-\end{proof}
+% \begin{definition}[{\cite[Definition 3.0.1]{coraglia2024a}}]
+%   A generalized natural model is a diagram
+%   \[\begin{codi}[hexagonal=horizontal side 6em angle 45] 
+%     \obj{\dot\cU &   \cU \\ & \cC \\};
+%     \mor  (dot cU) ["\typ",swap]:-> cU u:-> cC;
+%     \mor[swap] (dot cU) \dot u:-> cC;
+%     \mor[swap] cU \var:[bend right,->] (dot cU);
+%     \mor typ [shorten=0.3em, |-] var;
+%   \end{codi}\]
+%   in $\Cat$ for which $\typ$ and $\var$ preserve cartesian morphisms and the unit and counit of the adjunction
+%   $\typ \dashv \var$ are cartesian.
+% \end{definition}
+%
+% \begin{notation}
+%   We use $\set{-} : \cU \to \cC$ to denote the composite $\dot u\var$, and call this the comprehension map.
+%   Using $\epsilon : \typ\,\var \to 1_{\cU}$ and $\eta : 1_{\dot\cU} \to \var\,\typ$ to denote the unit
+%   and counit of the adjunction $\typ \dashv \var$, we use $\pi : \set{-} \to u$ to denote the 2-cell
+%   $u\epsilon : \set{-} = \dot u\var = u\,\typ\,\var \to u$, which intuitively corresponds to the projection
+%   given by context extension; for $\Gamma$ a context and $\Gamma \vdash A\;\cU$ a type, we have $\pi A :
+%   \Gamma.A \to A$.
+%
+%   We will use $\tau : \dot u \to \dot u\var = \set{\typ}$ to denote $\dot u\eta$, with the idea that this
+%   corresponds to the substitution $\Gamma \to \Gamma.A$, for a term $\Gamma \vdash a : A$. Note that we have
+%   \[
+%     \pi{\typ} \circ \tau = u\epsilon\typ \circ \dot u\tau = u\epsilon\typ \circ u\typ\tau =
+%     u(\epsilon\typ \circ \typ\tau) = 1_u,
+%   \]
+%   where the last equality holds by the one of the triangle identities of the adjunction $\typ \dashv \var$.
+%   This notion of terms thus aligns with the standard one of terms being sections of the context projection.
+%
+%   For $f : A \to \var B : X \to \dot\cU$, we use $f^\sharp$ to denote the adjoint conjugate of $f$, defined by
+%   $f^\sharp = \epsilon B \circ \typ f$, and for $g : \typ A \to B$, we denote the adjoint conjungate by
+%   $g_\sharp = \var g \circ \eta A$. The triangle identities of the adjuntion implies that $(f^\sharp)_\sharp
+%   = f$ and $(g_\sharp)^\sharp = g$. We also have that $u f^\sharp = \pi B \circ \dot u f$ and $\dot u g_\sharp
+%   = \set{g} \circ \tau A$.
+%
+%
+%   Finally, we will use $W \coloneq \typ\var$ to denote the comonad induced by the adjunction $\typ \dashv \var$,
+%   which has counit $\epsilon : W \to 1_\cU$ and comultiplication $\delta \coloneq \typ\eta\var : W \to W^2$.
+% \end{notation}
+%
+% \begin{proposition}
+%   For any $b : X \to \dot\cU$, the arrow $\eta b : b \to \var\typ b$ is monic.
+% \end{proposition}
+% \begin{proof}
+%   Let $f,g : a \to b : X \to \dot\cU$ be given such that $\eta b \circ f = \eta b \circ g$. Then 
+%   \[\dot u f = u\typ f = u(\epsilon\typ b \circ \typ\eta b \circ \typ f) = 
+%   u(\epsilon\typ b \circ \typ\eta b \circ \typ g) = u\typ g = \dot u g.\]
+%   Since $\eta$ is cartesian and $(b,a,\eta b \circ f = \eta b \circ g, \dot u f = \dot u g)$ is a certesian
+%   cone with both $f,g$ universal arrows, uniqueness of th euniversal arrow tells us that $f = g$.
+% \end{proof}
+%
+% \begin{proposition}
+%   The map $\typ : \dot\cU \to \cU$ is faithful, in the sense that for any pair of 2-cells $f,g : a \to b
+%   : X \to \dot\cU$, if $\typ f = \typ g$, then $f = g$. 
+% \end{proposition}
+% \begin{proof}
+%   Note that
+%   \[\eta b \circ f = \var\typ f \circ \eta a = \var\typ g \circ \eta a = \eta b \circ g\]
+%   by the interchange property, so by the previous proposition we conclude $f = g$.
+% \end{proof}
 
 % \begin{proposition}
 %   For any 2-cell $f : A \to B : X \to \cU$, if $f$ is $u$-cartesian, then $\var f$ is $\dot u$-cartesian, and
@@ -313,281 +507,282 @@ all the data in this diagram can be specified in terms of a $\cF$-sketch, so tha
 %   Since $\dot u = u\typ$, we have that $u\typ k = l \circ u\typ\var f g$, so \todo{Finish this}
 % \end{proof}
 
-\begin{lemma}
-  For any $\dot u$-cartesian map $f : a \to \var A : X \to \dot \cU$, its conjugate $f^\sharp$ is $u$-cartesian,
-  and for any $u$-cartesian map $g : \typ a \to A : X \to \cU$, the conjugate $g_\sharp$ is $\dot u$-cartesian.
-\end{lemma}
-\begin{proof}
-  For $f$, note that $f^\sharp = \epsilon A \circ Tf$, so since $\epsilon$ and $f$ are cartesian and $T$
-  preserves cartesian morphisms, it follows that $f^\sharp$ is cartesian as well. A similar argument shows
-  that $g_\sharp$ is cartesian, using that $\var$ preserves cartesian morphisms.
-\end{proof}
-
-\begin{lemma}
-  Let $f : A \to B : X \to \cU$ be a $u$-cartesian morphism. Then the following square is a pullback square:
-  \[\begin{codi}
-    \obj {|(eA)| \set{A} & |(eB)| \set{B} \\ uA & uB \\};
-    \mor eA {{\set{f}}}:-> eB \pi B:-> uB;
-    \mor[swap] eA \pi A:-> uA uf:-> uB;
-  \end{codi}\]
-\end{lemma}
-\begin{proof}
-  Consider another span $uA \xleftarrow{k} \Delta \xrightarrow{l} \set{B}$ such that $uf \circ k = \pi B \circ l$.
-  We must show that there exists a unique map $\Delta \to \set{A}$. Let $\bar l : \bar \Delta \to \var B$ denote a
-  cartesian lift of $l : \Delta \to \dot u \var B$. To construct a map $\Delta \to \set{A}$, it suffices to find
-  a map $h : \bar\Delta \to \var A$, which by the $\typ \dashv \var$ adjunction is equivalent to constructing
-  a map $h^\sharp : \typ\bar\Delta \to A$. Now, consider the cartesian cone
-  \[\begin{codi}[tetragonal=base 5.5em height 3.5em]
-    \obj { |(Y)| X & |(X)| X & |(A)| \dot\cU \\ & & |(B)| \cC \\};
-    \mor X ["B",name=x]:[->,bend left] A ["u",name=p]:-> B;
-    \mor X ["A",name=y,swap]:[->,bend right] A;
-    \mor y f:[-2>] x;
-    \mor Y ["\typ \bar\Delta",name=a]:[->, bend left=5em] A;
-    \mor Y ["1_X",name=g]:-> X;
-    \mor Y ["\Delta",name=pa,swap]:[->, bend right=2em] B;
-    \mor[swap] a {{\bar l^\sharp}}:[-2>,slide=0.1em] X;
-    \mor[swap] pa {{k}}:[-2>,slide=0.2em, shorten=0.2em] X;
-  \end{codi}\]
-  where $\bar l^\sharp$ is the adjoint of $\bar l$. Note that we have
-  \[u(\bar l^\sharp) = u\epsilon B \circ u\typ\bar l = \pi B \circ \dot u\bar l = \pi B \circ l = uf \circ k,\]
-  so that this is indeed a cartesian cone. The universal property of $f$ now gives us a unique map $h^\sharp
-  : \typ\bar\Delta \to A$ such that $uh^\sharp = k$ and $f \circ h^\sharp = \bar l^\sharp$. Furthermore, this
-  map is cartesian, since $f$ and $\bar l^\sharp$ are. We claim that, taking $h = (h^\sharp)_\sharp$, the map
-  $\dot u h$ is the universal map $\Delta \to \set{A}$. Thus we need to show that $\pi A \circ \dot u h =
-  k$ and $\set{f} \circ \dot u h = l$. For the former, we compute
-  \[
-    \pi A \circ \dot u h = \pi A \circ \set{h^\sharp} \circ \tau \bar\Delta
-    = uh^\sharp \circ \pi \bar\Delta \circ \tau\bar\Delta = uh^\sharp = k,
-  \]
-  and for the latter we have that
-  \[
-    \set{f} \circ \dot u h = \set{f \circ h^\sharp} \circ \tau\bar\Delta = \set{\bar l^\sharp} \circ
-    \tau\bar\Delta = u(\bar l^\sharp)_\sharp = u\bar l = l.
-  \]
-  
-  Finally, we must show that $uh$ is unique with these properties, so suppose $h' : \Delta \to \set{A}$ were
-  another map with $\pi A \circ h' = k$ and $\set{f} \circ h' = l$, and let $\bar h' : \bar\Delta' \to \var A$
-  denote a cartesian lift of $h'$. Then $\var f \circ h'$ is cartesian over $l$, so by essential uniqueness of
-  cartesian lifts, there exists a vertical isomorphism $\alpha : \bar\Delta \cong \bar\Delta'$ such that $\var
-  f \circ h' \circ \alpha = \bar l$, and since isomorphisms are cartesian, we find that $h' \circ \alpha : \bar
-  \Delta \to \var A$ is cartesian, and so equal to $h$ by again by uniqueness of cartesian lifts. Therefore $u
-  \bar h' = u (\bar h' \circ \alpha^{-1}) = uh$, as desired.
-\end{proof}
-
-\begin{lemma}
-  For any $f : A \to B : X \to \cU$, the following is a pullback square:
-  \[\begin{codi}
-    \obj {\typ\var A & \typ\var B \\ A & B \\};
-    \mor (typ var A) \typ\var f:-> (typ var B) \epsilon B: -> B;
-    \mor[swap] (typ var A) \epsilon A:-> A f:-> B; 
-  \end{codi}\]
-\end{lemma}
-\begin{proof}
-  By the previous lemma, we have that 
-  \[\begin{codi}
-    \obj {\typ\var A & \typ\var B \\ A & B \\};
-    \mor (typ var A) \typ\var f:-> (typ var B) \epsilon B: -> B;
-    \mor[swap] (typ var A) \epsilon A:-> A f:-> B; 
-  \end{codi}\]
-\end{proof}
-
-\begin{corollary}
-  Let $\delta \coloneq \typ\eta\var : \typ\var \to \typ\var\typ\var$. Then $\delta$ is the unique map such
-  that $\epsilon\typ\var \circ \delta = \typ\var\epsilon \circ \delta = 1_{\typ\var}$.
-\end{corollary}
-
-\begin{corollary}
-  Let $a : A \to \typ\var A : X \to \cU$ be such that $\epsilon A \circ a = 1_A$. 
-  $\delta A \circ a = \typ\var a \circ a$. In particular for any $A : X \to \cU$, the $\typ\var$-coalgebras are
-  exactly the sections of $\epsilon A$.
-\end{corollary}
-\begin{proof}
-  By the previous corollary, we see that $\delta A \circ a$ is the unique map such that
-  \[\epsilon A \circ \delta A \circ a = a = \typ\var \epsilon A \circ \delta A \circ a.\]
-  But we also have that $\epsilon A \circ \typ\var a \circ a = a \circ \epsilon A \circ a = a$ and
-  $\typ\var\epsilon A \circ \typ\var a \circ a = \typ\var(\epsilon A \circ a) \circ a = a$, so
-  we must conclude that $\delta A \circ a = \typ\var a \circ a$.
-\end{proof}
-
-\begin{proposition}
-  Let $\sigma : \Delta \to \Gamma : X \to \cC$, $A : X \to \cU$, and $a : X \to \dot\cU$ with $uA = \Gamma$
-  and $\typ a = A[\sigma]$ be given. Then the map $\var\bar\sigma \circ \eta a$ is cartesian, where $\bar
-  \sigma$ is the cartesian lift of $\sigma$ given by the cleavage. We denote $\dot u(\var\bar\sigma \circ
-  \eta a)$ by $(\sigma,a)$.
-\end{proposition}
-\begin{proof}
-  Since $\var$ preserves cartesian morphisms, $\eta$ and $\bar\sigma$ are cartesian, and cartesian morphisms
-  compose, this us true.
-\end{proof}
-\begin{proposition}
-  The map $\typ : \dot\cU \to \cU$ is comonadic.
-\end{proposition}
-\begin{proof}
-  \todo{This proof is a little more difficult than I expected. Will try with a new approach, showing that $\typ$
-  is a weak Eilenberg-Moore object instead.}
-  First note that $(\typ, \typ\eta)$ has a coalgebra structure: by the definition of the adjunction $\typ \dashv
-  \var$, we have that $\epsilon\typ \circ \typ\eta = 1_\typ$. Letting $W\CoAlg$ denote the Eilenberg-Moore object
-  corresponding to $W$, with forgetful map $U_W : W\CoAlg \to \cU$ and universal algebra $\alpha : U_W \to W U_W$,
-  we have a comparison map $\phi : \dot\cU \to W\CoAlg$ such that $\typ\eta = \alpha\phi$. By definition, $\typ$
-  is comonadic precisely when $\phi$ is an equivalence. 
-
-  Let $\dot r : \dot\cU \comma \dot u \to \dot\cU$ and $\dot \ell : \dot r \to \cod$ denote the cleavage for the
-  fibration $\dot u : \dot\cU \to \cC$. We show that $\phi^{-1} \coloneq \dot r\seq{u\alpha}$ is a pseudoinverse
-  to $\phi$, where $\seq{u\alpha} : W\CoAlg \to \cC \comma \dot u$ is the universal map induced by the 2-cell $u
-  \alpha : uU_W \to uWU_W = \dot u \var U_w$. Thus we require isomorphism 2-cells $\xi : \phi^{-1} \phi \to 1_{
-  \dot \cU}$ and $\zeta : \phi\phi^{-1} \to 1_{W\CoAlg}$.
-
-  Since $\dot\ell\seq{u \alpha}$ is $\dot u$-cartesian and
-  \[\dot u \dot\ell\seq{u\alpha}\phi = u\alpha\phi = u T\eta = \dot u \eta,\]
-  there exists a unique map $\xi^{-1} : 1_{\dot\cU} \to \phi^{-1}\phi$ such that $\dot u \xi^{-1} = 1_{\dot u}$
-  and $\dot\ell\seq{u\alpha}\phi \circ \xi^{-1} = \eta$. Symmetrically, since $\eta$ is $\dot u$-cartesian, there
-  exists a unique map $\xi : \phi^{-1}\phi \to 1_{\dot\cU}$ such that $\dot u \xi = 1_{\dot u}$. Furthermore,
-  the universal properties of cartesian morphisms tells us that $\xi^{-1}\xi$ and $\xi\xi^{-1}$ are inverses,
-  so that $\xi$ is indeed an isomorphism 2-cell.
-
-\end{proof}
-
-\begin{corollary}
-  The following is a bipullback square in $\NM$:
-  \[\begin{codi}
-    \obj {\dot\cU & \cC^S \\ \cU & \cC^\to \\};
-    \mor (dot cU) {{(\tau,\pi\typ)}}:-> (cC ^S) \cC^g:-> (cC ^to);
-    \mor[swap] (dot cU) \typ:-> cU (\pi):-> (cC ^to);
-  \end{codi}\]
-  where $\cC^S$ is the cotensor with $S$ the walking section. Concretely, $S$ consists of two tight objects
-  $s,t \in S$ and morphisms $f : x \to y$ and $g : y \to x$ with $gf = 1_x$.  
-\end{corollary}
-\begin{proof}
-  Suppose we are given $A : X \to \cU$ and $\sigma : X \to \cC^S$ such that $(\pi)A = \cC^g \sigma$. By the
-  universal property of $\cC^S$, we know that $s = (t, p)$ with $t : \Gamma \leftrightarrow \Delta : p$ and
-  $p t = 1_{\Gamma}$. From $(\pi)A = \cC^g \sigma$, we find that $\Gamma = uA$, $\Delta = \set{A} = \Gamma.A$
-  and $p = \pi A$. By the previous proposition we then have a unique term $\bar t : X \to \dot\cU$ with
-  $\typ \bar t = A$ and $\tau\bar t = t$. In particular, we 
-\end{proof}
-\todo{I think this is true, though as a bilimit rather than a strict 2-pullback.}
-
-\begin{proposition}
-  Let $A : X \to \cU$ be a type and $\sigma : uA \to \set{A}$ be a section to $\pi A : \set{A} \to uA$. Then
-  there exists a term $a : X \to \dot\cU$, unique up to isomorphism, with $\typ a \cong A$ such that
-  $\sigma = \tau a$.
-\end{proposition}
-\begin{proof}
-  We show that $a \coloneq (\var A)[\sigma]$ suffices. For ease of notation, let $\Gamma \coloneq \set{A}$. To see
-  that $\typ a \cong A$, it suffices to show that there exists a cartesian map $A \to \typ(\var A)$ over $\sigma$.
-  Let $\bar\sigma : (\var A)[\sigma] \to \var A$ be the $\dot u$-cartesian lift of $\sigma : uA \to \dot u V A$.
-  Then we have a cartesian cone
-  \[\begin{codi}[tetragonal=base 5.5em height 3.5em]
-    \obj { |(Y)| X & |(X)| X & |(A)| \dot\cU \\ & & |(B)| \cC \\};
-    \mor X ["\var A",name=x]:[->,bend left] A ["u",name=p]:-> B;
-    \mor X ["\var A",name=y,swap]:[->,bend right] A;
-    \mor y f:[-2>] x;
-    \mor Y ["\var A",name=a]:[->, bend left=5em] A;
-    \mor Y ["1_X",name=g]:-> X;
-    \mor Y ["\Delta",name=pa,swap]:[->, bend right=2em] B;
-    \mor[swap] a {{\bar l^\sharp}}:[-2>,slide=0.1em] X;
-    \mor[swap] pa {{k}}:[-2>,slide=0.2em, shorten=0.2em] X;
-  \end{codi}\]
-\end{proof}
-
-\begin{proposition}
-  The logics $\GNM$ (resp. $\NM$) and $\Comp$ (resp. $\Attr$) are biequivalent as $\cF$-categories.
-\end{proposition}
-\todo{Go through all notation to make sure it's consistent. (Currently it is most definitely not.)}
-\todo{Consider going through weakening-contraction comonads?}
-\begin{proof}
-  A biequivalence of $\cF$-categories is .....
-
-  We first construct the $\cF$-functor $F : \Comp \to \GNM$, for which it suffices to construct a model of
-  $\Comp$ inside $\GNM$. We keep the fibration of types the same, so we only need to find a map $\chi : \cU \to
-  \cC^\to$ such that $\chi^\to \ell$ is $\cod$-cartesian, where $\ell : r \to \cod : \cC \comma u \to \cU$ is the
-  cleaveage for $u$. Let $\chi$ be the universal map induced by $\pi : \set{-} \to u$. To see that $\chi^\to\ell$
-  is $\cod$-cartesian, it suffices to show that the square
-  \[\begin{codi}
-    \obj {|(r)| \set{r} & |(cod)| \set{\cod} \\ \dom & u\cod \\};
-    \mor r \set{\ell}:-> cod \pi\cod:-> ucod;
-    \mor[swap] r \pi r:-> dom \lambda:-> ucod;
-  \end{codi}\]
-  is a pullback.
-
-  In the other direction we require a $\cF$-functor $G : \NM \to \Attr$, so we construct a model of $\NM$
-  inside $\Attr$. As this construction is quite a bit more involved, we will start by laying out some basic
-  notation. Since we will deal with both the arrow object $\cC^\to$ and the comma object $\cC \comma u$, we
-  need to distinguish their universal cones. We write $\lambda : \dom \to u\cod : \cC \comma u \to \cC$ for
-  the universal cone belonging to $\cC\comma u$ and $\lambda' : \dom' \to \cod' : \cC^\to \to \cC$ for the
-  universal cone for $\cC^\to$. We write $e \coloneq \dom'\chi$ and $q \coloneq \lambda' \chi : e \to u :
-  \cU \to \cC$, and for a generalized element $A : X \to \cU$, will write $\Gamma \vdash A$ to denote that
-  $\Gamma \coloneq uA$. Furthermore, we write $\Gamma.A$ for $eA$. By the construction of $\Attr$, we have
-  a fixed cleavage $(r,\ell)$ showing that $u$ is a fibration, where $r : \cC \comma u \to \cU$ is such
-  that $ur = \dom$ and $\ell : r \to \cod : \cC\comma u \to \cU$ is $u$-cartesian with $u\ell = \lambda$.
-  Furthermore, we have that $\chi\ell : \chi r \to \chi\cod$ is $\cod$-cartesian, since that is how we capture
-  that $\chi$ preserves cartesian-ness of the cartesian lifts for $u$.
-
-  We will start with constructing the object of terms $\dot\cU$. Intuitively, the terms over a context
-  $\Gamma : X \to \cC$ ought to be sections to some context projection $q A$ for some $\Gamma \vdash A$,
-  and we encode this as a pullback. First we need an object of sections, however. Let $S$ denote the tight
-  walking section (an object of $\cF$), so it has two tight objects $s,t \in S$ and morphisms $f : x \to y$
-  and $g : y \to x$ with $gf = 1_x$. The power object $\cC^S$ consists of sections in $\cC$, in the sense
-  that any map $X \to \cC^S$ is the same data as a section in the $\cF$-category $X \to \cC$. Now the object
-  of terms is defined as the pullback
-  \[\begin{codi}
-    \obj {\dot\cU & \cC^S \\ \cU & \cC^\to \\};
-    \mor (dot cU) p:-> (cC ^S) \cC^g:-> (cC ^to);
-    \mor[swap] (dot cU) \typ:-> cU \chi:-> (cC ^to);
-  \end{codi}\]
-  where $\cC^g : \cC^S \to \cC^\to$ is the projection induced by inclusion $g : 2 \to S$ in $\cF$. We next
-  define $\dot u = u\typ$, as that is a required equation for $\dot\cU$ to be a fibration of terms in
-  a natural model. We will use $\Gamma \vdash a : A$ to denote an generalized element $a : X \to \dot\cU$,
-  with $A = \typ a$ and $\Gamma = uA$. Thus if we have an element $\Gamma \vdash a : A$, we also have
-  $\Gamma \vdash A$ and $\Gamma : X \to \cC$.
-
-  To show that $\dot u$ is a fibration, we need for every $\Gamma \vdash a : A$ and $\typ : \var \to
-  \Gamma : X \to \cC$ a term $\var \vdash a[\typ] : A[\typ]$, where $\Gamma \vdash A[\typ]$ is
-  $r(\typ,A)$. Using $\bar a : \Gamma \to \Gamma.A$ to denote the section of $q\typ$ induced by $p$,
-  we see that we require a section $\bar a[\typ] : \var \to \var.A[\typ]$ to $qA[\typ]$.
-  Since $\chi\epsilon(\typ,A) : \var.A[\typ] \to \Gamma.A$ is cartesian, we find that the following
-  square is a pullback:
-  \[\begin{codi}[tetragonal=base 8em height 4.5em]
-    \obj {|(tl)| \var.A[\typ] & |(tr)| \Gamma.A \\ |(bl)| \var & |(br)| \Gamma\\};
-    \mor tl {{e\epsilon(\typ,A)}}:-> tr qA:-> br;
-    \mor[swap] tl {{qA[\typ]}}:-> bl \typ:-> br;
-  \end{codi}\]
-  Since $qA \circ \bar a = 1_\Gamma$, we have that $\typ \circ 1_{\var} = qA \circ \bar a\typ$, which
-  induces a universal morphism $\bar a[\typ] : \var \to \var.A[\typ]$ which satisfies $qA[\typ]
-  \circ \bar a[\typ] = 1_{\var}$, as desired. Now the pair $(\bar a[\typ], qA[\typ])$ constitutes a
-  morphism $pa[\typ] : X \to \cC^S$ such that $\cC^g pa[\typ] = \chi A[\typ]$, which means we have
-  a morphism $a[\typ] : X \to \dot\cU$ with $\typ a[\typ] = A[\typ]$ and $p a[\typ]$ as just
-  defined. We also require a cartesian 2-cell $\dot \epsilon (\typ,a) : a [\typ] \to a$. \todo{Show that
-  this exists.}
-
-
-  Next we require a right adjoint $\var$ to $\typ$. This requires us to find maps $w : \cU \to \cU$ and
-  $v : \cU \to \cC^S$ such that $\chi w = \cC^g v$. Let $\bar q : \cU \to \cC \comma u$ denote the universal
-  map induced by $q : e \to u1_\cU : \cU \to \cC$, so that $\lambda\bar q = q$. Take $w = r\bar q : \cU \to
-  \cU$. Since $\chi\ell\bar q : \chi r\bar q \to \chi\cod\bar q = \chi$ is $\cod$-cartesian, we have the
-  following pullback square in $\cU \to \cC$
-  \[\begin{codi}[tetragonal=base 6em height 4.5em]
-    \obj {er\bar q & |(e1)| e \\ |(e2)| e & u \\};
-    \mor (erbar q) -> e1 -> u;
-    \mor[swap] * -> e2 -> *;
-  \end{codi}\]
-  where the left map is $\lambda'\chi r\bar q = qr\bar q$, the right map is $\lambda'\chi = q$, the top map
-  is $\dom'\chi\ell\bar q = e\ell\bar q$, and the bottom map is $\cod'\chi\ell\bar q = u\ell\bar q = \lambda
-  \bar q = q$. But since the square is a pullback, we have a map $v_1 : e \to er\bar q$ induced by $(1_e, 1_e)$
-  with the property that $qr\bar q \circ v = 1_e$. Thus we have an induced map $v = (v_1,v_2) : \cU \to \cC^S$
-  where $v_2 = r\bar q$, and so also $\lambda'\cC^g v = v_2$, so that $\cC^g v = \chi r\bar q = \chi w$, as
-  desired. Thus we have an induced map $\var$ with $\typ\var = w = r\bar q$ and $p\var = v$.
-  
-  \todo{Show that $\var$ is a a right adjoint to $\typ$.}
-\end{proof}
-\begin{remark}
-  This proof is heavily based on the proof in \cite{coraglia2024b} of the biequivalence of comprehension categories
-  and generalized categories with families. Note that this biequivalence of $\cF$-logics then provides a biequivalence
-  on all categories of models for free, including those in cat with strict, pseudo, lax, and colax morphisms, since
-  $\Mod(-)$ is 3-functorial, and biequivalences are preserved by 3-functors.
-\end{remark}
+% \begin{lemma}
+%   For any $\dot u$-cartesian map $f : a \to \var A : X \to \dot \cU$, its conjugate $f^\sharp$ is $u$-cartesian,
+%   and for any $u$-cartesian map $g : \typ a \to A : X \to \cU$, the conjugate $g_\sharp$ is $\dot u$-cartesian.
+% \end{lemma}
+% \begin{proof}
+%   For $f$, note that $f^\sharp = \epsilon A \circ Tf$, so since $\epsilon$ and $f$ are cartesian and $T$
+%   preserves cartesian morphisms, it follows that $f^\sharp$ is cartesian as well. A similar argument shows
+%   that $g_\sharp$ is cartesian, using that $\var$ preserves cartesian morphisms.
+% \end{proof}
+%
+% \begin{lemma}
+%   Let $f : A \to B : X \to \cU$ be a $u$-cartesian morphism. Then the following square is a pullback square:
+%   \[\begin{codi}
+%     \obj {|(eA)| \set{A} & |(eB)| \set{B} \\ uA & uB \\};
+%     \mor eA {{\set{f}}}:-> eB \pi B:-> uB;
+%     \mor[swap] eA \pi A:-> uA uf:-> uB;
+%   \end{codi}\]
+% \end{lemma}
+% \begin{proof}
+%   Consider another span $uA \xleftarrow{k} \Delta \xrightarrow{l} \set{B}$ such that $uf \circ k = \pi B \circ l$.
+%   We must show that there exists a unique map $\Delta \to \set{A}$. Let $\bar l : \bar \Delta \to \var B$ denote a
+%   cartesian lift of $l : \Delta \to \dot u \var B$. To construct a map $\Delta \to \set{A}$, it suffices to find
+%   a map $h : \bar\Delta \to \var A$, which by the $\typ \dashv \var$ adjunction is equivalent to constructing
+%   a map $h^\sharp : \typ\bar\Delta \to A$. Now, consider the cartesian cone
+%   \[\begin{codi}[tetragonal=base 5.5em height 3.5em]
+%     \obj { |(Y)| X & |(X)| X & |(A)| \dot\cU \\ & & |(B)| \cC \\};
+%     \mor X ["B",name=x]:[->,bend left] A ["u",name=p]:-> B;
+%     \mor X ["A",name=y,swap]:[->,bend right] A;
+%     \mor y f:[-2>] x;
+%     \mor Y ["\typ \bar\Delta",name=a]:[->, bend left=5em] A;
+%     \mor Y ["1_X",name=g]:-> X;
+%     \mor Y ["\Delta",name=pa,swap]:[->, bend right=2em] B;
+%     \mor[swap] a {{\bar l^\sharp}}:[-2>,slide=0.1em] X;
+%     \mor[swap] pa {{k}}:[-2>,slide=0.2em, shorten=0.2em] X;
+%   \end{codi}\]
+%   where $\bar l^\sharp$ is the adjoint of $\bar l$. Note that we have
+%   \[u(\bar l^\sharp) = u\epsilon B \circ u\typ\bar l = \pi B \circ \dot u\bar l = \pi B \circ l = uf \circ k,\]
+%   so that this is indeed a cartesian cone. The universal property of $f$ now gives us a unique map $h^\sharp
+%   : \typ\bar\Delta \to A$ such that $uh^\sharp = k$ and $f \circ h^\sharp = \bar l^\sharp$. Furthermore, this
+%   map is cartesian, since $f$ and $\bar l^\sharp$ are. We claim that, taking $h = (h^\sharp)_\sharp$, the map
+%   $\dot u h$ is the universal map $\Delta \to \set{A}$. Thus we need to show that $\pi A \circ \dot u h =
+%   k$ and $\set{f} \circ \dot u h = l$. For the former, we compute
+%   \[
+%     \pi A \circ \dot u h = \pi A \circ \set{h^\sharp} \circ \tau \bar\Delta
+%     = uh^\sharp \circ \pi \bar\Delta \circ \tau\bar\Delta = uh^\sharp = k,
+%   \]
+%   and for the latter we have that
+%   \[
+%     \set{f} \circ \dot u h = \set{f \circ h^\sharp} \circ \tau\bar\Delta = \set{\bar l^\sharp} \circ
+%     \tau\bar\Delta = u(\bar l^\sharp)_\sharp = u\bar l = l.
+%   \]
+%   
+%   Finally, we must show that $uh$ is unique with these properties, so suppose $h' : \Delta \to \set{A}$ were
+%   another map with $\pi A \circ h' = k$ and $\set{f} \circ h' = l$, and let $\bar h' : \bar\Delta' \to \var A$
+%   denote a cartesian lift of $h'$. Then $\var f \circ h'$ is cartesian over $l$, so by essential uniqueness of
+%   cartesian lifts, there exists a vertical isomorphism $\alpha : \bar\Delta \cong \bar\Delta'$ such that $\var
+%   f \circ h' \circ \alpha = \bar l$, and since isomorphisms are cartesian, we find that $h' \circ \alpha : \bar
+%   \Delta \to \var A$ is cartesian, and so equal to $h$ by again by uniqueness of cartesian lifts. Therefore $u
+%   \bar h' = u (\bar h' \circ \alpha^{-1}) = uh$, as desired.
+% \end{proof}
+%
+% \begin{lemma}
+%   For any $f : A \to B : X \to \cU$, the following is a pullback square:
+%   \[\begin{codi}
+%     \obj {\typ\var A & \typ\var B \\ A & B \\};
+%     \mor (typ var A) \typ\var f:-> (typ var B) \epsilon B: -> B;
+%     \mor[swap] (typ var A) \epsilon A:-> A f:-> B; 
+%   \end{codi}\]
+% \end{lemma}
+% \begin{proof}
+%   By the previous lemma, we have that 
+%   \[\begin{codi}
+%     \obj {\typ\var A & \typ\var B \\ A & B \\};
+%     \mor (typ var A) \typ\var f:-> (typ var B) \epsilon B: -> B;
+%     \mor[swap] (typ var A) \epsilon A:-> A f:-> B; 
+%   \end{codi}\]
+% \end{proof}
+%
+% \begin{corollary}
+%   Let $\delta \coloneq \typ\eta\var : \typ\var \to \typ\var\typ\var$. Then $\delta$ is the unique map such
+%   that $\epsilon\typ\var \circ \delta = \typ\var\epsilon \circ \delta = 1_{\typ\var}$.
+% \end{corollary}
+%
+% \begin{corollary}
+%   Let $a : A \to \typ\var A : X \to \cU$ be such that $\epsilon A \circ a = 1_A$. 
+%   $\delta A \circ a = \typ\var a \circ a$. In particular for any $A : X \to \cU$, the $\typ\var$-coalgebras are
+%   exactly the sections of $\epsilon A$.
+% \end{corollary}
+% \begin{proof}
+%   By the previous corollary, we see that $\delta A \circ a$ is the unique map such that
+%   \[\epsilon A \circ \delta A \circ a = a = \typ\var \epsilon A \circ \delta A \circ a.\]
+%   But we also have that $\epsilon A \circ \typ\var a \circ a = a \circ \epsilon A \circ a = a$ and
+%   $\typ\var\epsilon A \circ \typ\var a \circ a = \typ\var(\epsilon A \circ a) \circ a = a$, so
+%   we must conclude that $\delta A \circ a = \typ\var a \circ a$.
+% \end{proof}
+%
+% \begin{proposition}
+%   Let $\sigma : \Delta \to \Gamma : X \to \cC$, $A : X \to \cU$, and $a : X \to \dot\cU$ with $uA = \Gamma$
+%   and $\typ a = A[\sigma]$ be given. Then the map $\var\bar\sigma \circ \eta a$ is cartesian, where $\bar
+%   \sigma$ is the cartesian lift of $\sigma$ given by the cleavage. We denote $\dot u(\var\bar\sigma \circ
+%   \eta a)$ by $(\sigma,a)$.
+% \end{proposition}
+% \begin{proof}
+%   Since $\var$ preserves cartesian morphisms, $\eta$ and $\bar\sigma$ are cartesian, and cartesian morphisms
+%   compose, this us true.
+% \end{proof}
+% \begin{proposition}
+%   The map $\typ : \dot\cU \to \cU$ is comonadic.
+% \end{proposition}
+% \begin{proof}
+%   \todo{This proof is a little more difficult than I expected. Will try with a new approach, showing that $\typ$
+%   is a weak Eilenberg-Moore object instead.}
+%   First note that $(\typ, \typ\eta)$ has a coalgebra structure: by the definition of the adjunction $\typ \dashv
+%   \var$, we have that $\epsilon\typ \circ \typ\eta = 1_\typ$. Letting $W\CoAlg$ denote the Eilenberg-Moore object
+%   corresponding to $W$, with forgetful map $U_W : W\CoAlg \to \cU$ and universal algebra $\alpha : U_W \to W U_W$,
+%   we have a comparison map $\phi : \dot\cU \to W\CoAlg$ such that $\typ\eta = \alpha\phi$. By definition, $\typ$
+%   is comonadic precisely when $\phi$ is an equivalence. 
+%
+%   Let $\dot r : \dot\cU \comma \dot u \to \dot\cU$ and $\dot \ell : \dot r \to \cod$ denote the cleavage for the
+%   fibration $\dot u : \dot\cU \to \cC$. We show that $\phi^{-1} \coloneq \dot r\seq{u\alpha}$ is a pseudoinverse
+%   to $\phi$, where $\seq{u\alpha} : W\CoAlg \to \cC \comma \dot u$ is the universal map induced by the 2-cell $u
+%   \alpha : uU_W \to uWU_W = \dot u \var U_w$. Thus we require isomorphism 2-cells $\xi : \phi^{-1} \phi \to 1_{
+%   \dot \cU}$ and $\zeta : \phi\phi^{-1} \to 1_{W\CoAlg}$.
+%
+%   Since $\dot\ell\seq{u \alpha}$ is $\dot u$-cartesian and
+%   \[\dot u \dot\ell\seq{u\alpha}\phi = u\alpha\phi = u T\eta = \dot u \eta,\]
+%   there exists a unique map $\xi^{-1} : 1_{\dot\cU} \to \phi^{-1}\phi$ such that $\dot u \xi^{-1} = 1_{\dot u}$
+%   and $\dot\ell\seq{u\alpha}\phi \circ \xi^{-1} = \eta$. Symmetrically, since $\eta$ is $\dot u$-cartesian, there
+%   exists a unique map $\xi : \phi^{-1}\phi \to 1_{\dot\cU}$ such that $\dot u \xi = 1_{\dot u}$. Furthermore,
+%   the universal properties of cartesian morphisms tells us that $\xi^{-1}\xi$ and $\xi\xi^{-1}$ are inverses,
+%   so that $\xi$ is indeed an isomorphism 2-cell.
+%
+% \end{proof}
+%
+% \begin{corollary}
+%   The following is a bipullback square in $\NM$:
+%   \[\begin{codi}
+%     \obj {\dot\cU & \cC^S \\ \cU & \cC^\to \\};
+%     \mor (dot cU) {{(\tau,\pi\typ)}}:-> (cC ^S) \cC^g:-> (cC ^to);
+%     \mor[swap] (dot cU) \typ:-> cU (\pi):-> (cC ^to);
+%   \end{codi}\]
+%   where $\cC^S$ is the cotensor with $S$ the walking section. Concretely, $S$ consists of two tight objects
+%   $s,t \in S$ and morphisms $f : x \to y$ and $g : y \to x$ with $gf = 1_x$.  
+% \end{corollary}
+% \begin{proof}
+%   Suppose we are given $A : X \to \cU$ and $\sigma : X \to \cC^S$ such that $(\pi)A = \cC^g \sigma$. By the
+%   universal property of $\cC^S$, we know that $s = (t, p)$ with $t : \Gamma \leftrightarrow \Delta : p$ and
+%   $p t = 1_{\Gamma}$. From $(\pi)A = \cC^g \sigma$, we find that $\Gamma = uA$, $\Delta = \set{A} = \Gamma.A$
+%   and $p = \pi A$. By the previous proposition we then have a unique term $\bar t : X \to \dot\cU$ with
+%   $\typ \bar t = A$ and $\tau\bar t = t$. In particular, we 
+% \end{proof}
+% \todo{I think this is true, though as a bilimit rather than a strict 2-pullback.}
+%
+% \begin{proposition}
+%   Let $A : X \to \cU$ be a type and $\sigma : uA \to \set{A}$ be a section to $\pi A : \set{A} \to uA$. Then
+%   there exists a term $a : X \to \dot\cU$, unique up to isomorphism, with $\typ a \cong A$ such that
+%   $\sigma = \tau a$.
+% \end{proposition}
+% \begin{proof}
+%   We show that $a \coloneq (\var A)[\sigma]$ suffices. For ease of notation, let $\Gamma \coloneq \set{A}$. To see
+%   that $\typ a \cong A$, it suffices to show that there exists a cartesian map $A \to \typ(\var A)$ over $\sigma$.
+%   Let $\bar\sigma : (\var A)[\sigma] \to \var A$ be the $\dot u$-cartesian lift of $\sigma : uA \to \dot u V A$.
+%   Then we have a cartesian cone
+%   \[\begin{codi}[tetragonal=base 5.5em height 3.5em]
+%     \obj { |(Y)| X & |(X)| X & |(A)| \dot\cU \\ & & |(B)| \cC \\};
+%     \mor X ["\var A",name=x]:[->,bend left] A ["u",name=p]:-> B;
+%     \mor X ["\var A",name=y,swap]:[->,bend right] A;
+%     \mor y f:[-2>] x;
+%     \mor Y ["\var A",name=a]:[->, bend left=5em] A;
+%     \mor Y ["1_X",name=g]:-> X;
+%     \mor Y ["\Delta",name=pa,swap]:[->, bend right=2em] B;
+%     \mor[swap] a {{\bar l^\sharp}}:[-2>,slide=0.1em] X;
+%     \mor[swap] pa {{k}}:[-2>,slide=0.2em, shorten=0.2em] X;
+%   \end{codi}\]
+% \end{proof}
+%
+% \begin{proposition}
+%   The logics $\GNM$ (resp. $\NM$) and $\Comp$ (resp. $\Attr$) are biequivalent as $\cF$-categories.
+% \end{proposition}
+% \todo{Go through all notation to make sure it's consistent. (Currently it is most definitely not.)}
+% \todo{Consider going through weakening-contraction comonads?}
+% \begin{proof}
+%   A biequivalence of $\cF$-categories is .....
+%
+%   We first construct the $\cF$-functor $F : \Comp \to \GNM$, for which it suffices to construct a model of
+%   $\Comp$ inside $\GNM$. We keep the fibration of types the same, so we only need to find a map $\chi : \cU \to
+%   \cC^\to$ such that $\chi^\to \ell$ is $\cod$-cartesian, where $\ell : r \to \cod : \cC \comma u \to \cU$ is the
+%   cleaveage for $u$. Let $\chi$ be the universal map induced by $\pi : \set{-} \to u$. To see that $\chi^\to\ell$
+%   is $\cod$-cartesian, it suffices to show that the square
+%   \[\begin{codi}
+%     \obj {|(r)| \set{r} & |(cod)| \set{\cod} \\ \dom & u\cod \\};
+%     \mor r \set{\ell}:-> cod \pi\cod:-> ucod;
+%     \mor[swap] r \pi r:-> dom \lambda:-> ucod;
+%   \end{codi}\]
+%   is a pullback.
+%
+%   In the other direction we require a $\cF$-functor $G : \NM \to \Attr$, so we construct a model of $\NM$
+%   inside $\Attr$. As this construction is quite a bit more involved, we will start by laying out some basic
+%   notation. Since we will deal with both the arrow object $\cC^\to$ and the comma object $\cC \comma u$, we
+%   need to distinguish their universal cones. We write $\lambda : \dom \to u\cod : \cC \comma u \to \cC$ for
+%   the universal cone belonging to $\cC\comma u$ and $\lambda' : \dom' \to \cod' : \cC^\to \to \cC$ for the
+%   universal cone for $\cC^\to$. We write $e \coloneq \dom'\chi$ and $q \coloneq \lambda' \chi : e \to u :
+%   \cU \to \cC$, and for a generalized element $A : X \to \cU$, will write $\Gamma \vdash A$ to denote that
+%   $\Gamma \coloneq uA$. Furthermore, we write $\Gamma.A$ for $eA$. By the construction of $\Attr$, we have
+%   a fixed cleavage $(r,\ell)$ showing that $u$ is a fibration, where $r : \cC \comma u \to \cU$ is such
+%   that $ur = \dom$ and $\ell : r \to \cod : \cC\comma u \to \cU$ is $u$-cartesian with $u\ell = \lambda$.
+%   Furthermore, we have that $\chi\ell : \chi r \to \chi\cod$ is $\cod$-cartesian, since that is how we capture
+%   that $\chi$ preserves cartesian-ness of the cartesian lifts for $u$.
+%
+%   We will start with constructing the object of terms $\dot\cU$. Intuitively, the terms over a context
+%   $\Gamma : X \to \cC$ ought to be sections to some context projection $q A$ for some $\Gamma \vdash A$,
+%   and we encode this as a pullback. First we need an object of sections, however. Let $S$ denote the tight
+%   walking section (an object of $\cF$), so it has two tight objects $s,t \in S$ and morphisms $f : x \to y$
+%   and $g : y \to x$ with $gf = 1_x$. The power object $\cC^S$ consists of sections in $\cC$, in the sense
+%   that any map $X \to \cC^S$ is the same data as a section in the $\cF$-category $X \to \cC$. Now the object
+%   of terms is defined as the pullback
+%   \[\begin{codi}
+%     \obj {\dot\cU & \cC^S \\ \cU & \cC^\to \\};
+%     \mor (dot cU) p:-> (cC ^S) \cC^g:-> (cC ^to);
+%     \mor[swap] (dot cU) \typ:-> cU \chi:-> (cC ^to);
+%   \end{codi}\]
+%   where $\cC^g : \cC^S \to \cC^\to$ is the projection induced by inclusion $g : 2 \to S$ in $\cF$. We next
+%   define $\dot u = u\typ$, as that is a required equation for $\dot\cU$ to be a fibration of terms in
+%   a natural model. We will use $\Gamma \vdash a : A$ to denote an generalized element $a : X \to \dot\cU$,
+%   with $A = \typ a$ and $\Gamma = uA$. Thus if we have an element $\Gamma \vdash a : A$, we also have
+%   $\Gamma \vdash A$ and $\Gamma : X \to \cC$.
+%
+%   To show that $\dot u$ is a fibration, we need for every $\Gamma \vdash a : A$ and $\typ : \var \to
+%   \Gamma : X \to \cC$ a term $\var \vdash a[\typ] : A[\typ]$, where $\Gamma \vdash A[\typ]$ is
+%   $r(\typ,A)$. Using $\bar a : \Gamma \to \Gamma.A$ to denote the section of $q\typ$ induced by $p$,
+%   we see that we require a section $\bar a[\typ] : \var \to \var.A[\typ]$ to $qA[\typ]$.
+%   Since $\chi\epsilon(\typ,A) : \var.A[\typ] \to \Gamma.A$ is cartesian, we find that the following
+%   square is a pullback:
+%   \[\begin{codi}[tetragonal=base 8em height 4.5em]
+%     \obj {|(tl)| \var.A[\typ] & |(tr)| \Gamma.A \\ |(bl)| \var & |(br)| \Gamma\\};
+%     \mor tl {{e\epsilon(\typ,A)}}:-> tr qA:-> br;
+%     \mor[swap] tl {{qA[\typ]}}:-> bl \typ:-> br;
+%   \end{codi}\]
+%   Since $qA \circ \bar a = 1_\Gamma$, we have that $\typ \circ 1_{\var} = qA \circ \bar a\typ$, which
+%   induces a universal morphism $\bar a[\typ] : \var \to \var.A[\typ]$ which satisfies $qA[\typ]
+%   \circ \bar a[\typ] = 1_{\var}$, as desired. Now the pair $(\bar a[\typ], qA[\typ])$ constitutes a
+%   morphism $pa[\typ] : X \to \cC^S$ such that $\cC^g pa[\typ] = \chi A[\typ]$, which means we have
+%   a morphism $a[\typ] : X \to \dot\cU$ with $\typ a[\typ] = A[\typ]$ and $p a[\typ]$ as just
+%   defined. We also require a cartesian 2-cell $\dot \epsilon (\typ,a) : a [\typ] \to a$. \todo{Show that
+%   this exists.}
+%
+%
+%   Next we require a right adjoint $\var$ to $\typ$. This requires us to find maps $w : \cU \to \cU$ and
+%   $v : \cU \to \cC^S$ such that $\chi w = \cC^g v$. Let $\bar q : \cU \to \cC \comma u$ denote the universal
+%   map induced by $q : e \to u1_\cU : \cU \to \cC$, so that $\lambda\bar q = q$. Take $w = r\bar q : \cU \to
+%   \cU$. Since $\chi\ell\bar q : \chi r\bar q \to \chi\cod\bar q = \chi$ is $\cod$-cartesian, we have the
+%   following pullback square in $\cU \to \cC$
+%   \[\begin{codi}[tetragonal=base 6em height 4.5em]
+%     \obj {er\bar q & |(e1)| e \\ |(e2)| e & u \\};
+%     \mor (erbar q) -> e1 -> u;
+%     \mor[swap] * -> e2 -> *;
+%   \end{codi}\]
+%   where the left map is $\lambda'\chi r\bar q = qr\bar q$, the right map is $\lambda'\chi = q$, the top map
+%   is $\dom'\chi\ell\bar q = e\ell\bar q$, and the bottom map is $\cod'\chi\ell\bar q = u\ell\bar q = \lambda
+%   \bar q = q$. But since the square is a pullback, we have a map $v_1 : e \to er\bar q$ induced by $(1_e, 1_e)$
+%   with the property that $qr\bar q \circ v = 1_e$. Thus we have an induced map $v = (v_1,v_2) : \cU \to \cC^S$
+%   where $v_2 = r\bar q$, and so also $\lambda'\cC^g v = v_2$, so that $\cC^g v = \chi r\bar q = \chi w$, as
+%   desired. Thus we have an induced map $\var$ with $\typ\var = w = r\bar q$ and $p\var = v$.
+%   
+%   \todo{Show that $\var$ is a a right adjoint to $\typ$.}
+% \end{proof}
+% \begin{remark}
+%   This proof is heavily based on the proof in \cite{coraglia2024b} of the biequivalence of comprehension categories
+%   and generalized categories with families. Note that this biequivalence of $\cF$-logics then provides a biequivalence
+%   on all categories of models for free, including those in cat with strict, pseudo, lax, and colax morphisms, since
+%   $\Mod(-)$ is 3-functorial, and biequivalences are preserved by 3-functors.
+% \end{remark}
 
 \section{Inductive Types}
-In this section we show how to describe inductive types using finite 2-limits. While the details differ quite a
+In this section we show how to describe inductive and coinductive types using finite 2-limits. While the details
+differ quite a
 bit, the presentation of inductive types here was inspired by the presentation in \cite{basold2015}, where
 inductive types are defined as initial dialgebras for a pair of functors, the signature for the type, of a
 specific shape. To make sure that we have a well-behaved induction principle, we will require the existence
@@ -601,12 +796,15 @@ and should be possible to generalize to other models of type theory, such as nat
 
 \begin{definition}
   A \emph{data type signature} with parameters $p : P \to \cC$ is a tuple $(F,\phi)$ where $F$ is a 1-cell
-  $P \pb[p]{u} \cU \loose \cC^n$ and $\phi$ is a 2-cell $F \to \delta^n \pi_2 u$, where $\delta^n : \cC
-  \to \cC^n$ is the diagonal map.
+  $P \pb[p]{u} \cU \loose \cC^n$ and $\phi$ is a 2-cell $F \to \delta^n u \pi_2$, where $\delta^n : \cC
+  \to \cC^n$ is the diagonal map. The intuition is that $F$ determines the arguments for each constructor
+  by extending the given context, and $\phi$ connects the extend context back to the original one to
+  facilitate the elimination rule.
 
-  An algebra for a signature $(F,\phi)$ is a map $A : X \to P \pb[p]{u} \cU$ and a 2-cell $a : FA \to 
-  \delta^n\set{\pi_2A}$, such that $\phi A = \delta^n\pi \pi_2A \circ a$, and an algebra homomorphism
-  $(A,a) \to (B,b)$ is a 2-cell $f : A \to B$ such that $\delta^n\set{\pi_2 f} \circ a = b \circ F f$.
+  An algebra for a signature $(F,\phi)$ is a map $(\alpha, A) : X \to P \pb[p]{u} \cU$ equipped with a 2-cell
+  $a : F(\alpha,A) \to \delta^n\set{A}$ such that $\phi(\rho,A) = \delta^n\pi A \circ a$, and an algebra homomorphism
+  $(\alpha,A,a) \to (\beta, B,b)$ is a 2-cell $(\rho,f) : (\alpha,A) \to (\beta,B)$ such that $\delta^n\set{f}
+  \circ a = b \circ F(\rho,f)$.
 \end{definition}
 \begin{remark}
   An algebra for a signature $(F,\phi)$ is an $(F,\delta^n\set{\pi_2})$-\emph{dialgebra} subject to an
@@ -734,274 +932,90 @@ such that $\fst$ is an algebra homomorphism.
 
 
 % \todo{Talk about induction principle and the use of $\Sigma$-types.}
-
-% \subsection{Non-recursive inductive types}\todo{Figure out which maps are loose vs.\ tight.}
-% We capture the type formers of inductive types with parameters as fibred maps over $\cC$, in the sense that for
-% parameters in context $p : P \to \cC$, we let the type formation rule be a morphism $T : P \to \cU$ to subject
-% to the equation $uT = p$. Thus we model the formation rule as a judgement.
-% \[\infer{\Gamma \vdash x\;P}{\Gamma \vdash T(x)\;\cU}\]
-% for a type $T$ by a map $T : \cC \to \cU$ with $uT = 1_\cC$. Constructor $c(\bar a) : T$ with arguments
-% $\bar a : \bar A$ can be viewed as terms given by an inference rule
-% \[\infer{\Gamma \vdash x \; P}{\Gamma.\bar a(x) \vdash c : T(x)}\]
-% We will consider terms as certain substitution, and in particular the constructors as substitutions of a special
-% form. Taking the arguments of the constructor $c$ to be a map $A : P \to \cC$ equipped with a 2-cell $\alpha : A
-% \to p$ (generally some form of weakening from an extended context $A$), we take $c$ to be a 2-cell $A \to eT$
-% satisfying $q c = \alpha$, where $q : eT \to uT$ is the projection.
-%
-% Combining all of this, given a non-recursive inductive type $T$ with constructors $c_i(A_i) : T$, over some
-% parameter judgement $p : P \to \cC$, we model the introduction rule as a map $T : P \to \cU$ with $p = uT$
-% and the constructors as maps $c_i : A_i \to eT$ subject to the equation $qT \circ c_i = \alpha_i$, where
-% $A_i : P \to \cC$ and $\alpha_i : A_i \to p$ are given for the specific inductive type $T$.
-% % We further require these arguments to
-% % only extend the context, so that $a_i$ cannot be for example the empty context. We
-% % capture this by asking each $\alpha_i$ to be a section.
-% \todo{Consider whether it is better for the constructors to be terms, which makes dealing with them in type
-% formers more complex, or as substitutions, making the $\eta$-rule and $\beta$-rule less natutal.}
-%
-% The only missing feature (besides recursion) is the eliminator. For an inductive type given as earlier, the
-% eliminator should be a rule of the form
-% \[\infer{\Gamma.T \vdash B \\ A_1 \vdash b_1 : B[(\alpha_1,c_1)] \\ \cdots \\ A_n \vdash b_n : B[(\alpha_n,c_n)]}
-% {\Gamma.T \vdash \elim(B,b_1,\dots,b_n,t) : B}\]
-%
-% Each premise for a constructor $c_i$ is a term $A_i \vdash b_i : B[(\alpha_i,c_i)]$, and so can be described as
-% by a pullback
-% \[\begin{codi}
-%   \obj {\cP_i & \dot\cU \\ \cU_{/T} & \cU \\};
-%   \mor (cP _i) -> (dot cU) \typ:-> cU;
-%   \mor[swap] (cP _i) B_i:-> (cU _{/T}) t:-> cU;
-% \end{codi}\]
-% Then the premise $\cP$ of the full rule is given by the wide pullback of the maps $B_i : \cP_i \to \cU_{/T}$.
-% The conclusion is a term, so a morphism $\elim : \cP \to \dot\cU$, satisfying $\typ\elim = (\cP \to \cU{/T}
-% \xrightarrow{t} \cU)$.
-%
-% To capture the $\beta$-rule, we simply add for each $i$ the equation $\elim(b_i)_i [\tau c_i] = b_i[\tau c_i]$,
-% where we use $b_i : \cP \to \dot\cU$ to denote the composite projection $\cP \to \cP_i \to \dot\cU$.
-
-% \vspace{1em}
-% \todo{The following is wrong, but I don't want to remove it quite yet.}
-% describe the formation and
-% introduction rules by a diagram
-% \[\begin{codi}[]
-%   \obj {|(As)| \prod_{i = 1}^n A_i & \cC & \cU \\ \dot\cU^n & & \cU^n \\};
-%   \mor As {{\seq{a_i}}}:-> cC T:-> cU \delta^n:-> (cU ^n);
-%   \mor[swap] As {\prod_{i} c_i}:-> (dot cU ^n) \typ^n:-> (cU ^n);
-% \end{codi}\]
-% wher $\prod_{i} A_i$ denotes the wide pullback of the maps $a_i : A_i \to \cC$, $\seq{a_i}$ denotes the canonical
-% map $\prod_i A_i \to \cC$, $\prod_i c_i$ denotes the fibred product of maps $c_i : A_i \to \dot\cU$, $\delta^n$
-% denotes the fibred diagonal $\cU \to \cU^n$, and $\typ^n$ denotes the $n$-fold fibred product of $\typ :
-% \dot\cU \to \cU$.
-%
-% The eliminator is trickier. Given a type former $T$ and consturctors $c_i : A_i \to T$, recall that the rule is
-% essentially of the form
-% \[\infer{\Gamma.T \vdash B \\ a_1 \vdash b_1 : B(c_1) \\ \cdots \\ a_n \vdash b_n : B(c_n) \\
-%   \Gamma \vdash t : T}{\Gamma \vdash \elim(B,b_1,\dots,b_n,t) : B(t)}\]
-% The first step is to capture the judgement $\Gamma.T \vdash B$. This is a simpl
-% Given $T : \cC \to \cU$ and $(c_i : A_i \to \cU)_{i = 1}^n$ as above, we can form
-% the judgement of types dependent on $T$ by the pullback
-% \[\begin{codi}
-%   \obj {\cU_{/T} & \cU \\ |(cC1)| \cC & |(cC2)| \cC \\};
-%   \mor (cU _{/T}) t:-> cU u:-> cC2;
-%   \mor[swap] (cU _{/T}) \gamma:-> cC1 eT:-> cC2;
-% \end{codi}\]
-%
-% For the constructors, note that we have a map $\sub : \cU \pb[u]{e\typ} \dot\cU \to \cU$ corresponding to the
-% rule
-% \[\infer{\Gamma.A \vdash B\;\cU \\ \Gamma \vdash a : A}{\Gamma \vdash B(a)\;\cU}\]
-% Since $\typ c_i = T a_i$ and $ut = e\typ$, we have a map $(t \times c_i) : \cU/T \pb[\gamma]{a_i} A_i
-% \to \cU \pb[u]{e\typ} \dot\cU$, and so $\sub(t \times c_i) : \cU/T \pb[\gamma]{a_i} \to \cU$. We require the
-% argument to be a term of this type, which we capture by the pullback
-% \[\begin{codi}[tetragonal=base 8em height 4.5em]
-%   \obj {|(1)| \dot\cU/c_i & |(2)| \dot\cU \\ |(3)| \cU/T \pb[\gamma]{a_i} A_i & |(4)| \cU \\};
-%   \mor       1 \bar t_i:-> 2 \typ:-> 4;
-%   \mor[swap] 1 {{(\tau_i,\alpha_i)}}:-> 3 {{\sub(t \times c_i)}}:-> 4;
-% \end{codi}\]
-%
-% The term of type $T$ we capture by the pullback
-% \[\begin{codi}
-%   \obj {\dot\cU_T & \dot\cU \\ \cC & \cU \\};
-%   \mor (dot cU _T) k:-> (dot cU) \typ:-> cU;
-%   \mor[swap] (dot cU _T) f:-> cC T:-> cU;
-% \end{codi}\]
-%
-% Combining all of these together, we capture the dependent type and constructors of the premises of the
-% elimination rule as the wide pullback of the arrows $\tau_i : \dot \cU/c_i \to \cU/T$, so that each premise
-% corresponding to a constructor is the same dependent type substituted in the corresponding constructor. Denoting
-% this pullback by $P$, we then take the complete premise of the rule to be the pullback of $\gamma\tau$ and
-% $f$, where $\gamma\seq{\tau_i}$ denotes the canonical arrow $P \to \cC$ taking the underlying context of the rule.
-%
-% Finally, the conclusion of the rule is $\dot\cU$, so that the rule is a map $\elim : P \pb[\gamma\seq{\tau_i}]{f}
-% \dot\cU_T \to \dot\cU$ subject to the equation $\typ\dot\cU = \sub(\seq{\tau_i}, k)$, where $(t\seq{\tau_i}
-% \times k) : P \pb[\gamma\seq{\tau_i}]{f} \dot\cU_T \to \cU \pb[u]{e\typ}\dot\cU$ is the unique map induced by
-% the equation
-% \[ut\seq{\tau_i}\pi_1 = eT\gamma\seq{\tau_i}\pi_1 = eTf\pi_2 = e\typ k\pi_2.\]
-%
-% The computation rules, one for each constructor $c_i$, use the same object $P$, but rather than $\dot\cU_T$ have
-% the argument $A_i$. The rule
-% \[\infer{\Gamma.A \vdash B\;\cU \\ a_1 \vdash b_1 : B(c_1) \\ \cdots \\ a_n \vdash b_n : B(c_n) \\ a_i \vdash
-% c_i : T(a_i)}{\elim(B,b_1,\dots,b_n, c_i) = b_i}\]
-% is captured by an equality
-% \[\elim(P \times \bar c_i) = \bar t_i\pi_1,\]
-% where $\bar c_i : A_i \to \dot\cU_T$ is the map induced by $\typ c_i = T a_i$ and $P \times \bar c_i :
-% P \pb[\gamma\seq{\tau_i}]{} A_i$. \todo{Something is missing here}
-%
-% Consider an endomap $F : \cU \to \cU$ over $u$ (so that $uF = u$ and such that $F$ preserves cartesian lifts as
-% cartesian). We then have an object of $F$-algebras, namely the inserter of $F$ and $1_\cU$, with the universal
-% properrty that any $F$-algebra $\alpha : Fa \to a : X \to \cU$ corresponds to a unique map $\tilde a : X \to
-% F\Alg$, and any morphism of $F$-algebras $h : (a, \alpha) \to (b, \beta)$ corresponds to a unique morphism
-% $\tilde h : \tilde a \to \tilde b$. 
-%
-% \begin{lemma}\label{lem:algebra as term}
-%   There is an isomorphism over $\cU$ between $U_F : F\Alg \to \cU$ and the left leg in the pullback
-%   \[\begin{codi}
-%     \obj {P & \dot\cU \\ |(U1)| \cU & |(U2)| \cU \\};
-%     \mor P t:-> (dot cU) \typ:-> U2;
-%     \mor[swap] P U:-> U1 r\bar qF:-> U2;
-%   \end{codi}\]
-% \end{lemma}
-% \begin{proof}
-%   
-% \end{proof}
-%
-% \begin{lemma}
-%   For any $F : \cU \to \cU$ an endomap of fibrations $u \to u$, the $\cF$-algebras are stable under substitution,
-%   in the sense that the composite $uU_F : F\Alg \to \cC$ is a fibration.
-% \end{lemma}
-% \begin{proof}
-%
-% \end{proof}
-%
-% An inductive type of signature $F$ should then correspond to an $\cF$-algebra over every context $\Ind_F : \cC
-% \to F\Alg$, with the underlying type $U_F \Ind_F : \cC \to \cU$ corresponding to type former, and the algebra
-% structure on $U_F \Ind_F$ corresponding to the introduction rules. This structure should be invariant under
-% substitutions, in the sense that for any there exists a specified isomorphism $\alpha : r_F(\cC \comma \Ind_F)
-% \cong \Ind_F\dom$, where $\cC \comma \Ind_F : \cC \comma uU_F\Ind_F \to \cC \comma uU_F$ is
-% the map of comma objects induced by composition with $\Ind_F$ in the second component and $r_F : \cC \comma
-% uU_F \to F\Alg$ is lifting map from $uU_F$ being a fibration. We also ask that $U_Fr_F = r$, where $r$ is the
-% domain of the lifting map for $u$. Furthermore, the algebra $\Ind_F$ should be initial in an appropriate sense.
-% Namely, we want an algebra homomorphism $\epsilon : \Ind_F uU_F \to 1_{F\Alg}$, the recursor, such that $\epsilon
-% \Ind_F = 1_{\Ind_F}$, since recursing in the algebra structure is trivial, and $uU_F \epsilon = 1_{uU_F}$, as the
-% recursor should remain in the current context. In other words, we want an adjunction $\Ind_F \dashv uU_F$ with
-% identity unit, where the counit corresponds to the recursor. Clearly this captures the non-dependent recursion
-% rule, essentially by definition.
-%
-% For the dependent eliminator, we require some more effort. Let $q : e \to u$ denote the projection induced by
-% context extension $e : \cU \to \cC$, and $c : e \to er\bar q$ the context contraction map, where $r : \cC \comma
-% u \to \cU$ denotes the domain of the cartesian lifts for $u$ and $\bar q : \cU \to \cC \comma u$ the map induced
-% by $q$. A dependent algebra over $F$ is simply an algebra $A : X \to F\Alg$ such that $uU_F A = euU_F\Ind_F
-% \Gamma$ for some $\Gamma : X \to \cC$. The object of such algebras can thus be defined as a pullback
-% \[\begin{codi}
-%   \obj { R & F\Alg \\ |(C1)| \cC & |(C2)| \cC \\};
-%   \mor R h:-> FAlg uU_F:-> C2;
-%   \mor[swap] R p:-> C1 eU_F\Ind_F:-> C2;
-% \end{codi}\]
-% Since $h$ is an algebra, the recursor applied to $h$ gives $\epsilon h : \Ind_F uU_F h \to h$, and
-% since $uU_F h = eU_F\Ind_F p$, we have $\epsilon h : \Ind_F eU_F\Ind_F p \to h$. We further have that
-% $\Ind_F\dom\bar q U_F\Ind_Fp = \Ind_FeU_F\Ind_Fp$, so that $\epsilon h \circ \alpha \bar q U_F\Ind_Fp :
-% r_F(\cC \comma \Ind_F)\bar q U_F\Ind_Fp \to h$.
-%
-% However, we also capture the dependent induction rule. Recall that the dependent elimination rule for inductive
-% types has the form
-% \[\infer{\Gamma . U_F\Ind_F \vdash A\;\cU \\ \Gamma . U_F\Ind_F . F A \vdash a : A}{\Gamma . U_F\Ind_F \vdash
-% \ind_{(A,a)} : A}\]
-% By \cref{lem:algebra as term}, the premise of the rule is an $\cF$-algebra lying over an extended
-% context $\Gamma.U_F\Ind_F$, which we can capture as a pullback
-% The induction rule should then be a morphism $\ind : R \to \dot\cU$ such that $\typ\ind = U_Fh$. The computation
-% rule
-% \[\infer{\Gamma . U_F\Ind_F \vdash A\;\cU \\ \Gamma . U_F\Ind_F . F A \vdash a : A}{\Gamma . U_F\Ind_F \vdash
-% \ind_{(A,a)} : A}\]
-%
-% The induction rule should be a morphism $\ind : \Ind_F p \to h : R \to F\Alg$.
-%
-% Furthermore, letting $q : e \to u$
-% denote the generic projection induced by context extension $e : \cU \to \cC$.
-%
-% The induction principle should be an $\cF$-algebra homomorphism $\Ind_F \to q$ morphism $\ind : R \to \dot\cU$
-%
-% Suppose we are given some $F$-algebra $A$ over a context
-% $\Gamma.U_F\Ind_F$. In other words, maps $A : X \to F\Alg$ and $\Gamma : X \to \cC$ such that $uU_FA = \Gamma.
-% U_F\Ind_F$. Then the recursor is a morphism $\epsilon A : \Ind_FuU_F A = \Ind_F(\Gamma.U_F \Ind_F) \to A$. Now
-% note that the projection $q : e U_F \Ind_F \to u U_F \Ind_F = 1_\cC$ induces a cartesian lift $\bar q :
-% \overline{e U_F \Ind_F} \to U_F \Ind_F$, which factors the identity $1_{U_F \Ind_F}$ through $c : U_F \Ind_F
-% \to \overline {e U_F \Ind_F}$. Composing $\epsilon A \circ c $
-%
-% The premise to the depdendent induction rule
-% \[\infer{\Gamma . U_F\Ind_F \vdash A\;\cU \\ \Gamma . U_f\Ind_F . F A \vdash a : A}{\Gamma . U_F\Ind_F \vdash
-% \ind_{(A,a)} : A}\]
-% can be constructed as a pullback
-% \[\begin{codi}
-%   \obj { R & F\Alg \\ |(C1)| \cC & |(C2)| \cC \\};
-%   \mor R -> FAlg uU_F:-> C2;
-%   \mor[swap] R -> C1 eU_F\Ind_F:-> C2;
-% \end{codi}\]
-% where $e : \cU \to \cC$ denotes the context extension map. 
-%
-% In particular, we have for $qU_F : eU_F \to uU_F : F\Alg \to \cC$, the weakening substitution associated to the
-% carrier of an algebra, a cartesian lift $\bar q : \overline{eU_F} \to 1_{F\Alg}$. This map being cartesian
-% induces an $\cF$-algebra homomorphism $1_{F\Alg} \to \overline{eU_F}$. In particular, for the inductive type
-% $\Ind_F : \cC \to F-\Alg$, we have a contraction map $\bar q \Ind_F : \Ind_F \to \Ind_F[eU_F\Ind_F]$
-% corresponding to weakening along the carrier of an algebra.
-%
-% Since this
-%
-% We want $\Ind_F \dashv uU_F$. For an algebra $B : X \to F\Alg$ with $uU_F B = \Gamma.U_F \Ind_F$ for some context
-% $\Gamma$, we then have a 2-cell $\epsilon : \Ind_F uU_F B \to B$, i.e. an algebra homomorphism $U_F\epsilon :
-% U_F\Ind_F(\Gamma.U_F\ind F) \to U_F B$. 
-%
-% We want to show that $F$-algebras are stable under stubstitution, meaning that $uU_F : \cF\Alg \to \cC$ is a
-% fibration. To see this, we must construct a map $r' : \cC \comma uU_F \to \cF\Alg$ and a $uU_F$-cartesian
-% 2-cell $\epsilon : r \to \cod$. The former corresponds to a map $\bar r' : \cC \comma uU_F \to \cU$ equipped
-% with an $\cF$-algebra structure; this suggests that the underlying type $\bar r'$ should simply be $r(
-% \cC \comma U_F)$, where $r : \cC \comma u \to \cU$ denotes the map choosing cartesian lifts and $(\cC \comma
-% U_F) : \cC \comma uU_F \to \cC \comma u$ simply composes with $U_F$ in the second component. We also require
-% a map $\phi : F\bar r' \to \bar r'$. Since $\ell(\cC \comma U_F) : r(\cC \comma U_F) \to U_F\cod$ is
-% cartesian, it suffices to find a map $F\bar r' \to $
-% \[\begin{codi}
-%   \obj {};
-% \end{codi}\]
-% and this we find 
-%
-% Since $F$ preserves cartesian lifts (up to isomorphism), we have an isomorphism $\alpha : Fr \cong r(\cC \comma F)
-% : \cC \comma u \to \cU$, where we use that $uF = u$ so that $\cC \comma F : \cC \comma uF \to \cC \comma u$
-% has the correct domain. 
-%
-% Letting $q : e \to 1_u$ denote the projection from context extension, we thus have
-% $\alpha q : Frq \to r(\cC\comma F)q$. 
-%
-% Furthermore, any algebra $a : X \to F\Alg$ can be turned into a map $\tilde a : X \to R$ by weakening with
-% the map $q : e \to 1_\cC$:
-% \[
-%   x
-% \]
-
-% corresponds to a map $\tilde{a} : X \to \Box$.
-
-
-% using $\tm_\bzero$ to denote the pullback $\tm \times_\ty \bzero$, we encode the premise of the induction rule as the pullback $\times \tm_\bzero$ $\mathsf{ind}_{\bzero} : (\tm \pb[]{\ty} \bzero)$
-
 \section{Multimode and Modal type theories}
 Multimode dependent type theory (MTT) was introduced in \cite{gratzer2021} to provide a general family of type theories
-with different modalities. MTT is parameterized by a 2-category $\cM$, a so-called mode-theory, where the objects are
-\emph{modes}, 1-cells are \emph{modalities}, and 2-cells are \emph{operations} between modalities.
+with different modalities. MTT is parameterized by a 2-category $\cM$, a so-called mode theory, the objects of which
+are called \emph{modes}, the 1-cells are called \emph{modalities}, and the 2-cells are called \emph{operations}.
+The goal of this section is to show how the semantics presented in \cite{gratzer2021} can be seen as the models of
+a finite $\cF$-limit sketch. A interesting feature of the semantics of MTT which diffrentiates it from most other
+type theories, is that it more or less consists of a family of type theories, one at each mode, together with rules
+connecting the different type theories with the modalities and operations. as dictated by the mode theory. This is
+reflected in the semantics presented in \cite{gratzer2021} by having a family of natural models indexed by the modes,
+together with functors and natural transformations between the models corresponding to the modalities and operations.
+Because the semantics requires multiple categories of contexts, it is difficult to fit neatly into the functorial
+semantics of \cite{uemura2023} or the framework of \cite{coraglia2024a}, which single out the context judgement, and
+so the category of contexts, as a primitive notion.
 
-At each mode $m \in \cM$, we have an instance of a normal dependent type theory at that mode, and the modalities allow for
-transporting terms at one mode to another. In constructing a logic capturing MTT, we encode this by, for each mode
-$m \in \cM$, giving a diagram
-\[\begin{codi}[hexagonal=horizontal side 6em angle 45] 
-  \obj{\tm_m &   \ty_m \\ & \ctx_m \\};
-  \mor  (tm _m) ["\typ_m",swap]:≈> (ty _m) \rty:-> (ctx _m);
-  \mor[swap] (tm _m) \rtm_m:-> (ctx _m);
-  \mor[swap] (ty _m) \var_m:[bend right,≈>] (tm _m);
-  \mor (typ _m) [shorten=0.3em, |-] (var _m);
+To show that the semantics of \cite[{§5}]{gratzer2021} can be recovered as an finite $\cF$-limit theory, we will
+presen the important features of \emph{op.\ cit.\ } and show that these can be constructed by finite 2-limits. We
+begin with the defintions of a \emph{modal context structure} and \emph{modal natural models}.
+\begin{definition}
+  Let $\cM$ be a mode theory. A \emph{modal context structure} is a 2-functor $\cC[-] : \cM^{coop} \to \Cat$. 
+
+  A \emph{modal natural model} on a modal context structure $\cC[-]$ is an family of maps of discrete fibrations
+  $\typ_m : \dot\cU[m] \to \cU[m]$ over $\cC[m]$, indexed over the modes $m \in \cM$, such that for each modality
+  $\mu : m \to n$, the map $\cC[\mu]^*\typ_m : \cC[\mu]^*\dot\cU[m] \to \cC[\mu]^*\cU[m]$ is a representable map of
+  discrete fibrations.
+\end{definition}
+\begin{remark}
+  In \cite{gratzer2021}, they require the category of contexts to have a terminal object, corresponding to the empty
+  context. Since we have elided such a requirement from the start, we will continue to do so now. Note, however, that
+  it is trivial to add the requirement by simply adding a terminal object $1$ in the sketch and right adjoints to the
+  unique maps $\cC[m] \to 1$.
+\end{remark}
+We will describe a sketch for modal natural models directly, since the $\cF$-sketch for modal context structures is
+just $((\cM^{coop})^-, \emptyset)$, the sketch with underlying $\cF$-category $\cM^{coop}$ with only identities tight
+and with no cones. 
+\begin{definition}
+  The sketch for modal natural models consists of:
+  \begin{itemize}
+    \item For each mode $m$, a diagram
+      \[\begin{codi}[hexagonal=horizontal side 6em angle 45] 
+        \obj{|(tm _m)| \dot\cU_m &   |(ty _m)| \cU_m \\ & |(ctx _m)| \cC_m \\};
+        \mor  (tm _m) ["\typ_m",swap]:≈> (ty _m) u_m:-> (ctx _m);
+        \mor[swap] (tm _m) \dot u_m:-> (ctx _m);
+        % \mor[swap] (ty _m) \var_m:[bend right,≈>] (tm _m);
+        % \mor (typ _m) [shorten=0.3em, |-] (var _m);
+      \end{codi}\]
+      with cones and additional maps making $u_m, \dot u_m$ discrete fibrations.
+    \item For each modality $\mu : m \to n$, squares
+      \[\begin{codi}[tetragonal=base 4.5em height 4.5em]
+        \obj { \lock_\mu^* \cU_m & \cU_m \\ \cC_n & \cC_m \\ };
+        \mor (lock _mu ^* cU _m) -> (cU _m) u_m:-> (cC _m);
+        \mor[swap] (lock _mu ^* cU _m) \lock_\mu^*u_m:-> (cC _n) \lock_\mu:-> (cC _m);
+      \end{codi} \qquad
+      \begin{codi}[tetragonal=base 4.5em height 4.5em]
+        \obj { \lock_\mu^* \dot\cU_m & \dot\cU_m \\ \cC_n & \cC_m \\ };
+        \mor (lock _mu ^* dot cU _m) -> (dot cU _m) \dot u_m:-> (cC _m);
+        \mor[swap] (lock _mu ^* dot cU _m) \lock_\mu^*\dot u_m:-> (cC _n) \lock_\mu:-> (cC _m);
+      \end{codi}\]
+      and an adjunction $\lock_\mu^* \typ_m \dashv \var_\mu : \lock_\mu^* \cU_m \to \lock_\mu^*\dot\cU_m$,
+      as well as cones and diagrams making the two squares pullbacks and $\lock_\mu^*\typ_m : \lock_\mu^*\dot\cU_m
+      \to \lock_\mu^*\cU_m$ the map induced by $\typ_m : \dot\cU_m \to \cU_m$.
+    \item For each operation $\alpha : \mu \to \nu$, a 2-cell $\key_\alpha : \lock_\nu \to \lock_\mu$.
+  \end{itemize}
+  Additionally we add equalites so that the assignments $m \mapsto \cC_m$, $(\mu : m \to n) \mapsto \lock_\mu$, and
+  $(\alpha : \mu \to \nu) \mapsto \key_\alpha$ together constitute a strict 2-functor from $\cM^{coop}$.
+\end{definition}
+
+This does not yet account for the formation, introduction, elimination, and computation rules for the modal types,
+which is thus the next step. The modal type formation and introduction rules are given by
+\[\inferrule{\mu : m \to n \\ \Gamma.\lock_\mu \vdash A\;\cU_n}{\Gamma \vdash \seq{\mu \given A}\;\cU_m}
+\qquad\inferrule{\mu : m \to n \\ \Gamma.\lock_\mu \vdash a : A}{\Gamma \vdash \mathrm{mod}_\mu(a)
+: \seq{\mu \given A}}\]
+These then correspond to, for each $\mu : m \to n$, additional commuting square
+\[\begin{codi}[tetragonal=base 4.5em height 4.5em]
+  \obj { |(tl)| \lock_\mu^*\dot\cU_m & |(tr)| \dot\cU_n \\ |(bl)| \lock_\mu^*\cU_m & |(br)| \cU_n \\};
+  \mor tl {{\mathrm{mod}_\mu}}:-> tr \typ_n:-> br;
+  \mor[swap] tl \lock_\mu^*\typ_m:-> bl {{\seq{\mu\given -}}}:-> br;
 \end{codi}\]
-and all diagrams, equalities, and cones needed to turn this into a natural model. Then, for each modality $\mu : m \to
-n \in \cM$, we add a morphism $\lock_\mu : \ctx_n \loose \ctx_m$, corresponding to the rule
-\[\infer{\Gamma \ctx_n}{\Gamma. \lock_\mu \ctx_m}\]
-To model the type former for modal types $\Gamma \ctx_m \vdash [\mu] A \ty_m$ for a type $\Gamma.\lock_\mu \ctx n
-\vdash A \ty$ and modality $\mu : m \to n$, we add a loose 1-cell $[\mu] : \ctx_m \pb[\lock_\mu\mkern-6mu]{\rty_n}
-\loose \rty_m$ subject to the condition that $\rty_m [\mu] = \pi_1$
-
-
-\newpage
+such that $u_n \circ \seq{\mu\given -} = \lock_\mu^* u_m$. For each $\nu : o \to n$ and $\mu : n \to m$, the elimination
+rule is given as
+\[\inferrule{\Gamma\;\cC_m \\ \Gamma.\lock_\mu.\lock_\nu \vdash A \; \cU_o \\
+\Gamma.\lock_\mu \dashv M_0 : \seq{\nu \given A} \\ \Gamma.(\mu\;\vert\;\seq{\nu \given A}) \vdash B\;\cU_m \\
+\Gamma.(\mu \circ \nu\;\vert\; A) \vdash M_1 : B[\set{\mathrm{mod}_\nu(\tau \var A)}]}
+{\Gamma \vdash \elim_\mu^\nu}\]
+\todo[inline]{Show how to encode the eliminator, it's not hard, just annoying.}
 
 \ifSubfilesClassLoaded{\printbibliography}{}
 \end{document}
