@@ -221,6 +221,24 @@
 \DeclarePairedDelimiterX\set[1]{\{}{\}}{{\def\given{{\;\vert\;}}#1}}
 \DeclarePairedDelimiterX\seq[1]{\langle}{\rangle}{{\def\given{{\;\vert\;}}#1}}
 
+\makeatletter
+\newcommand{\twoarrows}[3][0.2ex]{%
+  % #1 = optional space correction, #2 = above, #3 = below
+  \mathrel{\mathpalette\twoarrows@{{#1}{#2}{#3}}}%
+}
+\newcommand{\twoarrows@}[2]{\twoarrows@@#1#2}
+\newcommand{\twoarrows@@}[4]{%
+  % #1 = style, #2 = optional space correction, #3 = above, #4 = below
+  \vcenter{\offinterlineskip\m@th
+    \ialign{\hfil##\hfil\cr
+      $#1#3$\cr
+      \noalign{\vskip#2}
+      $#1#4$\cr
+    }%
+  }%
+}
+\makeatother
+
 \ifSubfilesClassLoaded{%
     \IfFileExists{references.bib}{}{\addbibresource{./references.bib}}
   }{}
