@@ -1,0 +1,66 @@
+\documentclass[../thesis.tex]{subfiles}
+
+\ifSubfilesClassLoaded{
+  \externaldocument{../build/2-preliminaries}%
+  \externaldocument{../build/3-logics}%
+}
+
+\begin{document}
+\chapter{Conclusion}\label{ch:conclusion}
+The goal of this thesis was to show how several of the categorical models of dependent type theory can be captured in terms
+of some sort of 2-dimensional algebraic theory. Given that many of these models can be phrased in terms of fibred categories,
+and fibrations are specific instances of finite 2-limits, it seemed like a good notion of 2-dimensional theory in this case
+was that of finite 2-limit theories, generalizing the finite limit theories of categorical universal algebra. To further
+make the homomorphisms of models to coincide with those already in literature, we took the step from $\Cat$-enriched
+finite limit theories to $\sF$-enriched ones, following \cite{arkor2024}, as these provide fine control over which operations
+of the theory are preserved strictly, and which are preserved only up to isomorphism. 
+
+After recounting the basics of $\sF$-enriched limit theories we required, we showed how both comprehension categories and
+natural models were describable in the framework. We furthermore showed how to model the basic type constructors, following
+the general methods of \cite{coraglia2024a}, though rather than working in $\Cat$ directly, we were constructing the limits
+in abstract finite limit $\sF$-sketches. We ended by showing how this framework can capture the multimode type theory of \cite{
+gratzer2021}, which distinguishes the framework from the categories with representable maps of \cite{uemura2023} and judgemental
+theories of \cite{coraglia2024a}. 
+
+\begin{itemize}
+  \item  While we somewhat compared finite finite limit $\sF$-theories with similar frameworks, such as categories with
+    representable maps \cite{uemura2023} and judgemental theories \cite{coraglia2024a}, the comparisons have been superficial,
+    and mostly focused on the case of multimode type theory. However, we have not explored how the different frameworks are
+    related.
+
+    For example, given that the intended interpretation for categories with representable maps is given in terms of discrete
+    fibrations, one can intuitively construct, given any such category, a finite limit $\sF$-theory, such that their models
+    coincide: simply consider the sketch embeds the given category with representable maps, such every map into the terminal
+    object is made into a discrete fibration and any representable map is made into a left-adjoint. Of course, that the models
+    of the induced $\sF$-theory coincide with the models of the category with representable maps needs to be checked more
+    carefully, and one might naturally ask whether this assignment is functorial, and if so, whether this functor from
+    representable map categories to $\sF$-theories commutes with the models.
+
+    Similarly, one might expect that the models of any $\sF$-theory describing a type theory yields a judgemental theory.
+    This question can be further extended to asking whether the models of \emph{any} $\sF$-theory yields a judgemental theory.
+    Following this comparison with judgemental theories, one discovers a deficiency with $\sF$-theories: they do not allow for
+    modeling contraviant operations. Similarly, it is impossible (to my knowledge) to model fibred Heyting algebras, which means
+    that we cannot easily construct e.g.\ a theory corresponding to Lawvere's hyperdoctrines when compared to judgemental theories,
+    something that is used by \cite[§4]{coraglia2024a} to show that first-order logic falls into the framework of judgemental
+    theories.
+
+  \item We have in this thesis only really made use of the basic features of $\sF$-theories and 2-dimensional theories in
+    general. In particular, while we have shown that type theories induce $\sF$-theories, we have not made use of this fact
+    to study their categories of models. This is closely connected with the 2-dimensional generalizations of locally finitely
+    presentable and accessible categories, which are studied in \cite{bourke2021, diliberti2024}. 
+
+  \item In \cref{sec:nm/equiv attr} we showed how the classical equivalence between natural models and categories with attributes
+    adapts to the setting of $\sF$-theories. A more general version of the theorem is proven in \cite{coraglia2024b}, wherein
+    a generalized notion of categories with families, allowing for general Grothendieck fibrations of types and terms, rather
+    than only discrete ones, is proven equivalent to general comprehension categories. It would be interesting to see how their
+    proof adapts to the setting of $\sF$-theories, and whether one thus can show that theory of generalized categories with
+    families is equivalent to the one for comprehension categories, in a way compatible with the semantics. This would partially
+    simplify the proof, in the sense that you get equivalence of the 2-categories of models ``for free'', whether the morphisms
+    are strict, pseudo, lax, or even colax.
+  %
+  % \item Taking inspiration from the heavy use of finite 2-limits of $\sF$-theories, one might wonder whether there is a nice
+  %   account of inductive types to be found, wherein we take the 
+\end{itemize}
+
+\ifSubfilesClassLoaded{\printbibliography}{}
+\end{document}

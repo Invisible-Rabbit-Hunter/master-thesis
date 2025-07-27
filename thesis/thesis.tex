@@ -33,8 +33,11 @@
 
 \usepackage[left=3.5cm, right=3.5cm]{geometry}
 
-\usepackage{biblatex}
+\usepackage[backend=biber, useprefix=true]{biblatex}
 \addbibresource{\subfix{references.bib}}
+\makeatletter
+\AtBeginDocument{\toggletrue{blx@useprefix}}
+\makeatother
 
 \usepackage{todonotes}
 \usepackage{mathpartir}
@@ -67,10 +70,12 @@
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{notation}[theorem]{Notation}
 \newtheorem{example}[theorem]{Example}
+\newtheorem{literature}[theorem]{Literature}
 \newtheorem*{definition*}{Definition}
 \newtheorem*{remark*}{Remark}
 \newtheorem*{notation*}{Notation}
-\newtheorem*{example*}{Example*}
+\newtheorem*{example*}{Example}
+\newtheorem*{literature*}{Literature}
 
 \AtBeginDocument{%
   \NewCommandCopy{\phialt}{\phi}%
@@ -86,7 +91,9 @@
 \newcommand\Fun{{\mathrm{Fun}}}
 \newcommand\bFun{{\mathbb{F}\mathrm{un}}}
 \newcommand\bzero{{\mathbb{0}}}
+\newcommand\op{{\mathrm{op}}}
 \newcommand\id{{\mathrm{id}}}
+\newcommand\comp{{\mathrm{comp}}}
 \newcommand\loose{\rightsquigarrow}
 \newcommand\embed{\hookrightarrow}
 \newcommand\into{\hookrightarrow}
@@ -190,6 +197,7 @@
 
 \newcommand\Alg{\mathrm{-Alg}}
 \newcommand\CoAlg{\mathrm{-CoAlg}}
+\newcommand\Ob{\operatorname{\mathbf{Ob}}}
 \newcommand\ctx{\operatorname{\mathbf{ctx}}}
 \newcommand\sub{\operatorname{\mathrm{sub}}}
 \newcommand\ty{\operatorname{\mathbf{ty}}}
@@ -239,12 +247,14 @@
 }
 \makeatother
 
+\newcommand{\stackstag}[1]{\cite[\href{https://stacks.math.columbia.edu/tag/#1}{Tag #1}]{stacks-project}}
+
 \ifSubfilesClassLoaded{%
     \IfFileExists{references.bib}{}{\addbibresource{./references.bib}}
   }{}
 
 \author{Jonathan Osser}
-\title{Sketching Type Theories in Two Dimensions}
+\title{A 2-Sketchy Approach to Type Theory}
 
 \begin{document}
 \maketitle
@@ -255,6 +265,6 @@
 \subfile{chapters/2-preliminaries.tex}
 \subfile{chapters/3-logics.tex}
 \subfile{chapters/4-type-theories.tex}
-
+\subfile{chapters/5-conclusion.tex}
 \printbibliography
 \end{document}

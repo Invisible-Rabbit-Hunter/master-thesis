@@ -1,248 +1,679 @@
 \documentclass[../thesis.tex]{subfiles}
 
 \begin{document}
-  \chapter{Preliminaries}
+\chapter{Preliminaries}\label{ch:prelims}
+This chapter is to lay out the groundworks of the concepts we will make use of in the rest of the thesis.
 
-  
-  \todo{Move the following lemma to preliminaries.}
-  \begin{lemma}
-    The full embeddings are the right class of an orthogonal factorisation system on $\Cat$, where
-    the left class are surjective-on-objects functors.
-  \end{lemma}
-  \begin{proof}
-    Given any functor $F : A \to B$, let $A'$ denote the full subcategory of $B$ spanned by the
-    objects in the image of $F$. Clearly $F$ then factors through $A'$ as
-    \[\begin{codi}
-      \obj {A & & B \\
-            & A' & \\ };
-      \mor A F:-> B;
-      \mor[swap] A G:-> A' H:-> B;
-    \end{codi}\]
-    where $G$ is surjective on objects and $H$ is fully faithful and injective on objects.
-  \end{proof}
-  
-  \section{Finite limit theories}
+% \todo{Move the following lemma to preliminaries.}
+% \begin{lemma}
+%   The full embeddings are the right class of an orthogonal factorisation system on $\Cat$, where
+%   the left class are surjective-on-objects functors.
+% \end{lemma}
+% \begin{proof}
+%   Given any functor $F : A \to B$, let $A'$ denote the full subcategory of $B$ spanned by the
+%   objects in the image of $F$. Clearly $F$ then factors through $A'$ as
+%   \[\begin{codi}
+%     \obj {A & & B \\
+%           & A' & \\ };
+%     \mor A F:-> B;
+%     \mor[swap] A G:-> A' H:-> B;
+%   \end{codi}\]
+%   where $G$ is surjective on objects and $H$ is fully faithful and injective on objects.
+% \end{proof}
 
-  \section{enriched categories}
-  \label{sec:enriched}
+\section{Finite limit theories and sketches}
+The basic notion of theory we will generalize is that of finite limit theories, or essentially algebraic theories, which allow
+for specifying not just total algebraic operations, but also partial ones whose domains are determined by algebraic equations.
+For example, any algebraic theory is a finite limit theory, but also the theory of categories. 
 
-  \subsection{Limits in enriched categories}
-  \label{sec:enriched/limits}
-  
-  \section{2-categories}
-  \label{sec:2-cats}
+\begin{definition}[Finite limit theory]
+  A \emph{finite limit theory} is a small, finitely complete category $\cT$. A \emph{model} of a finite limit theory in a
+  finitely complete category $\cC$ is a finite limit-preserving functor $\cT \to \cC$. A \emph{homomorphism} of models
+  $M, N : \cT \to \cC$ is a natural transformation $M \to N$. We denote by $\Mod_\cT(\cC)$ the full subcategory of
+  the functor category $\cC^\cT$ on models.
+\end{definition}
+\begin{literature}
+\end{literature}
 
-  \section{Fibrations}
-  Originally introduced by Grothendieck in \cite{grothendieck1960} in the context of descent theory, fibrations
-  have turned out to be an immensely useful tool in the categorical modelling of substitution in type theory.
-  In essence, a fibration encodes the idea of a family of categories $(\cE_b)_{b \in \cB}$ indexed over a base
-  category $\cB$, equipped with actions of morphisms $f^* : \cE_b \to \cE_{b'}$ for each morphism $f : b' \to
-  b$. In essence, a fibration is a pseudofunctor $\cE_{(-)} : \cB \to \Cat$. However, rather than the complex
-  algebraic structure that is a pseudofunctor, it turns out we can instead describe this structure by
-  a \emph{functor} $p : \cE \to \cB$, where we call $\cE$ the total category of the fibration $p$, with
-  the idea that we can define $\cE_{b}$ to be the fiber of $p$ over $b$: the objects $e$ are those of $\cE$
-  which map to $b$, i.e.\ $p^{-1}(b) = \set{e \given p(e) = b}$, and morphisms $k : e \to e'$ are those of
-  $\cE$ which lie over the identity, meaning that $p(k) = 1_b$.
+To ease the construction of finite limit theories, we will make use of the notion of finite limit sketches. Furthermore,
+all of the theories we will construct in chapters 3 and 4 are given in terms of their sketch. The reason we consider
+theories still is that they provide a good way to say when two theories are equivalent, namely by categorical equivalence,
+which is slightly more involved for sketches.
+\begin{definition}[Finite limit sketch]
+  A \emph{finite limit sketch} $(\cC,\cS)$ consists of a small category $\cC$ together with a collection $\sS$ of finite
+  cones over digrams in $\cC$. A \emph{model} of the finite limit sketch $(\cC,\cS)$ in a category $\cD$ is a functor
+  $\cC \to \cD$ which maps every cone of $\sS$ to a limit cone in $\cD$. We denote the category of models in a category
+  $\cD$ by $\Mod_{(\cC,\cS)}(\cD)$.
+\end{definition}
 
-  Since we will be working in general 2-categories, rather than only $\Cat$, we will define fibrations as
-  certain 1-cells in a 2-category. 
+\begin{remark}
+  Any finite limit theory $\cT$ induces a sketch $(\cT,\cS_\cT)$ in which the cones are exactly the finite limit cones.
+  Then a model of $(\cT,\cS_\cT)$ is exactly a finite limit-preserving functor, and so a model of $\cT$. Hence the categories
+  of models are the same.
+\end{remark}
 
-  \begin{definition}[Cartesian morphism]
-    Let $p : A \to B$ be a morphism of an 2-category $\cA$. A 2-cell $\phi : a_1 \to a_2 : X \to A$ is
-    called \emph{$p$-cartesian} if for every $g : Y \loose X$, $a_0 : Y \loose A$, $\alpha : a_0 \to a_2g$,
-    and $\beta : pa_0 \to pa_1g$ with $\beta \circ p\phi = p\alpha$, there exists a unique $\gamma : a_0 \to
-    a_1g$ such that $\beta = p\gamma$ and $\alpha = \phi g \circ \gamma$. We will call the data $(g,a_0,
-    \alpha,\beta)$ satisfying the equality $\beta \circ p\phi = p\alpha$ a cartesian cone.
+\begin{theorem}
+  Any finite limit sketch $(\cC,\cS)$ may be extended to a finite limit theory $\cT_{(\cC,\cS)}$, such that
+  there is a fully faithful embedding $i : \cC \to \cT_{(\cC,\cS)}$ that provides a model of $(\cC,\cS)$ inside
+  the sketch induced by $\cT_{(\cC,\cS)}$, and the restriction $i^* : \Mod_\cT(\cD) \to \Mod_{(\cC,\cS)}(\cD)$ is an
+  equivalence for any finitely complete category $\cD$.
+\end{theorem}
 
-    If $A^\to$ exists in $\bA$, we say that a 1-cell $f : X \to A^\to$ is cartesian when $\lambda f : \dom f
-    \to \cod f$, the 2-cell induced by $f$, is cartesian.
-  \end{definition}
-  \begin{proposition}
-    Let $p : A \to B$ be a tight morphism in an $\cF$-category $\bA$ with finite weighted limits and $\phi :
-    a_1 \to a_2 : X \loose A$ a 2-cell. Consider the diagram $D : \bJ \to \cA$ (with $\bJ$ the obvious shape
-    $\cF$-category) given by
-    \[\begin{codi}
-      \obj { X & A & B \\};
-      \mor X ["a_1",name=x]:[->,bend left] A p:-> B;
-      \mor X ["a_2",name=y,swap]:[->,bend right] A;
-      \mor x \phi:-2> y;
-    \end{codi}\]
-    and weight $W : \bJ \to \bF$ generated by
-    \[\begin{codi}
-      \obj { |(X)| 1 & |(A)| H & |(B)| 3 \\};
-      \mor X ["1",name=x]:[->,bend left] A c:-> B;
-      \mor X ["2",name=y,swap]:[->,bend right] A;
-      \mor x \phi:-2> y;
-    \end{codi}\]
-    where $H = \set{0 \to 2 \from 1}$ is the generic (tight) cospan, and $c : H \to 3$ maps the morphism $1 \to 2$ to
-    the corresponding morphism in $3$ and $0 \to 2$ to the composite $0 \to 1 \to 2$ in $3$.
+\begin{literature}
+  Sketches were first introduced by \citeauthor{ehresmann1969} in \cite{ehresmann1969} as a formalisation of the notion of
+  theory. A further generalization in the context of enriched categories is given in provided by \citeauthor{kelly1982a} in
+  \cite{kelly1982a}, which we later make use of. The above theorem is also given in the generalized enriched context in
+  \cite{kelly1982a}.
+\end{literature}
 
-    A $W$-weighted cone over $D$ is exactly a cartesian cone over $\phi$.
-  \end{proposition}
+\section{Enriched categories}
+\label{sec:enriched}
+Enriched categories are generally defined in terms of symmetric monoidal closed categories, but for our purposes
+we restrict ourselves to cartesian closed categories, as these suffice for our purposes and lets us elide the
+definition of monoidal categories. The main reference for enriched categories used in this thesis is \cite{kelly1982a}.
 
-  \begin{proposition}\label{prop:cartesian by limit}
-    Let $\bA$ be an $\cF$-category with finite weighted limits, $p : A \to B$ a 1-cell in $\bA$, and $\phi : a_1 \to
-    a_2 : X \loose A$ a 2-cell in $\bA$. Then $\phi$ is cartesian if and only if $\ell = (\cod, \dom, \phi\cod \circ
-    \lambda, p\lambda)$ is a universal cartesian cone with apex $A \comma a_1$.
-  \end{proposition}
-  \begin{proof}
-    In the left-to-right direction, suppose $\phi$ is cartesian. We must show that for every object $Y$, the following
-    hold:
-    \begin{enumerate}[label=(\arabic*)]
-      \item for every cartesian cone $(g,a,\alpha,\beta)$ with apex $Y$, there exists a unique morphism $h : Y \to A
-        \comma a$ such that $g = \cod h$, $a = \dom h$, $\alpha = (\phi\cod \circ \lambda)h$ and $\beta = p\lambda h$.
-      \item for every morphism of cones $m : (g,a,\alpha,\beta) \to (g',a',\alpha',\beta')$ there exists a unique
-        morphism $h_m : h \to h'$ such that $m = h_m^* \ell$.
-    \end{enumerate}
-    For (1), note that since $(g,a,\alpha,\beta)$ is a cartesian cone and $\phi$ is cartesian, there exists a unique
-    2-cell $\gamma : a \to a_1g$ such that $\alpha = \phi \circ \gamma$ and $\beta = p\gamma$. By the universal
-    property of $A \comma a_1$, there then exists a unique morphism $\bar\gamma : Y \to A \comma a_1$ with $\lambda\bar
-    \gamma = \gamma$. In particular, we have that $\cod\bar\gamma = g$, $\dom\bar\gamma = a$, $\alpha = \phi \circ
-    \lambda\bar\gamma$, and $\beta = p\lambda\bar\gamma$, so taking $h = \bar\gamma$ we are done. Furthermore, $h =
-    \bar\gamma$ is the unique such map by uniqueness of $\bar\gamma$ and $\gamma$.
+\begin{definition}[Enriched categories]\label{def:enriched category}
+  Let $\sK$ be a cartesian category. An \emph{$\sK$-enriched category} (or $\sK$-category for short) $\bA$ consists of
+  \begin{enumerate}
+    \item A class of objects $\bA_0$,
+    \item For each pair of objects $A,B \in \bA_0$, an object $\bA(A,B)$ of $\sK$,
+    \item For each object $A \in \bA_0$ a morphism $\id_A : \mathbf{1} \to \bA(A,A)$,
+    \item For each triple of objects $A,B,C \in \bA_0$, a morphism $\comp_{A,B,C} : \bA(B,C) \times \bA(A,B) \to \bA(A,C)$,
+  \end{enumerate}
+  such that for each $A,B,C,D \in \bA_0$, the following diagrams, corresponding to the unit and associativity laws, commute:
+  \begin{mathpar}
+    \begin{codi}[tetragonal=base 12em height 4.5em]
+      \obj {|(tl)| \bA(A,B) & |(tr)| \bA(A,B) \times \bA(A,A) \\ & |(br)| \bA(A,B) \\};
+      \mor tl {{1_{\bA(A,B)} \times \id_A}}:-> tr {{\comp_{A,A,B}}}:-> br;
+      \mor[swap] tl {{1_{\bA(A,B)}}}:-> br;
+    \end{codi} \and
+    \begin{codi}[tetragonal=base 12em height 4.5em]
+      \obj {|(tl)| \bA(A,B) & |(tr)| \bA(B,B) \times \bA(A,B) \\ & |(br)| \bA(A,B) \\};
+      \mor tl {{\id_B \times 1_{\bA(A,B)}}}:-> tr {{\comp_{A,B,B}}}:-> br;
+      \mor[swap] tl {{1_{\bA(A,B)}}}:-> br;
+    \end{codi} \\
+    \begin{codi}[tetragonal=base 20em height 4.5em]
+      \obj {|(tl)| \bA(C,D) \times \bA(B,D) \times \bA(A,B) & |(tr)| \bA(B,D) \times \bA(A,B) \\
+      |(bl)| \bA(C,D) \times \bA(A,C) & |(br)| \bA(A,D) \\};
+      \mor tl {{\comp_{B,C,D} \times 1_{\bA(A,B)}}}:-> tr {{\comp_{A,B,D}}}:-> br;
+      \mor[swap] tl {{1_{\bA(C,D)} \times \comp_{A,B,C}}}:-> bl {{\comp_{A,C,D}}}:-> br;
+    \end{codi}
+  \end{mathpar}
+\end{definition}
 
-    For (2), suppose we are given a modification $m : (g,a,\alpha,\beta) \to (g',a',\alpha',\beta')$. Concretely, $m$
-    consists of two morphisms $m_1 : g \to g'$ and $m_2 : a \to a'$ such that the following squares commute:
-    \[\begin{codi}[tetragonal=base 6em height 4.5em]
-      \obj { a & a' & & pa & pa' \\ a_2g & a_2g' & & pa_1g & pa_1g' \\};
-      \mor[swap] a \alpha:-> a_2g a_2m_1:-> a_2g';
-      \mor a m_2:-> a' \alpha':-> a_2g';
+\begin{example}[Locall small categories]
+  Locally small 1-categories are $\Set$-enriched categories: they are equipped with a class of objects and a \emph{set} of
+  morphisms.
+\end{example}
 
-      \mor pa pm_2:-> pa' \beta':-> pa_1g';
-      \mor[swap] pa \beta:-> pa_1g pa_1m_1:-> pa_1g';
-    \end{codi}\]
-    We want to show that the square
-    \[\begin{codi}[tetragonal=base 6em height 4.5em]
-      \obj {a & a' \\ a_1g & a_1g' \\};
-      \mor a m_2:-> a' \gamma':-> a_1g';
-      \mor[swap] a \gamma:-> a_1g a_1m_1:-> a_1g';
-    \end{codi}\]
-    commutes as well, as that induces the desired unique morphism $\bar m : \bar \gamma \to \bar \gamma'$ with the
-    desired properties. To that end, consider the cartesian cone over $Y$ given by $(g', a, \alpha'' = \alpha' \circ
-    m_2, \beta'' = \beta'  \circ pm_2)$. To see that this is indeed a cone, we must show that $p\alpha'' = p\phi \circ
-    \beta''$, but this follows from simple computation:
-    \[p\alpha'' = p(\alpha' \circ m_2) = p\alpha' \circ pm_2 = p\phi \circ \beta' \circ pm_2 = p\phi \circ \beta''\]
-    Since $(g',a,\alpha'',\beta'')$ is a cartesian cone and $r$ is cartesian, there exists a unique lift $\gamma''$
-    with $p\gamma'' = \beta''$ and $\alpha'' = \phi g' \circ \gamma''$. But we have already that
-    \[p(\gamma' \circ m_2) = p\gamma' \circ pm_2 = \beta' \circ pm_2 = \beta'' \text{\quad and \quad}
-    \phi g' \circ \gamma' \circ m_2 = \alpha' \circ m_2 = \alpha'',\]
-    and similarly
-    \[p(a_1m_1 \circ \gamma) = pa_1m_1 \circ p\gamma = pa_1m_1 \circ \beta = \beta''\]
-    and
-    \[\phi g' \circ a_1m_1 \circ \gamma = a_2m_1 \circ \phi g \circ \gamma = a_2 m_1 \circ \alpha = \alpha'',\]
-    where we use the interhcange law to commute $\phi$ and $m_1$.
-    In particular, we see that both $\gamma' \circ m_2$ and $a_1m_1 \circ \gamma$ provide universal morphisms for
-    the cartesian cone $(g',a,\alpha'', \beta'')$, from which we conclude that they must be identical by the uniqueness
-    of such morphisms. Hence the diagram
-    \[\begin{codi}[tetragonal=base 6em height 4.5em]
-      \obj {a & a' \\ a_1g & a_1g' \\};
-      \mor a m_2:-> a' \gamma':-> a_1g';
-      \mor[swap] a \gamma:-> a_1g a_1m_1:-> a_1g';
-    \end{codi}\]
-    commutes.
+\begin{example}[2-categories]\label{ex:2-cat}
+  (Strict) 2-categories are exactly the $\Cat$-enriched categories: the 1-cells are the objects of the hom-categories and
+  the 2-cells the morphisms. Vertical composition is the composition of the hom-categories and horizontal composition is
+  the action on morphisms of the composition bifunctor of the $\Cat$-enriched category.
+\end{example}
 
-    For the right-to-left direction, suppose that $(\cod,\dom,\phi\cod \circ \lambda, p\lambda)$ is a limiting cone
-    with apex $A \comma a_1$, and let $(g,a,\alpha,\beta)$ be any cartesian cone with apex $Y$. By the universal
-    property of limiting cones, there exists a unique morphism $\bar\gamma : Y \to A \comma a_1$ such that
-    $\cod\bar\gamma = g$, $\dom\bar\gamma = a$, $(\phi\cod \circ \lambda)\bar\gamma = \alpha$, and
-    $p\phi\bar\gamma = \beta$. In particular, taking $\gamma = \lambda\bar\gamma : a \to a_1g$, we have the
-    desired morphism, and it is unique by the universal property of $A \comma a_1$.
-  \end{proof}
+\begin{example}
+  Let $\bA$ be a $\sK$-enriched category. Then $\bA^\op$, defined by taking the same objects and flipping the direction
+  of objects (so $\bA^\op(A,B) = \bA(B,A)$), is a $\sK$-enriched category.
+\end{example}
+
+\begin{definition}[Enriched functors]\label{def:enriched functor}
+  Let $\bA, \bB$ be $\sK$-enriched categories for some cartesian category $\sK$. An \emph{$\sK$-enriched functor}
+  (or $\sK$-functor) $F : \bA \to \bB$ consists of
+  \begin{enumerate}
+    \item A function $F_0 : \bA_0 \to \bB_0$, and
+    \item for each pair of objects $A,B \in \bA_0$, a morphism $F_{A,B} : \bA(A,B) \to \bA(F_0 A, F_0 B)$
+  \end{enumerate}
+  such that for each $A,B,C \in \bA$, we have
+  \[F_{A,A} \id_A = \id_{F_0 A} \qquad\text{and}\qquad
+  F_{A,C}\;\comp_{A,B,C} = \comp_{F_0A,F_0B,F_0C} (F_{B,C} \times F_{A,B}).\]
+
+  The identity $\sK$-functors and composition of $\sK$-functors are defined in the obvious way.
+\end{definition}
+
+\begin{example}[Self-enrichment]\label{ex:self enrichment}
+  Suppose $\sK$ is a cartesian closed category. Then $\sK$ can canonically be made into a $\sK$-category $\bK$ as follows:
+  \begin{enumerate}
+    \item The objects are those of $\sK$,
+    \item for objects $A,B \in \sK$, the hom-object $\bK(A,B)$ is exactly the internal hom $B^A$,
+    \item for each object $A \in \sK$, the identity is exactly the transpose of the projection $\mathbf{1} \times A \to A$,
+    \item for each triple of objects $A,B,C \in \sK$, the composition is the internal composition map $C^B \times A^B \to C^A$.
+  \end{enumerate}
+\end{example}
+
+\begin{example}
+  Let $\bK$ be as before, $\bA$ be some $\sK$-category, and $X$ an object of $\bA$. Then there is a $\sK$-functor $\bA(X,-) :
+  \bA \to \bK$ given on objects by $\bA(X,-)(A) = \bA(X,A)$. The morphism component $\bA(X,-)_{A,B} : \bA(A,B) \to \bA(X,B)^
+  \bA(X,A)$ is given by the transpose of the composition map $\comp_{X,A,B} : \bA(A,B) \times \bA(X,A) \to \bA(X,B)$, for
+  all objects $A,B \in \bA$.
+\end{example}
+
+\begin{definition}[Enriched natural transformation]\label{def:enriched transformation}
+  Let $\bA, \bB$ be $\sK$-enriched categories for some cartesian category $\sK$ and $F,G : \bA \to \bB$ enriched
+  functors between them. An \emph{$\sK$-enriched natural transformation} (or $\sK$-natural transformation)
+  $\alpha : F \to G$ consists of a family $(\alpha_A : \mathbf{1} \to \bB(F_0 A, G_0 A))_{A \in \bA_0}$ such that
+  for each $A,B \in \bA$ the following square, corresponding to naturality, commutes:
+  \[\begin{codi}[tetragonal=base 20em height 4.5em]
+    \obj {|(tl)| \bA(A,B) & |(tr)| \bB(F_0 B, G_0 B) \times \bB(F_0 A, F_0 B) \\
+    |(bl)| \bB(G_0 A, G_0 B) \times \bB(F_0 A, G_0 A) & |(br)| \bB(F_0 A, G_0 B) \\};
+    \mor tl {{\alpha_B \times F_{A,B}}}:-> tr {{\comp_{F_0 A, F_0 B, G_0 B}}}:-> br;
+    \mor[swap] tl {{G_{A,B} \times \alpha_A}}:-> bl {{\comp_{F_0 A,G_0 A, G_0 B}}}:-> br;
+  \end{codi}\]
+\end{definition}
+
+\begin{example}[Enriched functor category]\label{ex:enriched functor cateory}
+  Let $\sK$ be a complete cartesian closed category. Then for any pair of $\sK$-categories $\bA, \bB$ such that the objects
+  of $\bA$ form a set, we can form the $\sK$-functor category $[\bA,\bB]$, whose objects are $\sK$-functors $\bA \to \bB$ and
+  hom-objects are an internalization of the $\sK$-natural transformations. Specifically, the hom-object $[\bA,\bB](F,G)$ is
+  given as the largest subobject of the product \(\prod_{A \in \bA} \bB(F_0 A, G_0 A)\) such that for every $A,B \in \bA$
+  the square
+  \[\begin{codi}[tetragonal=base 20em height 4.5em]
+    \obj {|(tl)| [\bA,\bB](F,G) \times \bA(A,B) & |(tr)| \bB(F_0 B, G_0 B) \times \bB(F_0 A, F_0 B) \\
+      |(ml)| \bA(A,B) \times [\bA,\bB](F,G) \\
+    |(bl)| \bB(G_0 A, G_0 B) \times \bB(F_0 A, G_0 A) & |(br)| \bB(F_0 A, G_0 B) \\};
+    \mor tl {{\pi_B \times F_{A,B}}}:-> tr {{\comp_{F_0 A, F_0 B, G_0 B}}}:-> br;
+    \mor[swap] tl \sigma:-> ml {{G_{A,B} \times \pi_A}}:-> bl {{\comp_{F_0 A,G_0 A, G_0 B}}}:-> br;
+  \end{codi}\]
+  where $\sigma : [\bA,\bB](F,G) \times \bA(A,B) \to \bA(A,B) \times [\bA,\bB](F,G)$ is the symmetry isomorphism of the
+  product. This can be described as an equalizer, and so is well-defined as a limit. Note that the global elements of
+  the hom-object $[\bA,\bB](F,G)$, i.e. the maps $\mathbf{1} \to [\bA,\bB](F,G)$ are exactly the $\sK$-natural transformations.
+\end{example}
+
+\subsection{Limits in enriched categories}
+\label{sec:enriched/limits}
+Given that the basis for this thesis is enriched finite limit theories, we will of course need to have and understanding of
+enriched limits. This is especially important as the conical approach of standard category theory doesn't work out quite as
+nicely for enriched categories. For example, unlike ordinary category theory, we find that for general $\sK$, the enriched
+presheaf category $[\bA^\op,\bK]$ is not the free cocompletion. Furthermore, there are limit-like in for, example 2-categories,
+that we would like to capture, but which aren't conical in the classical sense. Therefore we introduce, and will make heavy
+use of, weighted limits. 
+
+For the remainder of this section, we fix a cartesian closed category $\sK$, which will serve as the base of enrichment.
+We will use $\bK$ to denote the canonical $\sK$-category induced by $\sK$ itself, as in \cref{ex:self enrichment}.
+
+\begin{definition}[Weights, Diagrams, Weighted cones]
+  Let $\bJ$ be a small $\sK$-category. A \emph{weight} is a $\sK$-functor $W : \bJ \to \bK$. For $\bA$ another $\sK$-category,
+  a \emph{$\bJ$-shaped diagram} in $\bA$ is a $\sK$-functor $D : \bJ \to \bA$. For a weighted $W$ and diagram $D$ with common
+  domain $\bJ$, a \emph{$W$-weighted cone over $D$} based at $A \in \bA$ is a $\sK$-natural transformation $[\bJ, \bK](W,
+  \bA(A,D))$, where $\bA(A,D) = \bA(A,-) \circ D$.
+\end{definition}
+
+\begin{definition}[Weighted limit]
+  Let $W : \bJ \to \bK$ and $D : \bJ \to \bA$ be a weight and diagram respectively. The \emph{$W$-weighted limit of $D$} is
+  an object $L \in \bA$ and a $\sK$-natural isomorphism
+  \[\bA(-,L) \cong [\bJ,\bK](W,\bA(-,D)).\]
+\end{definition}
+
+\begin{example}[Conical limits]
+  We recover the standard conical limits by taking the weight to be constantly the terminal object.
+\end{example}
+
+\begin{example}[Cotensors]
+  Let $X \in \sK$ be some object, $\bA$ some $\sK$-category, and $A \in \bA$ some object of $\bA$. The \emph{cotensor}
+  of $A$ by $X$, written $A^X$, is the limit with of the diagram $D(*) = A$, using the terminal $\sK$-category as shape,
+  weighted by $W(*) = X$. Thus the copower $A^X$ is determined by a natural isomorphism
+  \[\bA(-,A^X) \cong \bK(X,\bA(-,A)).\]
+\end{example}
+
+\section{2-categories}
+\label{sec:2-cats}
+We cover some basic properties of 2-categories and the limits therein. For a more thorough introduction to the subject of
+2-categories, we refer the reader to chapter 7 of \cite{borceux1994a}, which has also served as the reference for most of
+the definitions used here.
+
+\begin{definition}[2-categories]
+  A 2-category is a category enriched in $\Cat$, as shown in \cref{ex:2-cat}. A 2-functor between 2-categories $\cA \to \cB$
+  is a $\Cat$-enriched functor, and a 2-natural transformations is a $\Cat$-enriched natural transformation.
+\end{definition}
+
+\begin{notation}
+  We will sometimes denote the objects of a 2-category by 0-cells, the objects of the hom-categories by morphisms, maps or
+  1-cells, and the morphisms of the hom-categories by 2-cells.
+
+  We use $\circ$ for the object component of the composition functor and the composition of 2-cells, and $\star$ for the
+  morphism part of the composition functor, the horizontal composition of 2-cells. We may also write composition of 1-cells
+  by juxtaposition where convenient.
+\end{notation}
+
+\begin{example}
+  Since $\Cat$ is cartesian closed, it cannonically induces a 2-category, whose objects are categories, morphisms are functors,
+  and 2-cells are natural transformations.
+
+  Similarly, many  categories of structured categories are often naturall viewed as 2-categories. For example, consider the
+  2-category of finitely complete categories, whose objects are finitely complete categories, morphisms are lex functors, and
+  2-cells are natural transformations.
+\end{example}
+
+\begin{example}
+  Any category $\sA$ can be viewed as a 2-category $\cA$ by taking the hom-categories $\cA(A,B)$ to be the discrete category
+  associated with the homset $\sA(A,B)$.
+\end{example}
+
+\begin{definition}[Whiskering]
+  Let $\cA$ be a 2-category, $f : A \to B$ a morphism of $\cA$, and $\alpha : g \to h : B \to C$ a 2-cell of $\cA$. We
+  define the left whiskering of $f$ and $\alpha$, written $f\alpha : fg \to fh : A \to C$, to be the horizontal composite
+  $1_f \star \alpha$.  
+\end{definition}
+\begin{notation}
+  We will generally write whiskering by juxtaposition, with left (resp. right) whiskering inferred from which is the 2-cell
+  and which is the 1-cell. Note that, in a 2-category, we have that $f(g\alpha) = (fg)\alpha$ for composable 1-cells $f,g$
+  and a 2-cell $\alpha$, which means that parentheses can generally be elided.
+\end{notation}
+
+\begin{definition}[Pseudonatural transformations]
+  Let $F,G : \cA \to \cB$ be 2-functors. A pseudonatural transformation $\alpha : F \to G$ consists of the following
+  data:
+  \begin{enumerate}
+    \item For each object $A \in \cA$, a 1-cell $\alpha_A : FA \to GA$,
+    \item For each morphism $f : A \to B$ in $\cA$, an isomorphism $\alpha_f$ as shown in the following square
+      \[\begin{codi}
+        \obj {FA & FB \\ GA & GB \\}; 
+        \mor FA Ff:-> FB \alpha_B:-> GB;
+        \mor[swap] FA \alpha_A:-> GA Gf:-> GB;
+        \mor GA \alpha_f:-2> FB;
+      \end{codi}\]
+  \end{enumerate}
+  such that for every $A \in \cA$ we have $\alpha_{1_A} = 1_{\alpha_A}$ and for any pair of composable 1-cells $f,g$ in
+  $\cA$ we have that $\alpha_{f \circ g} = \alpha_f \circ \alpha_g$.
+\end{definition}
+
+\begin{definition}[Modifications]
+  Let $\alpha,\beta : F \to G : \cA \to \cB$ be two parallel pseudonatural transformations. A modification $m : \alpha \to
+  \beta$ consists of a family $(m_A : \alpha_A \to \beta_A)_{A \in \cA}$ such that for any $\phi : f \to g : A \to B$ in $\cA$
+  the equality $m_B \star F\phi = G\phi \star m_A$ holds.
+\end{definition}
+
+\begin{definition}[Sub-2-category]
+  A \emph{sub-2-category} of a 2-category $\cA$ is a 2-category $\cB$ such that the objects of $\cB$ form a subclass of the
+  objects of $\cA$, the hom-categories $\cB(A,B)$ are subcategories of $\cA(A,B)$, and identities and composition in $\cA$
+  restrict to $\cB$.
+\end{definition}
+
+\begin{definition}[Locally fully faithful]
+  A 2-functor $F : \cA \to \cB$ is \emph{locally fully faithful} if for every $A,B \in \cA$, the functor $F_{A,B} :
+  \cA(A,B) \to \cB(FA, FB)$ is fully faithful.
+\end{definition}
+
+\begin{definition}[Locally full sub-2-category]
+  A sub-2-category $\cB \subseteq \cA$ is \emph{locally full} if $\cB(A,B) = \cA(A,B)$ for each $A,B \in \cB$.
+\end{definition}
+
+\subsection{2-limits}
+Given the definition of weighted limits in \cref{sec:enriched/limits}, we may take the 2-limits to be exactly weighted limits
+in $\Cat$-enriched categories. This subsection will cover some useful examples and properties of 2-limits, as they form the
+bases of the rest of the thesis. We begin by providing an explicit description of the weighted limits and cones, so as to
+provide some intuition for how to construct the correct weights for the limits we wish to describe, and then follow up with
+plenty of examples of 2-limits and their universal properties.
+
+\begin{proposition}
+  Let $\cJ$, $\cA$ be 2-categories, $W : \cJ \to \Cat$ be a weight, and $D : \cJ \to \cA$ be a $\cJ$-shaped diagram in $\cA$.
+  Then a $W$-weighted cone $(a,\alpha)$ over $D$, i.e. an object $a \in \cA$ and a 2-natural transformation $W \to \cA(a,D)$
+  consists of the following data:
+  \begin{itemize}
+    \item for each object $x \in \cJ$ and $r \in W(x)$, a morphism $\alpha_{x,r} : a \to Dx$,
+      and
+    \item for each $p : r \to s \in W(x)$, a 2-cell $\alpha_{x,p} : \alpha_{x,r} \to \alpha_{x,s}$,
+      such that
+    \item for each morphism $f : x \to y$ in $\cJ$ and $r \in W(x)$, we have $Df \circ \alpha_%
+      {x,r} = \alpha_{y,W(f)(r)}$, and
+    \item for each $p : r \to s$ in $W(x)$ we have $Df \star \alpha_{x,p} = \alpha_{y,W(f)(p)}$.
+  \end{itemize} 
+
+  Furthermore, a morphism $m : \alpha \to \beta$ of parallel cones $W \to \cA(a,D)$, i.e.\ a modification,
+  consists of a family $(m_{x,r} : \alpha_{x,r} \to \beta_{x,r})_{x \in \cJ, r \in W(x)}$ such that for every
+  $f : x \to y$ in $\cJ$  and $r \in W(x)$ we have that
+  \[m_{y,Wf(r)} = Df m_{x,r} : Df \circ \alpha_{x,r} = \alpha_{y,Wf(r)} \to \beta_{y,Wf(r)}
+  = Df \circ \beta_{x,r}.\]
+\end{proposition}
+\begin{proof}
+  This holds immediately after unfolding all the layers of definition.
+\end{proof}
+
+\begin{definition}[Pullback of cones]
+  Let $\cJ, \cA$ be 2-categories, $W : \cJ \to \cF$ a weight, and $D : \cJ \to \cA$ a diagram.
+  Given a $W$-weighted cone $(a,\alpha)$ over $D$ and a morphism $f : b \to a$ in $\cA$, we define
+  the pullback of $(a,\alpha)$ along $f$ as the cone $(b,f^*\alpha)$ defined by
+  \[(f^*\alpha)_{x,r} = \alpha_{x,r} \circ f\]
+  on objects $x \in \cJ$ and $r \in W(x)$, and
+  \[(f^*\alpha)_{x,p} = \alpha_{x,p} \star f\]
+  on objects $x \in \cJ$ and morphisms $p : r \to s \in W(x)$.
+
+  Given a modification $m : \alpha \to \alpha' : W \to \cA(a,D)$, we define the pullback $f^*m : f^*\alpha
+  \to f^*\alpha'$ by
+  \[(f^*m)_{x,r} = m_{x,r} \star f\]
 
 
-  \begin{definition}[Fibration in an $\cF$-category]
-    A \emph{fibration} in an $\cF$-category $\bA$ is a tight morphism $p : A \to B$ such that for every morphism $\phi :
-    a_1 \to p a_2 : X \to B$ (with $a_1 : X \to B$ and $a_2 : X \to A$) there exists a $p$-cartesian morhism $\bar \phi :
-    a_1' \to p a_2$ such that $\phi = p\bar\phi$.
-  \end{definition}
+  Furthermore, for $\phi : f \to g : b \to a$ a 2-cell in $\cA$, we define a modification $\phi^*\alpha :
+  f^*\alpha \to g^*\alpha$ by \((\phi^*\alpha)_{x,r} = \alpha_{x,r} \star \phi\).
 
-  \begin{proposition}
-    Let $p : A \to B$ be a tight morphism in an $\cF$-category $\bA$ with finite weighted limits. Then the
-    following are equivalent:
-    \begin{enumerate}[label=(\arabic*)]
-      \item $p$ is a fibration.
-      \item There exists a map $\ell : B \comma p \to A$ with $p\ell = \dom$ and $p$-cartesian 2-cell $\epsilon :
-        \ell \to \cod$ with $p\epsilon = \lambda$, where $\lambda : \dom \to p\cod$ is the universal 2-cell for $B
-        \comma p$.
-      \item The map $t : A^\to \to B \comma p$ has a section $r : B \comma p \to A^\to$ which is $p$-cartesian.
-      \item The canonical map $t : A^\to \to B \comma p$ has a right adjoint $r : B \comma p \to A^\to$
-        with identity counit.
-      \item The map $i : A \to B \comma p$ induced by the identity $1_p$ has a right adjoint $\ell : B \comma p
-        \to A$ in the slice $\bA/B$ with invertible unit.
-    \end{enumerate}
-  \end{proposition}
-  \begin{proof}
-    We show that $(1) \iff (2) \implies (3) \implies (4) \implies (2)$ and $(2) \iff (5)$.
+  These together form the data of the 2-functor $[\cJ,\Cat](W,\cA(-,D)) : \cA \to \Cat$ taking objects of $\cA$ to
+  their 2-categories of cones based at that object, 1-cells $f : b \to a$ of $\cA$ to the pullback of cones as defined
+  above, and similarly for 2-cells.
+\end{definition}
 
-    For $(1) \implies (2)$, note that since $p$ is a fibration, there exists a $p$-cartesian lift $\epsilon : \ell
-    \to \cod : B \comma p \to A$ for the 2-cell $\lambda : \dom \to p\cod : B \comma p \to B$, and this lift
-    satisfies $p\epsilon = \lambda$. This is exactly the map we require.
+\begin{proposition}\label{prop:chr of 2-limits}
+  Given a weight $W : \cJ \to \Cat$, a diagram $D : \cJ \to \cA$ has a limit in $\cA$ if and only if there
+  exists a $W$-weighted cone $(\ell,L)$ over $D$ in $\cA$ such that
+  \begin{enumerate}
+    \item for every cone $\alpha : W \to \cA(a,D)$, there exists a unique morphism $h_\alpha : a \to
+      \ell$ such that $\alpha = h_\alpha^*L$,
+    \item for every modification $m : \alpha \to \alpha' : W \to \cA(a,D)$ there exists a unique 2-cell
+      $h_m : h_\alpha \to h_{\alpha'}$ such that $h_m^*\ell = m$.
+  \end{enumerate}
+  We will call a cone satisfying these properties a limiting cone.
+\end{proposition}
+\begin{proof}
+  We start by unfolding the definition of the naturality squares of the isomorphism
+  \[h : [\cJ,\Cat](W,\cA(-,D)) \cong \cA(-,\ell)\]
+  which is supposed to exist for $\ell$ to be the $W$-weighted limit of $D$. For each $a \in \cA$, we find that
+  $h_a : [\cJ,\Cat](W,\cA(a,D)) \cong \cA(a,\ell)$ is an isomorphism in $\Cat$, i.e.\ an invertible functor.
+  Naturality tells us that given a morphism $\phi : b \to a$, we have that $h_b \circ \phi^* = \cA(\phi,\ell)
+  \circ h_a$, where $\phi^*$ denotes the operation of pulling back a cone along a morphism of $\cA$. On cones
+  $\alpha : W \to \cA(b,\ell)$, this gives us that $h_b(\phi^*\alpha) = h_a(\alpha) \circ \phi$, and on
+  modifactions $m : \alpha \to \alpha' : W \to \cA(b,D)$, we have $h_b(\phi^*m) = h_a(m) \star \phi$.
 
-    For $(2) \implies (1)$, note that since $\epsilon : \ell \to \cod$ is $p$-cartesian, so is $\epsilon x$ for
-    all $f : X \loose B \comma p$. In particular, for any 2-cell $\phi : b \to pa$ with $b : X \to B$ and $a : X
-    \to A$, we have an induced 1-cell $f : X \loose B \comma p$ with $\lambda f = \phi$. Then $\epsilon f$ is $p$-%
-    cartesian, and by the properties of $\epsilon$, we have that $p\epsilon f = \lambda f = \phi$, so $\epsilon f$
-    is a cartesian lift for $\phi$. Since $\phi$ was an arbitrary such 2-cell, we conclude that every such 2-cell
-    has a caresian lift, which is exactly what it means for $p$ to be a fibration.
+  Now, given a natural isomorphism $h$ as above, we can consider the cone $L = h^{-1}(\id_\ell)$. Given any
+  other cone $\alpha : W \to \cA(a,D)$, naturality tells us that
+  \[h_a(h_a(\alpha)^*L) = h_\ell(L) \circ h_a(\alpha) = \id_\ell \circ h_a(\alpha) = h_a(\alpha),\]
+  so $h_a(\alpha)^*L = \alpha$ since $h$ is an isomorphism. Similarly, for a modification $m : \alpha \to
+  \alpha'$ we find that
+  \[h_a(h_a(m)^*L) = h_a(m) = h_\ell(L) \star h_a(m) = \id_\ell \star h_a(m) = h_a(m),\]
+  so again $h_a(m)^*L = m$.
 
 
-    For $(2) \implies (3)$, note that $\epsilon$ induces a map $r : B \comma p \to A^\to$ with $\lambda'r =
-    \epsilon$, where $\lambda' : \dom' \to \cod' : A^\to \to A$ is the universal 2-cell associated with $A^\to$.
-    This map then satisfies that $\lambda tr = p\lambda' r = p\epsilon = \lambda$, so that $tr = 1_{B \comma p}$,
-    and $r$ is $p$-cartesian by definition.
+  In the other direction, suppose we are given an object $\ell \in \cA$ and cone $L : W \to \cA(\ell,D)$
+  such that (1) and (2) hold. Then we construct the natural isomorphism $h : [\cJ,\Cat](W,\cA(-,D)) \cong
+  \cA(-,\ell)$ by $h_a(\alpha) = h_\alpha$ and $h_a(m : \alpha \to \alpha') = h_m$. Verification that $h_a$
+  is indeed an isomorphism for each $a \in \cA$ is simple to verify, so we focus instead only on naturality:
+  given $\phi : b \to a \in \cA$, we must show that $h_b \circ \phi^* = \cA(\phi,\ell) \circ h_a$. On cones,
+  this amounts to showing that for any cone $\alpha : W \to \cA(a,D)$, we have that $h_b(\phi^*\alpha) =
+  h_a(\alpha) \circ \phi$. But
+  \[
+    \phi^*\alpha = \phi^*h_a(\alpha)^*L = (h_a(\alpha) \circ \phi)^*L,
+  \]
+  so uniqueness of $h_b(h_a(\alpha) \circ \phi)$ gives us that $h_b(\phi^*\alpha) = h_a(\alpha) \circ \phi)$.
+  For the naturality condition on 2-cells, let $m : \alpha \to \alpha'$ be a modification. We must show that
+  $h_b(\phi^*m) = h_a(\alpha) \star m$, which much like for cones follows from uniqueness:
+  \[\phi^*m = \phi^*(h_a(m)^*L) = (h_a(m)\star\phi)^*L,\]
+  so $h_b(\phi^*m) = h_a(m)\star\phi$.
+\end{proof}
 
-    suppose that $p$ is a fibration. We require first of all a map $r : B \comma p \to
-    A^\to$, which we then show is a $p$-cartesian section to $t : A^\to \to B \comma p$. Such a map $r$ is
-    equivalently a 2-cell $\lambda r : \dom r \to \cod r : B \comma p \to A$. Since $p$ is a fibration, there
-    exists a $p$-cartesian lift $\bar r : x \to \cod' : B \comma p \to A$ for the map $\lambda' : \dom' \to p
-    \cod' : B \comma p \to B$, where $x : B \comma p \to A$ is such that $px = \dom'$. This map $\bar r$ induces
-    a 1-cell $r : B \comma p \to A^\to$ with $\lambda \bar r = r$. In particular, we see that $\lambda' t r =
-    p\lambda r = p\bar r = \lambda'$, so that $tr = 1_{B \comma p}$, as desired. Hence $r : B \comma p \to A^\to$
-    is a $p$-cartesian section of $t$.
+\begin{example}[Arrow object]
+  Let $\cA$ a 2-category and $A \in \cA$ be given. The arrow-object of $A$, written $A^\to$, is the cotensor by the category
+  $2 = \set{0 \to 1}$. By the above explicit description, $A^\to$ is equipped with two arrows $\dom_A,\cod_A : A^\to \to A$ and
+  a 2-cell $\lambda_A : \dom_A \to \cod_A$, and this classifies 2-cells into $A$, in the sense that for any 2-cell $\alpha
+  : f \to g : X \to A$, there exists a unique 1-cell $h : X \to A^\to$ such that $f = \dom_A h$, $g = \cod_A h$, and
+  $\alpha = \lambda_A h$, and a corresponding universal property for 2-cells.
 
-    For $(3) \implies (4)$, suppose $r$ is a $p$-cartesian 1-cell with $tr = 1_{B \comma p}$. We show that $r$
-    is also a right-adjoint to $t$, for which we must find a unit $\eta : 1_{A^\to} \to rt$. By the universal
-    property of $A^\to$, $\eta$ is equivalent to a commuting square
-    \[\begin{codi}[tetragonal=base 6em height 4.5em]
-      \obj {\dom' & \dom'rt \\ \cod' & \cod'rt \\};
-      \mor       (dom ') \eta_1:-> (dom 'rt) \lambda'rt:-> (cod 'rt);
-      \mor[swap] (dom ') \lambda':-> (cod ') \eta_2:-> (cod 'rt);
-    \end{codi}\]
-    Since $\cod'rt = \cod trt = \cod t = \cod'$, it would suffices to find a map $\eta_1$ such that
-    $\lambda' = \lambda'rt \circ \eta_1$, since $\eta_2 = 1_{\cod'}$ then makes the above square commute. Since
-    $r$ is a $p$-cartesian 1-cell, $\lambda'rt$ is a $p$-cartesian 2-cell, whereby there exists a unique universal
-    map $\gamma : \dom' \to \dom'rt$ induced by the cone $(\cod', \dom', \lambda', 1_{p\dom'})$ with $p\gamma =
-    1_{p\dom'}$ and $\lambda' = \lambda'rt \circ \gamma$, so we may take $\eta_1 = \gamma$, and then $\eta$ is
-    the universal map induced by the square
-    \[\begin{codi}[tetragonal=base 6em height 4.5em]
-      \obj {\dom' & \dom'rt \\ \cod' & \cod'rt \\};
-      \mor       (dom ') \gamma:-> (dom 'rt) \lambda'rt:-> (cod 'rt);
-      \mor[swap] (dom ') \lambda':-> (cod ') 1_{\cod'}:-> (cod 'rt);
-    \end{codi}\]
-    To verify that $\eta : 1_{A^\to} \to rt$ is indeed the unit of an adjunction $t \dashv r$, we must verify that
-    $t\eta = 1_t$ and $\eta r = 1_r$. For the former, it suffices to show that $\dom t\eta = 1_{\dom t}$ and
-    $\cod t\eta = 1_{\cod t}$. But these hold since
-    \[\dom t\eta = p\dom'\eta = p\gamma = 1_{p\dom'} = 1_{\dom t} \qquad\text{ and }\qquad
-    \cod t\eta = \cod'\eta = 1_{\cod'} = 1_{\cod t}.\]
-    Hence $t\eta = 1_t$. For the latter equation $\eta r = 1_r$, we must show that $\gamma r = 1_{\dom' r}$,
-    for which it suffices to see that $1_{\dom' r}$ and $\gamma r$ both are universal morphisms for the same
-    $p$-cartesian cone over $\lambda'r : \dom' r \to \cod' r : B\comma p \to A$. The cone we consider is
-    specifically $(1_{B \comma p}, \dom'r, \lambda'r, 1_{p\dom'r})$ with apex $B \comma p$, which clearly
-    satisfies $p\lambda'r = p\lambda'r \circ 1_{p\dom'}$. Furthermore, we clearly see that $1_{\dom' r}$ is
-    a universal map over the cone, and that $p\gamma r = 1_{p\dom' r}$ and $\lambda'r \circ \gamma r =
-    \lambda'rtr \circ \gamma r = (\lambda'rt \circ \gamma)r = \lambda'r$, so $\gamma r$ is another such
-    universal map. Hence $\gamma r = 1_{\dom' r}$, from which we conclude that $\eta r = 1_r$. Hence
-    $\eta$ is the unit of an adjunction $t \dashv r$ with identity counit.
+  Equivalently, there is for every $X \in \cA$ an isomorphism of categories $\cA(X,A^\to) \cong \cA(X,A)^2$,
+  where the latter denotes the arrow category, and this isomorphism is natural in $X$ in a suitable sense.
+\end{example}
 
-    For $(4) \implies (2)$, we must show that the right adjoint $r : B \comma p \to A^\to$ is $p$-cartesian, so let
-    $(g,a,\alpha,\beta)$ be a $p$-cartesian cone over $\lambda' r : \dom' r \to \cod' r$ with apex $Y$. Thus
-    $g : Y \to B \comma p$, $a : Y \to A$, $\alpha : a \to \cod'r g$, and $\beta : pa \to p\dom'rg = \dom trg
-    = \dom g$.
-  \end{proof}
+\begin{example}[Comma object]
+  Let $\cA$ be a 2-category and $A \xrightarrow{f} C \xleftarrow{g} B$ a cospan in $\cA$. The comma object for $f,g$ is an
+  object $f \comma g$ equipped with a limiting cone $(\dom_{f,g}, \cod_{f,g}, \lambda_{f,g})$ for the diagram given by the
+  aforementioned cospan and weighted by $1 \xrightarrow{0_2} 2 \xleftarrow{1_0} 1$, where $2 = \set{0_2 \to 1_2}$ is the
+  walking arrow and $1$ is the terminal category. The universal property tells us that for any span $A \xleftarrow{p} X
+  \xrightarrow{q} B$ with a 2-cell $\alpha : fp \to gq$, there exists a unique 1-cell $h : X \to f \comma g$ such that
+  $\dom_{f,g} h = p$, $\cod_{f,g} h = q$, and $\lambda_{f,g} h = \alpha$, as well as a corresponding property for 2-cells.
+\end{example}
 
-  \begin{notation}
-    For any fibration $p : A \to B$ with a chosen lifting $\epsilon : \ell \to \cod$ with $\ell : B \comma p \to A$
-    as in (2), and any object $X$ and morphisms $a : X \to A$, $b : X \to B$, and $\sigma : b \to pa$, we write
-    $A[\sigma] \coloneq \ell\bar\sigma$, where $\bar \sigma : X \to B \comma p$ is the map induced by $\sigma$.
-  \end{notation}
+\begin{example}[1-limits]
+  All 1-limits, such as products, pullbacks, equalizers, etc.\ lift to 2-limits by taking the weight to be constantly the
+  terminal object. As such, we will speak of these 1-limits also in the context of 2-categories. 
+\end{example}
+
+\begin{example}[Inserters]
+  Given two parallel 1-cells $f,g : a \to b$ in a 2-category $\cA$, their \emph{inserter} is the limit of these arrows
+  weighted by
+  \[\begin{codi}
+    \obj {1 & 2 \\};
+    \mor 1 0_2:[->,bend left] 2;
+    \mor[swap] 1 1_2:[->,bend right] 2;
+  \end{codi}\]
+  with $1$ and $2$ defined as above. Thus the inserter consists of an object $v$, a 1-cell $i : v \to a$, and a 2-cell
+  $\lambda : fi \to gi$, with a corresponding universal property.
+
+  It can be also be constructed as the following pullback:
+  \[\begin{codi}  
+    \obj {v & b^\to \\ a & b \times b \\};
+    \mor v \bar\lambda:-> b^to {{(\dom_b,\cod_b)}}:-> (b times b);
+    \mor[swap] v i:-> a {{(f,g)}}:-> (b times b);
+  \end{codi}\]
+  where $\bar\lambda$ is the unique 1-cell such that $\lambda_b \bar\lambda = \lambda : fi \to gi$.
+\end{example}
+
+\section{Fibrations}
+\label{sec:fibrations}
+Originally introduced by Grothendieck in \cite{grothendieck1960} in the context of descent theory, fibrations
+have turned out to be an immensely useful tool in the categorical modelling of substitution in type theory.
+In essence, a fibration encodes the idea of a family of categories $(\cE_b)_{b \in \cB}$ indexed over a base
+category $\cB$, equipped with actions of morphisms $f^* : \cE_b \to \cE_{b'}$ for each morphism $f : b' \to
+b$. In essence, a fibration is a pseudofunctor $\cE_{(-)} : \cB \to \Cat$. However, rather than the complex
+algebraic structure that is a pseudofunctor, it turns out that we can instead describe this structure by
+a \emph{functor} $p : \cE \to \cB$, where we call $\cE$ the total category of the fibration $p$, with
+the idea that we can define $\cE_{b}$ to be the fiber of $p$ over $b$: the objects $e$ are those of $\cE$
+which map to $b$, i.e.\ $p^{-1}(b) = \set{e \given p(e) = b}$, and morphisms $k : e \to e'$ are those of
+$\cE$ which lie over the identity, meaning that $p(k) = 1_b$. For a good textbook account of fibrations
+in $\Cat$ and their applications to logic, I recommend \cite{jacobs1998}. 
+
+Since we will be working in general 2-categories, rather than only $\Cat$, we will require a generalization
+of fibrations to this setting. This was initially done by \citeauthor{street1974} in \cite{street1974}, and
+was further developed in \cite{weber2007}. A good overview of these generalizations, both to 2-categories
+and bicategories, can be found in \cite{loregian2020}. Here we will simply provide the definitions that
+will be required for the later chapters, without much general motivation on why they are defined as they
+are.
+
+The main concept underlying fibrations is that of \emph{cartesian morphisms}. These are certain 2-cells satisfying
+a universal property with respect to some fixed 1-cells $p : A \to B$ in a 2-category $\cA$, with the name coming
+from the universal property in a sence mimicing that of pullbacks.
+\begin{definition}[Cartesian morphisms]
+  Let $p : A \to B$ be a morphism of an 2-category $\cA$. A 2-cell $\phi : a_1 \to a_2 : X \to A$ is
+  called \emph{$p$-cartesian} if for every $g : Y \to X$, $a_0 : Y \to A$, $\alpha : a_0 \to a_2g$,
+  and $\beta : pa_0 \to pa_1g$ with $\beta \circ p\phi = p\alpha$, there exists a unique $\gamma : a_0 \to
+  a_1g$ such that $\beta = p\gamma$ and $\alpha = \phi g \circ \gamma$. We will call the data $(g,a_0,
+  \alpha,\beta)$ satisfying the equality $\beta \circ p\phi = p\alpha$ a cartesian cone.
+\end{definition}
+\begin{example}
+  Let $\cod : A^\to \to A$ denote the codomain projection for some object $A$ in a finitely complete 2-category $\cA$.
+  A 2-cell $\alpha : a_1 \to a_2 : X \to A^\to$ is cartesian precisely if the following square is a pullback:
+  \[\begin{codi}[tetragonal=base 6em height 4.5em]
+    \obj {\dom a_1 & \dom a_2 \\ \cod a_1 & \cod a_2 \\};
+    \mor (dom a_1) \dom\alpha:-> (dom a_2) \lambda a_2:-> (cod a_2);
+    \mor[swap] (dom a_1) \lambda a_1:-> (cod a_1) \cod\alpha:-> (cod a_2);
+  \end{codi}\]
+\end{example}
+
+\begin{definition}[Fibrations]
+  A map $p : A \to B$ in a 2-category $\cA$ is a \emph{fibration} if every $\phi : b \to p a : X \to B$ has
+  \emph{$p$-cartesian lift}, that is, a $p$-carteisan 2-cell $\bar\phi : \bar b \to a$ with $p\bar b = b$ and
+  $p\bar\phi = \phi$.
+\end{definition}
+
+\begin{proposition}
+  Let $p : A \to B$ be a morphism in an 2-category $\cA$ with finite weighted limits and $\phi : a_1 \to a_2
+  : X \to A$ a 2-cell. Consider the diagram $D : \cJ \to \cA$ given by
+  \[\begin{codi}
+    \obj { X & A & B \\};
+    \mor X ["a_1",name=x]:[->,bend left] A p:-> B;
+    \mor X ["a_2",name=y,swap]:[->,bend right] A;
+    \mor x \phi:-2> y;
+  \end{codi}\]
+  and weight $W : \cJ \to \Cat$ generated by
+  \[\begin{codi}
+    \obj { |(X)| 1 & |(A)| H & |(B)| 3 \\};
+    \mor X ["1",name=x]:[->,bend left] A c:-> B;
+    \mor X ["2",name=y,swap]:[->,bend right] A;
+    \mor x \phi:-2> y;
+  \end{codi}\]
+  where $H = \set{0 \to 2 \from 1}$ is the walking cospan, and $c : H \to 3$ maps the morphism $1 \to 2$ to
+  the corresponding morphism in $3$ and $0 \to 2$ to the composite $0 \to 1 \to 2$ in $3$.
+
+  A $W$-weighted cone over $D$ is exactly a cartesian cone over $\phi$.
+\end{proposition}
+
+\begin{proposition}\label{prop:cartesian by limit}
+  Let $\cA$ be an 2-category with finite weighted limits, $p : A \to B$ a 1-cell in $\cA$, and $\phi : a_1 \to
+  a_2 : X \to A$ a 2-cell in $\cA$. Then $\phi$ is cartesian if and only if $\ell = (\cod, \dom, \phi\cod \circ
+  \lambda, p\lambda)$ is a universal cartesian cone with apex $A \comma a_1$.
+\end{proposition}
+\begin{proof}
+  In the left-to-right direction, suppose $\phi$ is cartesian. We must show that for every object $Y$, the following
+  hold:
+  \begin{enumerate}[label=(\arabic*)]
+    \item for every cartesian cone $(g,a,\alpha,\beta)$ with apex $Y$, there exists a unique morphism $h : Y \to A
+      \comma a$ such that $g = \cod h$, $a = \dom h$, $\alpha = (\phi\cod \circ \lambda)h$ and $\beta = p\lambda h$.
+    \item for every morphism of cones $m : (g,a,\alpha,\beta) \to (g',a',\alpha',\beta')$ there exists a unique
+      morphism $h_m : h \to h'$ such that $m = h_m^* \ell$.
+  \end{enumerate}
+  For (1), note that since $(g,a,\alpha,\beta)$ is a cartesian cone and $\phi$ is cartesian, there exists a unique
+  2-cell $\gamma : a \to a_1g$ such that $\alpha = \phi \circ \gamma$ and $\beta = p\gamma$. By the universal
+  property of $A \comma a_1$, there then exists a unique morphism $\bar\gamma : Y \to A \comma a_1$ with $\lambda\bar
+  \gamma = \gamma$. In particular, we have that $\cod\bar\gamma = g$, $\dom\bar\gamma = a$, $\alpha = \phi \circ
+  \lambda\bar\gamma$, and $\beta = p\lambda\bar\gamma$, so taking $h = \bar\gamma$ we are done. Furthermore, $h =
+  \bar\gamma$ is the unique such map by uniqueness of $\bar\gamma$ and $\gamma$.
+
+  For (2), suppose we are given a modification $m : (g,a,\alpha,\beta) \to (g',a',\alpha',\beta')$. Concretely, $m$
+  consists of two morphisms $m_1 : g \to g'$ and $m_2 : a \to a'$ such that the following squares commute:
+  \[\begin{codi}[tetragonal=base 6em height 4.5em]
+    \obj { a & a' & & pa & pa' \\ a_2g & a_2g' & & pa_1g & pa_1g' \\};
+    \mor[swap] a \alpha:-> a_2g a_2m_1:-> a_2g';
+    \mor a m_2:-> a' \alpha':-> a_2g';
+
+    \mor pa pm_2:-> pa' \beta':-> pa_1g';
+    \mor[swap] pa \beta:-> pa_1g pa_1m_1:-> pa_1g';
+  \end{codi}\]
+  We want to show that the square
+  \[\begin{codi}[tetragonal=base 6em height 4.5em]
+    \obj {a & a' \\ a_1g & a_1g' \\};
+    \mor a m_2:-> a' \gamma':-> a_1g';
+    \mor[swap] a \gamma:-> a_1g a_1m_1:-> a_1g';
+  \end{codi}\]
+  commutes as well, as that induces the desired unique morphism $\bar m : \bar \gamma \to \bar \gamma'$ with the
+  desired properties. To that end, consider the cartesian cone over $Y$ given by $(g', a, \alpha'' = \alpha' \circ
+  m_2, \beta'' = \beta'  \circ pm_2)$. To see that this is indeed a cone, we must show that $p\alpha'' = p\phi \circ
+  \beta''$, but this follows from simple computation:
+  \[p\alpha'' = p(\alpha' \circ m_2) = p\alpha' \circ pm_2 = p\phi \circ \beta' \circ pm_2 = p\phi \circ \beta''\]
+  Since $(g',a,\alpha'',\beta'')$ is a cartesian cone and $r$ is cartesian, there exists a unique lift $\gamma''$
+  with $p\gamma'' = \beta''$ and $\alpha'' = \phi g' \circ \gamma''$. But we have already that
+  \[p(\gamma' \circ m_2) = p\gamma' \circ pm_2 = \beta' \circ pm_2 = \beta'' \text{\quad and \quad}
+  \phi g' \circ \gamma' \circ m_2 = \alpha' \circ m_2 = \alpha'',\]
+  and similarly
+  \[p(a_1m_1 \circ \gamma) = pa_1m_1 \circ p\gamma = pa_1m_1 \circ \beta = \beta''\]
+  and
+  \[\phi g' \circ a_1m_1 \circ \gamma = a_2m_1 \circ \phi g \circ \gamma = a_2 m_1 \circ \alpha = \alpha'',\]
+  where we use the interhcange law to commute $\phi$ and $m_1$.
+  In particular, we see that both $\gamma' \circ m_2$ and $a_1m_1 \circ \gamma$ provide universal morphisms for
+  the cartesian cone $(g',a,\alpha'', \beta'')$, from which we conclude that they must be identical by the uniqueness
+  of such morphisms. Hence the diagram
+  \[\begin{codi}[tetragonal=base 6em height 4.5em]
+    \obj {a & a' \\ a_1g & a_1g' \\};
+    \mor a m_2:-> a' \gamma':-> a_1g';
+    \mor[swap] a \gamma:-> a_1g a_1m_1:-> a_1g';
+  \end{codi}\]
+  commutes.
+
+  For the right-to-left direction, suppose that $(\cod,\dom,\phi\cod \circ \lambda, p\lambda)$ is a limiting cone
+  with apex $A \comma a_1$, and let $(g,a,\alpha,\beta)$ be any cartesian cone with apex $Y$. By the universal
+  property of limiting cones, there exists a unique morphism $\bar\gamma : Y \to A \comma a_1$ such that
+  $\cod\bar\gamma = g$, $\dom\bar\gamma = a$, $(\phi\cod \circ \lambda)\bar\gamma = \alpha$, and
+  $p\phi\bar\gamma = \beta$. In particular, taking $\gamma = \lambda\bar\gamma : a \to a_1g$, we have the
+  desired morphism, and it is unique by the universal property of $A \comma a_1$.
+\end{proof}
+\begin{corollary}
+  Suppose $\cA, \cB$ are finitely complete 2-categories and $F : \cA \to \cB$ is a 2-functor preserving finite
+  2-limits. Further let $p : A \to B \in \cA$ and $\alpha : a_1 \to a_2 : X \to A$ be given. If $\alpha$ is $p$%
+  -cartesian, then $F\alpha$ is $Fp$-cartesian.
+\end{corollary}
+
+\begin{proposition}
+  Let $p : A \to B$ be a morphism in an 2-category $\cA$ with finite 2-limits. The following are equivalent:
+  \begin{enumerate}[label=(\arabic*)]
+    \item $p$ is a fibration.
+    \item There exists a map $\ell : B \comma p \to A$ with $p\ell = \dom$ and $p$-cartesian 2-cell $\epsilon :
+      \ell \to \cod$ with $p\epsilon = \lambda$, where $\lambda : \dom \to p\cod$ is the universal 2-cell for $B
+      \comma p$.
+    \item The map $t : A^\to \to B \comma p$ has a section $r : B \comma p \to A^\to$ which is $p$-cartesian.
+    \item The canonical map $t : A^\to \to B \comma p$ has a right adjoint $r : B \comma p \to A^\to$
+      with identity counit.
+    \item The map $i : A \to B \comma p$ induced by the identity $1_p$ has a right adjoint $\ell : B \comma p
+      \to A$ in the slice $\cA/B$ with invertible unit.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We show that $(1) \iff (2) \implies (3) \implies (4) \implies (2)$ and $(2) \iff (5)$.
+
+  For $(1) \implies (2)$, note that since $p$ is a fibration, there exists a $p$-cartesian lift $\epsilon : \ell
+  \to \cod : B \comma p \to A$ for the 2-cell $\lambda : \dom \to p\cod : B \comma p \to B$, and this lift
+  satisfies $p\epsilon = \lambda$. This is exactly the map we require.
+
+  For $(2) \implies (1)$, note that since $\epsilon : \ell \to \cod$ is $p$-cartesian, so is $\epsilon x$ for
+  all $f : X \to B \comma p$. In particular, for any 2-cell $\phi : b \to pa$ with $b : X \to B$ and $a : X
+  \to A$, we have an induced 1-cell $f : X \to B \comma p$ with $\lambda f = \phi$. Then $\epsilon f$ is $p$-%
+  cartesian, and by the properties of $\epsilon$, we have that $p\epsilon f = \lambda f = \phi$, so $\epsilon f$
+  is a cartesian lift for $\phi$. Since $\phi$ was an arbitrary such 2-cell, we conclude that every such 2-cell
+  has a caresian lift, which is exactly what it means for $p$ to be a fibration.
+
+
+  For $(2) \implies (3)$, note that $\epsilon$ induces a map $r : B \comma p \to A^\to$ with $\lambda'r =
+  \epsilon$, where $\lambda' : \dom' \to \cod' : A^\to \to A$ is the universal 2-cell associated with $A^\to$.
+  This map then satisfies that $\lambda tr = p\lambda' r = p\epsilon = \lambda$, so that $tr = 1_{B \comma p}$,
+  and $r$ is $p$-cartesian by definition.
+
+  suppose that $p$ is a fibration. We require first of all a map $r : B \comma p \to
+  A^\to$, which we then show is a $p$-cartesian section to $t : A^\to \to B \comma p$. Such a map $r$ is
+  equivalently a 2-cell $\lambda r : \dom r \to \cod r : B \comma p \to A$. Since $p$ is a fibration, there
+  exists a $p$-cartesian lift $\bar r : x \to \cod' : B \comma p \to A$ for the map $\lambda' : \dom' \to p
+  \cod' : B \comma p \to B$, where $x : B \comma p \to A$ is such that $px = \dom'$. This map $\bar r$ induces
+  a 1-cell $r : B \comma p \to A^\to$ with $\lambda \bar r = r$. In particular, we see that $\lambda' t r =
+  p\lambda r = p\bar r = \lambda'$, so that $tr = 1_{B \comma p}$, as desired. Hence $r : B \comma p \to A^\to$
+  is a $p$-cartesian section of $t$.
+
+  For $(3) \implies (4)$, suppose $r$ is a $p$-cartesian 1-cell with $tr = 1_{B \comma p}$. We show that $r$
+  is also a right-adjoint to $t$, for which we must find a unit $\eta : 1_{A^\to} \to rt$. By the universal
+  property of $A^\to$, $\eta$ is equivalent to a commuting square
+  \[\begin{codi}[tetragonal=base 6em height 4.5em]
+    \obj {\dom' & \dom'rt \\ \cod' & \cod'rt \\};
+    \mor       (dom ') \eta_1:-> (dom 'rt) \lambda'rt:-> (cod 'rt);
+    \mor[swap] (dom ') \lambda':-> (cod ') \eta_2:-> (cod 'rt);
+  \end{codi}\]
+  Since $\cod'rt = \cod trt = \cod t = \cod'$, it would suffices to find a map $\eta_1$ such that
+  $\lambda' = \lambda'rt \circ \eta_1$, since $\eta_2 = 1_{\cod'}$ then makes the above square commute. Since
+  $r$ is a $p$-cartesian 1-cell, $\lambda'rt$ is a $p$-cartesian 2-cell, whereby there exists a unique universal
+  map $\gamma : \dom' \to \dom'rt$ induced by the cone $(\cod', \dom', \lambda', 1_{p\dom'})$ with $p\gamma =
+  1_{p\dom'}$ and $\lambda' = \lambda'rt \circ \gamma$, so we may take $\eta_1 = \gamma$, and then $\eta$ is
+  the universal map induced by the square
+  \[\begin{codi}[tetragonal=base 6em height 4.5em]
+    \obj {\dom' & \dom'rt \\ \cod' & \cod'rt \\};
+    \mor       (dom ') \gamma:-> (dom 'rt) \lambda'rt:-> (cod 'rt);
+    \mor[swap] (dom ') \lambda':-> (cod ') 1_{\cod'}:-> (cod 'rt);
+  \end{codi}\]
+  To verify that $\eta : 1_{A^\to} \to rt$ is indeed the unit of an adjunction $t \dashv r$, we must verify that
+  $t\eta = 1_t$ and $\eta r = 1_r$. For the former, it suffices to show that $\dom t\eta = 1_{\dom t}$ and
+  $\cod t\eta = 1_{\cod t}$. But these hold since
+  \[\dom t\eta = p\dom'\eta = p\gamma = 1_{p\dom'} = 1_{\dom t} \qquad\text{ and }\qquad
+  \cod t\eta = \cod'\eta = 1_{\cod'} = 1_{\cod t}.\]
+  Hence $t\eta = 1_t$. For the latter equation $\eta r = 1_r$, we must show that $\gamma r = 1_{\dom' r}$,
+  for which it suffices to see that $1_{\dom' r}$ and $\gamma r$ both are universal morphisms for the same
+  $p$-cartesian cone over $\lambda'r : \dom' r \to \cod' r : B\comma p \to A$. The cone we consider is
+  specifically $(1_{B \comma p}, \dom'r, \lambda'r, 1_{p\dom'r})$ with apex $B \comma p$, which clearly
+  satisfies $p\lambda'r = p\lambda'r \circ 1_{p\dom'}$. Furthermore, we clearly see that $1_{\dom' r}$ is
+  a universal map over the cone, and that $p\gamma r = 1_{p\dom' r}$ and $\lambda'r \circ \gamma r =
+  \lambda'rtr \circ \gamma r = (\lambda'rt \circ \gamma)r = \lambda'r$, so $\gamma r$ is another such
+  universal map. Hence $\gamma r = 1_{\dom' r}$, from which we conclude that $\eta r = 1_r$. Hence
+  $\eta$ is the unit of an adjunction $t \dashv r$ with identity counit.
+
+  For $(4) \implies (2)$, we must show that the right adjoint $r : B \comma p \to A^\to$ is $p$-cartesian, so let
+  $(g,a,\alpha,\beta)$ be a $p$-cartesian cone over $\lambda' r : \dom' r \to \cod' r$ with apex $Y$. Thus
+  $g : Y \to B \comma p$, $a : Y \to A$, $\alpha : a \to \cod'r g$, and $\beta : pa \to p\dom'rg = \dom trg
+  = \dom g$.
+\end{proof}
+
+\begin{notation}
+  For any fibration $p : A \to B$ with a chosen lifting $\epsilon : \ell \to \cod$ with $\ell : B \comma p \to A$
+  as in (2), and any object $X$ and morphisms $a : X \to A$, $b : X \to B$, and $\sigma : b \to pa$, we write
+  $A[\sigma] \coloneq \ell\bar\sigma$, where $\bar \sigma : X \to B \comma p$ is the map induced by $\sigma$.
+\end{notation}
+
+\ifSubfilesClassLoaded{\printbibliography}{}
   \end{document}

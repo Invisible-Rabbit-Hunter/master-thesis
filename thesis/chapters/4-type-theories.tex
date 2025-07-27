@@ -6,7 +6,7 @@
 }
 
 \begin{document}
-\chapter{Type Theories}
+\chapter{Type Theories}\label{ch:type theories}
 Throughout the literature, a whole host of different categorical structure have been introduced to model
 type dependency and type theories, ranging from display map categories to comprehension categories to
 categories with families and natural models. A good overview of the relationship between these different
@@ -211,7 +211,7 @@ that any map $a : X \to \dot\cU$ induces a unique section $\tau a : u\typ a \to 
 for some adequately chosen $\typ : \dot\cU \to \cU$. 
 
 \begin{definition}
-  In $\Comp$, let $\dot\cU$ denote the $\cF$-limit of the diagram
+  In $\Comp$, let $\dot\cU$ denote the $\sF$-limit of the diagram
   \[\begin{codi}
     \obj {\cU & \cC \\};
     \mor:[bend left] cU u:-> cC;
@@ -506,7 +506,7 @@ that $\delta A = A[\pi A]$ is the weaking of $A$. The dependent
 \todo{Finish writing this subsubsection.}
 
 
-\subsection{Equivalence to categories with attributes}
+\subsection{Equivalence to categories with attributes}\label{sec:nm/equiv attr}
 Already when they were introduced in \cite{dybjer1996}, \citeauthor{dybjer1996} showed how categories with families are in
 fact equivalent to categories with attributes. When passing from a category with families to a category with attributes,
 you simply need to recover the comprehension map, which we've already had to do in describing the common type constructors,
@@ -689,154 +689,154 @@ We are now equipped to show that $FG \cong 1_\NM$ and $GF \cong 1_\Attr$.
   Natural models and categories with attributes are equivalent.
 \end{corollary}
 
-\section{Inductive Types}
-In this section we show how to describe inductive and coinductive types using finite 2-limits. While the details
-differ quite a
-bit, the presentation of inductive types here was inspired by the presentation in \cite{basold2015}, where
-inductive types are defined as initial dialgebras for a pair of functors, the signature for the type, of a
-specific shape. To make sure that we have a well-behaved induction principle, we will require the existence
-of dependent sum types. This allows the derivation of the induction principle from the non-dependent recursion
-principle given by initiality.
-
-We will base the presentation on comprehension categories, since the definition of terms as substitutions
-turns out to be more convenient in describing the constructors, eliminators. and computation rules of
-inducitve types. However, the specfic construction is not inherently limited to comprehension categories,
-and should be possible to generalize to other models of type theory, such as natural models.
-
-\begin{definition}
-  A \emph{data type signature} with parameters $p : P \to \cC$ is a tuple $(F,\phi)$ where $F$ is a 1-cell
-  $P \pb[p]{u} \cU \loose \cC^n$ and $\phi$ is a 2-cell $F \to \delta^n u \pi_2$, where $\delta^n : \cC
-  \to \cC^n$ is the diagonal map. The intuition is that $F$ determines the arguments for each constructor
-  by extending the given context, and $\phi$ connects the extend context back to the original one to
-  facilitate the elimination rule.
-
-  An algebra for a signature $(F,\phi)$ is a map $(\alpha, A) : X \to P \pb[p]{u} \cU$ equipped with a 2-cell
-  $a : F(\alpha,A) \to \delta^n\set{A}$ such that $\phi(\rho,A) = \delta^n\pi A \circ a$, and an algebra homomorphism
-  $(\alpha,A,a) \to (\beta, B,b)$ is a 2-cell $(\rho,f) : (\alpha,A) \to (\beta,B)$ such that $\delta^n\set{f}
-  \circ a = b \circ F(\rho,f)$.
-\end{definition}
-\begin{remark}
-  An algebra for a signature $(F,\phi)$ is an $(F,\delta^n\set{\pi_2})$-\emph{dialgebra} subject to an
-  additional condition ensuring compatibility with the 2-cell $\phi$. Algebra homomorphisms are exactly
-  maps of dialgebras. 
-\end{remark}
-
-\begin{remark}
-  For a fixed signature $(F,\phi)$, we can using only finite $\sF$-weighted limits construct an object
-  of algebras $(F,\phi)\Alg$, such that any $(F,\phi)$-algebra is the same as a map into $(F,\phi)\Alg$,
-  and vice versa. This object comes equipped with a universal $(F,\phi)$-algebra, with underlying map
-  $R_{(F,\phi)} : (F,\phi) \Alg \to P \pb[u]{p} \cU$ and 2-cell $\rho : F R_{(F,\phi)} \to \delta^n\set
-  {R_{(F,\phi)}}$.
-\end{remark}
-
-We want an inductive type over a signature $(F,\phi)$ to be an inital algebra. Since this algebra is supposed
-to exist over aribtary parameters, this is best modeled by a map from the object of parameters to the object
-of algebras.
-
-\begin{definition}
-  An inductive type for a signature $(F,\phi)$ is a map $\mu(F,\phi) : P \to (F,\phi)\Alg$ such that
-  $\pi_1 R_{(F,\phi)} \mu(F,\phi) = 1_P$ and for every $A : X \to (F,\phi)\Alg$, there exists a unique
-  map $h : \mu(F,\phi)\pi_1R_{(F,\phi)} A \to A$ such that $\pi_1R_{(F,\phi)} h = 1_{\pi_1R_{(F,\phi)}A}$
-\end{definition}
-\begin{lemma}
-  Let a signature $(F,\phi)$ and $\mu(F,\phi) : P \to (F,\phi)\Alg$ be given. Then the following are equivalent:
-  \begin{enumerate}
-    \item $\mu(F,\phi)$ is an inductive data type.
-    \item $\mu(F,\phi)$ is left adjoint to $\pi_1 R_{(F,\phi)} : (F,\phi)\Alg \to P$ with identity unit.
-  \end{enumerate}
-\end{lemma}
-\begin{proof}
-  For $1 \implies 2$, note that by taking $A = 1_{(F,\phi)\Alg}$, we see that there exists a unique map $
-  \epsilon : \mu(F,\phi)\pi_1R_{(F,\phi)} \to 1_{(F,\phi)\Alg}$ such that $\pi_1 R_{(F,\phi)}\epsilon =
-  1_{\pi_1 R_{(F,\phi)}}$. Thus it only remains to show that $\epsilon\mu(F,\phi) = 1_{\mu(F,\phi)}$. But
-  there exists by uniqueness only one map $h : \mu(F,\phi)\pi_1R_{(F,\phi)}\mu(F,\phi) = \mu(F,\phi) \to
-  \mu(F,\phi)$ such that $\pi_1 R_{(F,\phi)} h = 1_{\pi_1 R_{(F,\phi)}\mu(F,\phi)} = 1_{1_{(F,\phi)\Alg}}.$
-  Since the identity map $1_{\mu(F,\phi)}$ and $\epsilon\mu(F,\phi)$ both satisfy this property, we conclude
-  that they are the same, thereby establishing that $\epsilon$ is the counit of an adjunction $\mu(F,\phi)
-  \dashv \pi_1R_{(F,\phi)}$ with identity unit.
-
-  For $2 \implies 1$, let $A : X \to (F,\phi)\Alg$ be given. Clearly $\epsilon A$ is a map $\mu(F,\phi)\pi_1
-  R_{(F,\phi)}A \to A$ satisfying the desired property, so it remains to show that this map is unique. To that
-  end, let $h : \mu(F,\phi)\pi_1R_{(F,\phi)}A \to A$ be given such that $\pi_1R_{(F,\phi)}h = 1_{\pi_1R_{(F,
-  \phi)}A}$. Note that
-  \[\epsilon A \circ \mu(F,\phi) \pi_1 R_{(F,\phi)} h = h \circ \epsilon \mu(F,\phi)\pi_1 R_{(F,\phi)}A = h,\]
-  but $\pi_1 R_{(F,\phi)} h = 1_{\pi_1 R_{(F,\phi)}}$, so we see that
-  \[\epsilon A = \epsilon A \circ \mu(F,\phi)\pi_1 R_{(F,\phi)} h = h,\]
-  as desired.
-\end{proof}
-
-\begin{remark}
-  The data types described here satisfy the $\eta$-rule, since $\epsilon\mu(F,\phi) = 1_{\mu(F,\phi)}$. We could
-  drop this property by asking for a weakly initial object, rather than an initial object. This would be removing
-  the uniqueness requirement from the definition of an inductive data type, or equivalently asking for a map
-  $\epsilon : \mu(F,\phi)\pi_1R_{(F,\phi)} \to 1_{(F,\phi)\Alg)}$ such that $\pi_1 R_{(F,\phi)}\epsilon =
-  1_{\pi_1R_{(F,\phi)}}$.
-\end{remark}
-
-\begin{example}[Empty type]
-  The empty type has no parameters, meaning we take $p = 1_\cC : \cC \to \cC$, and no constructors. Thus we
-  take $F$ to be the unique map into the 2-terminal object, and $\phi$ is trivially determined by this.
-  We use $\bot = \mu(F,\phi)$ to denote this inductive type. 
-
-  An algebra for $(F,\phi)$ is simply a type $A : X \loose \cU$ (up to isomorphism), and the universal property
-  then always gives us a map $\set{\bot uA} \to \set{A}$, which we interpret to say that for any context
-  containing $\bot$, we have an element of any type.
-\end{example}
-
-\begin{example}[Unit type]
-  The unit type also has no parameters, so $p = 1_\cC : \cC \to \cC$. It has exactly one constructor, and
-  this constructor takes no arguments. Thus we take $F = p\pi_1$ and $\phi = 1_{p\pi_1}$. We denote the
-  inductive type for this signature by $\top$.
-
-  An algebra for $(F,\phi)$ is a type $A : X \to \cU$ with a substitution $a : uA \to \set{A}$ such that
-  $\pi A \circ a = 1_{uA}$, i.e.\ a term of type $A$. We use $\top$ also to denote the underlying type
-  $\pi_2 R_{(F,\phi)}\top$ of the initial algebra. The constructor $* : u\top \to \set{\top}$ is the map
-  given by the algebra, formally $\pi_2 \rho_{(F,\phi)}$. The universal property then gives us a map
-  $\set{\pi_2R_{(F,\phi)}\epsilon A} : \set{\top uA} \to \set{A}$ such that $\set{\pi_2 R_{(F,\phi)}\epsilon A}
-  \circ * = a \circ p\pi_1R_{(F,\phi)}\epsilon A = a$, which is exactly the
-  $\beta$-rule.
-\end{example}
-
-\begin{example}[Binary sum types]
-  Two constructors, $P = \cU \pb[u]{u} \cU$, $p = u\pi_1 = u\pi_2$, $F_1 = \set{\pi_1\pi_1}$, $F_2 =
-  \set{\pi_2\pi_1}$. 
-\end{example}
-
-\begin{example}[Natural numbers]
-  No parameters, so $p = 1_\cC : \cC \to \cC$. Two constructors, the first with no arguments, so take
-  $F_1 = u\pi_2 = p\pi_1$, and the second with one, so take $F_2 = \set{\pi_2}$. An algebra is a type
-  $A : X \to \cU$ with two substitutions, $a_z : uA \to \set{A}$ and $a_s : \set{A} \to \set{A}$.
-  The initial algebra is a type $\bN : \cC \to \cU$ with two constructors $z : 1_\cC \to \set{\bN}$ and
-  $s : \set{\bN} \to \set{\bN}$, and the eliminator into $A$ gives $\epsilon A : \bN \to A$ such that
-  $\set{\pi_2 \epsilon A} \circ s = a_s \circ \set{\pi_2 \epsilon A}$ and $\set{\pi_2 \epsilon A} \circ z
-  = a_z$.
-\end{example}
-
-\begin{example}[W-types]
-  Suppose the theory has function types, whose type former we denote by $Fun : \cU \pb[u]{u} \cU \to \cU$.
-  $W$-types are parameterized by a type $A$ and a family $B$ indexed over the type. Thus we take $P = (\cU
-  \pb[\set{-}] {u} \cU)$ and $p = u\pi_1$. It has a single constructor, so $F : P \pb[p]{u} \cU \to \cC$,
-  and this constructor takes an element of the first type $A$ and, letting $X = \pi_2$, a map $Fun(B, X[
-  \pi A])$. Thus we take $F = \set{Fun(\pi_2\pi_1, r(\pi\pi_1\pi_1, \pi_2))}$, where $r : \cC \comma u \to
-  \cU$ is the lifting map for the fibration $u$ and $(\pi\pi_1\pi_1, \pi_2) : P \pb[p]{u} \cU \to \cC
-  \comma u$ is the map induced by the 2-cell $\pi\pi_1\pi_2 : \set{\pi_1\pi_1} \to u\pi_1\pi_1 = u\pi_2$.
-\end{example}
-
-\todo{Find better notation than the pointfree style used here. Also, $\pi_i$ is maybe a bad choice for the
-projections.}
-
-The one thing missing now is the general induction principle, which is where we require dependent sum types.
-Consider the induction rule for natural numbers:
-\[\infer{\Gamma.\bN \vdash B\;\cU \\ b_z : \Gamma \to \Gamma.B[z] \\ \pi B[z] \circ b_z = 1_\Gamma \\
-  b_s : \Gamma.\bN.B  \to \Gamma.\bN.B \\ \pi B \circ b_s = s \circ \pi B}
-  {\Gamma.\bN\vdash \elim(B,b_z,b_s) : B}\]
-Using dependent sum types, we can change the premise for the successor to be a map $b_s' : \Gamma.\sum_\bN B
-\to \Gamma.\sum_\bN B$ such that $\pi(\sum_\bN B) \circ b_s' = \pi(\sum_\bN B)$ and $\mathtt{fst} \circ b_s'
-= s \circ \mathtt{fst}$. Similarly, we can change the premise for the zero case to be $b_z' : \Gamma \to
-\Gamma.\sum_\bN B$ such that $\pi(\sum_\bN B) \circ b_z' = 1_\Gamma$ and $\mathtt{fst} \circ b_z' = z$.
-Effectively then, this depedent algebra $B$ over $\bN$ is equivalent to an algebra $b'$ on $\sum_\bN B$,
-so a map $b' : F(\sum_\bN B) \to \set{\sum_\bN B}^n$, such that $\fst^n \circ b' = a' \circ F\fst$, i.e.
-such that $\fst$ is an algebra homomorphism.
+% \section{Inductive Types}
+% In this section we show how to describe inductive and coinductive types using finite 2-limits. While the details
+% differ quite a
+% bit, the presentation of inductive types here was inspired by the presentation in \cite{basold2015}, where
+% inductive types are defined as initial dialgebras for a pair of functors, the signature for the type, of a
+% specific shape. To make sure that we have a well-behaved induction principle, we will require the existence
+% of dependent sum types. This allows the derivation of the induction principle from the non-dependent recursion
+% principle given by initiality.
+%
+% We will base the presentation on comprehension categories, since the definition of terms as substitutions
+% turns out to be more convenient in describing the constructors, eliminators. and computation rules of
+% inducitve types. However, the specfic construction is not inherently limited to comprehension categories,
+% and should be possible to generalize to other models of type theory, such as natural models.
+%
+% \begin{definition}
+%   A \emph{data type signature} with parameters $p : P \to \cC$ is a tuple $(F,\phi)$ where $F$ is a 1-cell
+%   $P \pb[p]{u} \cU \loose \cC^n$ and $\phi$ is a 2-cell $F \to \delta^n u \pi_2$, where $\delta^n : \cC
+%   \to \cC^n$ is the diagonal map. The intuition is that $F$ determines the arguments for each constructor
+%   by extending the given context, and $\phi$ connects the extend context back to the original one to
+%   facilitate the elimination rule.
+%
+%   An algebra for a signature $(F,\phi)$ is a map $(\alpha, A) : X \to P \pb[p]{u} \cU$ equipped with a 2-cell
+%   $a : F(\alpha,A) \to \delta^n\set{A}$ such that $\phi(\rho,A) = \delta^n\pi A \circ a$, and an algebra homomorphism
+%   $(\alpha,A,a) \to (\beta, B,b)$ is a 2-cell $(\rho,f) : (\alpha,A) \to (\beta,B)$ such that $\delta^n\set{f}
+%   \circ a = b \circ F(\rho,f)$.
+% \end{definition}
+% \begin{remark}
+%   An algebra for a signature $(F,\phi)$ is an $(F,\delta^n\set{\pi_2})$-\emph{dialgebra} subject to an
+%   additional condition ensuring compatibility with the 2-cell $\phi$. Algebra homomorphisms are exactly
+%   maps of dialgebras. 
+% \end{remark}
+%
+% \begin{remark}
+%   For a fixed signature $(F,\phi)$, we can using only finite $\sF$-weighted limits construct an object
+%   of algebras $(F,\phi)\Alg$, such that any $(F,\phi)$-algebra is the same as a map into $(F,\phi)\Alg$,
+%   and vice versa. This object comes equipped with a universal $(F,\phi)$-algebra, with underlying map
+%   $R_{(F,\phi)} : (F,\phi) \Alg \to P \pb[u]{p} \cU$ and 2-cell $\rho : F R_{(F,\phi)} \to \delta^n\set
+%   {R_{(F,\phi)}}$.
+% \end{remark}
+%
+% We want an inductive type over a signature $(F,\phi)$ to be an inital algebra. Since this algebra is supposed
+% to exist over aribtary parameters, this is best modeled by a map from the object of parameters to the object
+% of algebras.
+%
+% \begin{definition}
+%   An inductive type for a signature $(F,\phi)$ is a map $\mu(F,\phi) : P \to (F,\phi)\Alg$ such that
+%   $\pi_1 R_{(F,\phi)} \mu(F,\phi) = 1_P$ and for every $A : X \to (F,\phi)\Alg$, there exists a unique
+%   map $h : \mu(F,\phi)\pi_1R_{(F,\phi)} A \to A$ such that $\pi_1R_{(F,\phi)} h = 1_{\pi_1R_{(F,\phi)}A}$
+% \end{definition}
+% \begin{lemma}
+%   Let a signature $(F,\phi)$ and $\mu(F,\phi) : P \to (F,\phi)\Alg$ be given. Then the following are equivalent:
+%   \begin{enumerate}
+%     \item $\mu(F,\phi)$ is an inductive data type.
+%     \item $\mu(F,\phi)$ is left adjoint to $\pi_1 R_{(F,\phi)} : (F,\phi)\Alg \to P$ with identity unit.
+%   \end{enumerate}
+% \end{lemma}
+% \begin{proof}
+%   For $1 \implies 2$, note that by taking $A = 1_{(F,\phi)\Alg}$, we see that there exists a unique map $
+%   \epsilon : \mu(F,\phi)\pi_1R_{(F,\phi)} \to 1_{(F,\phi)\Alg}$ such that $\pi_1 R_{(F,\phi)}\epsilon =
+%   1_{\pi_1 R_{(F,\phi)}}$. Thus it only remains to show that $\epsilon\mu(F,\phi) = 1_{\mu(F,\phi)}$. But
+%   there exists by uniqueness only one map $h : \mu(F,\phi)\pi_1R_{(F,\phi)}\mu(F,\phi) = \mu(F,\phi) \to
+%   \mu(F,\phi)$ such that $\pi_1 R_{(F,\phi)} h = 1_{\pi_1 R_{(F,\phi)}\mu(F,\phi)} = 1_{1_{(F,\phi)\Alg}}.$
+%   Since the identity map $1_{\mu(F,\phi)}$ and $\epsilon\mu(F,\phi)$ both satisfy this property, we conclude
+%   that they are the same, thereby establishing that $\epsilon$ is the counit of an adjunction $\mu(F,\phi)
+%   \dashv \pi_1R_{(F,\phi)}$ with identity unit.
+%
+%   For $2 \implies 1$, let $A : X \to (F,\phi)\Alg$ be given. Clearly $\epsilon A$ is a map $\mu(F,\phi)\pi_1
+%   R_{(F,\phi)}A \to A$ satisfying the desired property, so it remains to show that this map is unique. To that
+%   end, let $h : \mu(F,\phi)\pi_1R_{(F,\phi)}A \to A$ be given such that $\pi_1R_{(F,\phi)}h = 1_{\pi_1R_{(F,
+%   \phi)}A}$. Note that
+%   \[\epsilon A \circ \mu(F,\phi) \pi_1 R_{(F,\phi)} h = h \circ \epsilon \mu(F,\phi)\pi_1 R_{(F,\phi)}A = h,\]
+%   but $\pi_1 R_{(F,\phi)} h = 1_{\pi_1 R_{(F,\phi)}}$, so we see that
+%   \[\epsilon A = \epsilon A \circ \mu(F,\phi)\pi_1 R_{(F,\phi)} h = h,\]
+%   as desired.
+% \end{proof}
+%
+% \begin{remark}
+%   The data types described here satisfy the $\eta$-rule, since $\epsilon\mu(F,\phi) = 1_{\mu(F,\phi)}$. We could
+%   drop this property by asking for a weakly initial object, rather than an initial object. This would be removing
+%   the uniqueness requirement from the definition of an inductive data type, or equivalently asking for a map
+%   $\epsilon : \mu(F,\phi)\pi_1R_{(F,\phi)} \to 1_{(F,\phi)\Alg)}$ such that $\pi_1 R_{(F,\phi)}\epsilon =
+%   1_{\pi_1R_{(F,\phi)}}$.
+% \end{remark}
+%
+% \begin{example}[Empty type]
+%   The empty type has no parameters, meaning we take $p = 1_\cC : \cC \to \cC$, and no constructors. Thus we
+%   take $F$ to be the unique map into the 2-terminal object, and $\phi$ is trivially determined by this.
+%   We use $\bot = \mu(F,\phi)$ to denote this inductive type. 
+%
+%   An algebra for $(F,\phi)$ is simply a type $A : X \loose \cU$ (up to isomorphism), and the universal property
+%   then always gives us a map $\set{\bot uA} \to \set{A}$, which we interpret to say that for any context
+%   containing $\bot$, we have an element of any type.
+% \end{example}
+%
+% \begin{example}[Unit type]
+%   The unit type also has no parameters, so $p = 1_\cC : \cC \to \cC$. It has exactly one constructor, and
+%   this constructor takes no arguments. Thus we take $F = p\pi_1$ and $\phi = 1_{p\pi_1}$. We denote the
+%   inductive type for this signature by $\top$.
+%
+%   An algebra for $(F,\phi)$ is a type $A : X \to \cU$ with a substitution $a : uA \to \set{A}$ such that
+%   $\pi A \circ a = 1_{uA}$, i.e.\ a term of type $A$. We use $\top$ also to denote the underlying type
+%   $\pi_2 R_{(F,\phi)}\top$ of the initial algebra. The constructor $* : u\top \to \set{\top}$ is the map
+%   given by the algebra, formally $\pi_2 \rho_{(F,\phi)}$. The universal property then gives us a map
+%   $\set{\pi_2R_{(F,\phi)}\epsilon A} : \set{\top uA} \to \set{A}$ such that $\set{\pi_2 R_{(F,\phi)}\epsilon A}
+%   \circ * = a \circ p\pi_1R_{(F,\phi)}\epsilon A = a$, which is exactly the
+%   $\beta$-rule.
+% \end{example}
+%
+% \begin{example}[Binary sum types]
+%   Two constructors, $P = \cU \pb[u]{u} \cU$, $p = u\pi_1 = u\pi_2$, $F_1 = \set{\pi_1\pi_1}$, $F_2 =
+%   \set{\pi_2\pi_1}$. 
+% \end{example}
+%
+% \begin{example}[Natural numbers]
+%   No parameters, so $p = 1_\cC : \cC \to \cC$. Two constructors, the first with no arguments, so take
+%   $F_1 = u\pi_2 = p\pi_1$, and the second with one, so take $F_2 = \set{\pi_2}$. An algebra is a type
+%   $A : X \to \cU$ with two substitutions, $a_z : uA \to \set{A}$ and $a_s : \set{A} \to \set{A}$.
+%   The initial algebra is a type $\bN : \cC \to \cU$ with two constructors $z : 1_\cC \to \set{\bN}$ and
+%   $s : \set{\bN} \to \set{\bN}$, and the eliminator into $A$ gives $\epsilon A : \bN \to A$ such that
+%   $\set{\pi_2 \epsilon A} \circ s = a_s \circ \set{\pi_2 \epsilon A}$ and $\set{\pi_2 \epsilon A} \circ z
+%   = a_z$.
+% \end{example}
+%
+% \begin{example}[W-types]
+%   Suppose the theory has function types, whose type former we denote by $Fun : \cU \pb[u]{u} \cU \to \cU$.
+%   $W$-types are parameterized by a type $A$ and a family $B$ indexed over the type. Thus we take $P = (\cU
+%   \pb[\set{-}] {u} \cU)$ and $p = u\pi_1$. It has a single constructor, so $F : P \pb[p]{u} \cU \to \cC$,
+%   and this constructor takes an element of the first type $A$ and, letting $X = \pi_2$, a map $Fun(B, X[
+%   \pi A])$. Thus we take $F = \set{Fun(\pi_2\pi_1, r(\pi\pi_1\pi_1, \pi_2))}$, where $r : \cC \comma u \to
+%   \cU$ is the lifting map for the fibration $u$ and $(\pi\pi_1\pi_1, \pi_2) : P \pb[p]{u} \cU \to \cC
+%   \comma u$ is the map induced by the 2-cell $\pi\pi_1\pi_2 : \set{\pi_1\pi_1} \to u\pi_1\pi_1 = u\pi_2$.
+% \end{example}
+%
+% \todo{Find better notation than the pointfree style used here. Also, $\pi_i$ is maybe a bad choice for the
+% projections.}
+%
+% The one thing missing now is the general induction principle, which is where we require dependent sum types.
+% Consider the induction rule for natural numbers:
+% \[\infer{\Gamma.\bN \vdash B\;\cU \\ b_z : \Gamma \to \Gamma.B[z] \\ \pi B[z] \circ b_z = 1_\Gamma \\
+%   b_s : \Gamma.\bN.B  \to \Gamma.\bN.B \\ \pi B \circ b_s = s \circ \pi B}
+%   {\Gamma.\bN\vdash \elim(B,b_z,b_s) : B}\]
+% Using dependent sum types, we can change the premise for the successor to be a map $b_s' : \Gamma.\sum_\bN B
+% \to \Gamma.\sum_\bN B$ such that $\pi(\sum_\bN B) \circ b_s' = \pi(\sum_\bN B)$ and $\mathtt{fst} \circ b_s'
+% = s \circ \mathtt{fst}$. Similarly, we can change the premise for the zero case to be $b_z' : \Gamma \to
+% \Gamma.\sum_\bN B$ such that $\pi(\sum_\bN B) \circ b_z' = 1_\Gamma$ and $\mathtt{fst} \circ b_z' = z$.
+% Effectively then, this depedent algebra $B$ over $\bN$ is equivalent to an algebra $b'$ on $\sum_\bN B$,
+% so a map $b' : F(\sum_\bN B) \to \set{\sum_\bN B}^n$, such that $\fst^n \circ b' = a' \circ F\fst$, i.e.
+% such that $\fst$ is an algebra homomorphism.
 
 
 
