@@ -94,6 +94,7 @@ whereas in the theory of functors we take the one generating morphism to be tigh
 %   $\sF$ is cartesian closed.
 % \end{corollary}
 %
+
 \begin{lemma}
   The functors $\bone_\lambda : \bzero \into \bone$ and $\bone_\tau : \bone \into \bone$ are the
   representables of $\sF$, in the sense that for any $A \in \sF$, we have $A_\tau \cong \sF(\bone_%
@@ -136,68 +137,58 @@ Any $\sF$-category $\bA$ gives rise two 2-categories: the 2-category of tight mo
 \lambda$ and its locally full sub-2-category of tight morphisms $\bA_\tau$. We use $J_\bA$ to
 denote the inclusion $\bA_\tau \embed \bA_\lambda$ and
 
-We let $\bF$ denote the $\sF$-category of $\sF$-categories, whose tight morphisms are $\sF$-%
-functors and loose morphisms are functors on the loose categories, and whose 2-cells are $\sF$-%
-natural transformations, i.e. natural transformations on whose components are all tight.
-Furthermore, given two $\sF$-categories $\bA,\bB$, we let $[\bA,\bB]$ denote the $\sF$-category
-whose objects are $\sF$-functors $\bA \to \bB$, whose tight morphisms are $\sF$-natural
-transformations, loose morphisms are natural transformations whose componenets need not be
-tight, and whose 2-cells are modifications.
+We let $\bF$ denote the $\sF$-category of $\sF$-categories, as shown exists in \cref{ex:self enrichment}.
+Its tight morphisms are $\sF$-functors and its loose morphisms are ordinary functors on the loose part.
+The 2-cells are $\sF$-natural transformations, i.e. natural transformations on whose components are all
+tight. Furthermore, given two $\sF$-categories $\bA,\bB$, we let $[\bA,\bB]$ denote the functor $\sF$-%
+category as described in \cref{ex:enriched functor cateory}. Thus its objects are $\sF$-functors $\bA \to
+\bB$, its tight morphisms are $\sF$-natural transformations, its loose morphisms are natural transformations
+whose componenets need not be tight, and its 2-cells are modifications.
 
-Any 2-category $K$ can be regarded as an $\sF$-category in two natural ways: taking only
-identities to be tight yields what we call the \emph{inchordate} $\sF$-category $K^-$, and 
-dually taking all morphisms to be tight yields the \emph{chordate} $\sF$-category $K^+$. The
-operations of taking a 2-category to its inchordate or chordate $\sF$-category extends to
-functors $2\Cat \to \sF\text-\Cat$, and these are respectively left and right adjoint to the
-functor $(-)_\lambda : \sF\text-\Cat \to 2\Cat$ taking a $\sF$-category to its underlying 2-%
-category of loose morphisms.
-
+\begin{definition}[Chordate and inchordate $\sF$-categories]
+  Any 2-category $K$ can be regarded as an $\sF$-category in two natural ways: taking only
+  identities to be tight yields what we call the \emph{inchordate} $\sF$-category $K^-$, and 
+  dually taking all morphisms to be tight yields the \emph{chordate} $\sF$-category $K^+$. The
+  operations of taking a 2-category to its inchordate or chordate $\sF$-category extends to
+  functors $2\Cat \to \sF\text-\Cat$, and these are respectively left and right adjoint to the
+  functor $(-)_\lambda : \sF\text-\Cat \to 2\Cat$ taking a $\sF$-category to its underlying 2-%
+  category of loose morphisms.
+\end{definition}
 
 \section{Limits in \texorpdfstring{$\sF$}{F}-categories}
 Since we will be considering $\sF$-enriched finite limit theories, it will be helpful to have an
-explicit description of $\sF$-enriched limits. The goal of this section is therefore to provide
-such an explicit description, unfolding the notions of weighted limits in enriched categories in
-the special case of enrichment in $\sF$. This is also useful in understanding how to find the
-correct weights for the different limits we will construct. For example, we will see later how
-cartesian morphisms, in the context of fibrations, can be described in terms of a certain weighted
-cone being a limiting cone, similar to how monomorphisms can be described in terms of a certain
-square being a pullback. Finding the correct weight for this limit is however not immediately
-obvious, and the explicit description is helpful also in proving the proposition that morphisms
-for which this weighted cone is limiting is in fact cartesian, and vice versa.
+explicit description of $\sF$-enriched limits in a similar style to that of \cref{prop:chr of 2-limits}.
+In fact, much of that description works out the same for $\sF$-limits, with tightness conditions
+threaded throughout. As with the case of 2-limits, the usefulness of having such a characterisation
+of $\sF$-limits will be instrumental in understanding what weights are correct for the notion we
+want.
 
-\begin{definition}
-  Let $\bJ$ be an $\sF$-category. A $\bJ$-shaped weight is a functor $W : \bJ \to \bF$, where $\bF$
-  is the $\sF$-category induced by the cartesian closed structure of $\sF$. Given a $\bJ$-shaped
+\begin{proposition}
+  Let $\bJ$ be an $\sF$-category. A $\bJ$-shaped weight is an $\sF$-functor $W : \bJ \to \bF$, where
+  $\bF$ is the $\sF$-category induced by the cartesian closed structure of $\sF$. Given a $\bJ$-shaped
   diagram $D : \bJ \to \bA$ in an $\sF$-category $\bA$, a loose $W$-weighted cone $(a,\alpha)$
-  from $a \in \bA$ to $D$ is a loose natural transformation $W \loose \bA(a,D)$. Concretely,
-  $\alpha$ consists of:
-  \begin{itemize}
-    \item for each object $x \in \bJ$ and $r \in W(x)$, a morphism $\alpha_{x,r} : a \loose Dx$,
-      and
-    \item for each $p : r \to s \in W(x)$, a 2-cell $\alpha_{x,p} : \alpha_{x,r} \to \alpha_{x,s}$,
-      such that
-    \item for each morphism $f : x \loose y$ in $\bJ$ and $r \in W(x)$, we have $Df \circ \alpha_%
-      {x,r} = \alpha_{y,W(f)(r)}$, and
-    \item for each $p : r \to s$ in $W(x)$ we have $Df \star \alpha_{x,p} = \alpha_{y,W(f)(p)}$.
-  \end{itemize} 
-  The cone $\alpha$ is \emph{tight} if, whenever $r \in W(x)$ is a tight object, the arrow
-  $\alpha_{x,r} : a \to Dx$ is tight.
+  from $a \in \bA$ to $D$ is a loose natural transformation $W \loose \bA(a,D)$, i.e. a $W_\lambda$-%
+  weighted cone for $D_\lambda$ in terms of 2-categories.
 
-  A morphism of two parallel cones $\alpha,\beta \in [\bJ,\bF](W,\bA(a,D))$ is a modification,
-  which explicitly works out to be a family $(m_x : \alpha_x \to \beta_x)_{x \in \bJ}$ such
-  that for any $f : x \loose y \in \bJ$, we have $m_y \star Wf = \bA(a,Df) \star m_x$. Concretely,
-  each $m_x : \alpha_x \to \beta_x$ is a 2-cell in $\bF$, and so an assignment for each
-  $r \in W(x)$ a morphism $m_{x,r} : \alpha_{x,r} \to \beta_{x,r}$ such that for every $p :
-  r \to s \in W(x)$, we have $m_{x,s} \circ \alpha_{x,p} = \beta_{x,p} \circ m_{x,r}$,
-  and for every $f : x \loose y \in \bJ$, we have $m_y \star Wf = \bA(a,Df) \star m_x$
-  (where $m_y \star Wf : \alpha_y \circ Wf \to \beta_y \circ Wf$), which
-  works out to be for every $r \in W(x)$ the condition that
+  If furthermore $\alpha_{x,r}$ (as given by \cref{prop:desc of 2-limits}) is a tight morphism of $\bA$
+  for each tight objet $r \in W(x)$ and $x \in \bJ$, we say that the cone is \emph{tight}. 
+  
+  As with \cref{prop:chr of 2-limits}, we see that a morphism of two parallel cones $\alpha,\beta \in
+  [\bJ,\bF](W,\bA(a,D))$, i.e. a modification, works out to be a family $(m_{x,r} : \alpha_{x,r} \to
+  \beta_{x,r})_{x \in \bJ, r \in W(x)}$ such that for every $p : r \to s \in W(x)$ we have
+  \[m_{x,s} \circ \alpha_{x,p} = \beta_{x,p} \circ m_{x,r},\]
+  and for every $f : x \loose y \in \bJ$ and for every $r \in W(x)$ we have
   \[m_{y,Wf(r)} = Df m_{x,r} : Df \circ \alpha_{x,r} = \alpha_{y,Wf(r)} \to \beta_{y,Wf(r)}
   = Df \circ \beta_{x,r}.\]
-\end{definition}
+\end{proposition}
+\begin{proof}
+  As with \cref{prop:desc of 2-limits}, this is simply given by unfolding the many layer of definitions.
+\end{proof}
 
+As with \cref{prop:chr of 2-limits}, we will require a notion of pullback with cones for $\sF$-weighted
+digrams as well.
 \begin{definition}[Pullback of cones]
-  Let $\bJ, \bA$ be $\sF$-categories, $W : \bJ \to \bF$ a weight, and $D : \bJ \to \bA$ a diagram.
+  Let $\bJ$, $\bA$ be $\sF$-categories, $W : \bJ \to \bF$ a weight, and $D : \bJ \to \bA$ a diagram.
   Given a $W$-weighted cone $(a,\alpha)$ over $D$ and a morphism $f : b \to a$ in $\bA$, we define
   the pullback of $(a,\alpha)$ along $f$ as the cone $(b,f^*\alpha)$ defined by
   \[(f^*\alpha)_{x,r} = \alpha_{x,r} \circ f\]
@@ -209,19 +200,19 @@ for which this weighted cone is limiting is in fact cartesian, and vice versa.
   \to f^*\alpha'$ by
   \[(f^*m)_{x,r} = m_{x,r} \star f\]
 
-
-  Furthermore, for $\phi : f \to g : b \to a$ a 2-cell in $\bA$, we define a modification $\phi^*\alpha :
+  Furthermore, for $\phi : f \to g : b \to a$ a 2-cell in $\bA$, we define the modification $\phi^*\alpha :
   f^*\alpha \to g^*\alpha$ by \((\phi^*\alpha)_{x,r} = \alpha_{x,r} \star \phi\).
 \end{definition}
 
-\begin{definition}[Weighted Limit]
+We briefly recount the notion of enriched limit in the special case of $\sF$-categories:
+\begin{definition}[{Weighted limit (see \cref{def:weighted limit})}]
   Given a shape $\sF$-category $\bJ$ and weight $W : \bJ \to \sF$, the $W$-weighted limit of a diagram
   $D : \bJ \to \bA$ in an $\sF$-category $\bA$ is an object $L \in \bA$ such that there exists an
   isomorphism in $\sF$
   \[\bA(-,L) \cong [\bJ,\bF](W,\bA(-,D)).\]
 \end{definition}
 
-\begin{proposition}\label{prop:chr of limits}
+\begin{proposition}\label{prop:chr of F-limits}
   Given a weight $W : \bJ \to \sF$, a diagram $D : \bJ \to \bA$ has a limit in $\bA$ if and only if there
   exists an object $\ell \in \bA$ and a tight cone $L : W \to \bA(\ell,D)$ with the property that
   \begin{enumerate}
@@ -233,67 +224,39 @@ for which this weighted cone is limiting is in fact cartesian, and vice versa.
   We will call a cone satisfying these properties a limiting cone.
 \end{proposition}
 \begin{proof}
-  We start by unfolding the naturality squares of the isomorphism $h : [\bJ,\bF](W,\bA(-,D)) \cong \bA(-,\ell)$
-  which is supposed to exist for $\ell$ to be the $W$-weighted limit of $D$. For each $a \in \bA$, we find that
-  $h_a : [\bJ,\bF](W,\bA(a,D)) \cong \bA(a,\ell)$ is an isomorphism in $\bF$, i.e.\ an invertible functor which
-  preserves and reflects tight morphisms. Naturality tells us that given a morphism $\phi : b \to a$, we have
-  that $h_b \circ \phi^* = \bA(\phi,\ell) \circ h_a$, where $\phi^*$ denotes the operation of pulling back a 
-  cone along a morphism of $\bA$. On cones $\alpha : W \loose \bA(b,\ell)$, this gives us that $h_b(\phi^*
-  \alpha) = h_a(\alpha) \circ \phi$, and on modifactions $m : \alpha \to \alpha' : W \loose \bA(b,D)$, we
-  have $h_b(\phi^*m) = h_a(m) \star \phi$.
-
-  Now, given a natural isomorphism $h$ as above, we can consider the cone $L = h^{-1}(\id_\ell)$. Given any
-  other cone $\alpha : W \loose \bA(a,D)$, naturality tells us that
-  \[h_a(h_a(\alpha)^*L) = h_\ell(L) \circ h_a(\alpha) = \id_\ell \circ h_a(\alpha) = h_a(\alpha),\]
-  so $h_a(\alpha)^*L = \alpha$ since $h$ is an isomorphism. Similarly, for a modification $m : \alpha \to
-  \alpha'$ we find that
-  \[h_a(h_a(m)^*L) = h_a(m) = h_\ell(L) \star h_a(m) = \id_\ell \star h_a(m) = h_a(m),\]
-  so again $h_a(m)^*L = m$.
-
-
-  In the other direction, suppose we are given an object $\ell \in \bA$ and cone $L : W \loose \bA(\ell,D)$
-  such that (1) and (2) hold. Then we construct the natural isomorphism $h : [\bJ,\bF](W,\bA(-,D)) \cong
-  \bA(-,\ell)$ by $h_a(\alpha) = h_\alpha$ and $h_a(m : \alpha \to \alpha') = h_m$. It is not hard to verify
-  that $h_a$ is an isomorphism for each $a \in \bA$, so we focus on naturality: given $\phi : b \to a \in
-  \bA$, we must show that $h_b \circ \phi^* = \bA(\phi,\ell) \circ h_a$. On cones, this amounts to showing
-  that for any cone $\alpha : W \loose \bA(a,D)$, we have that $h_b(\phi^*\alpha) = h_a(\alpha) \circ \phi$.
-  But
-  \[
-    \phi^*\alpha = \phi^*h_a(\alpha)^*L = (h_a(\alpha) \circ \phi)^*L,
-  \]
-  so uniqueness of $h_b(h_a(\alpha) \circ \phi)$ gives us that $h_b(\phi^*\alpha) = h_a(\alpha) \circ \phi)$.
-  For the naturality condition on 2-cells, let $m : \alpha \to \alpha'$ be a modification. We must show that
-  $h_b(\phi^*m) = h_a(\alpha) \star m$, which much like for cones follows from uniqueness:
-  \[\phi^*m = \phi^*(h_a(m)^*L) = (h_a(m)\star\phi)^*L,\]
-  so $h_b(\phi^*m) = h_a(m)\star\phi$.
-
-  Finally, for preservation and reflection of tightness, note that by assumption $h_a(\alpha)$ is tight if and
-  only if $\alpha$ is, so $h_a$ preserves and reflects tightness by definition.
+  The proof for the isomorphisms is exactly the same as for \cref{prop:chr of 2-limits}, and so we only consider
+  the tightness preservation and reflection of the isomorphism $h_a$ constructed as there. In particular, note
+  that $h_a$ is an isomorphism in $\sF$, and so $h_a(\alpha)$ is tight if and only if $\alpha$ is.
 \end{proof}
+Furthermore, as aluded to throughout this section, any $\sF$-limit in an $\sF$-category $\bA$ produces a 2-limit in
+the 2-category $\bA_\lambda$ of loose morphisms, and any 2-limit in $\bA_\lambda$ for which the universal cone is
+tight and for which the universal morphisms induced by cones $\alpha$ are tight if and only if the cones $\alpha$
+are tight is an $\sF$-limit. In particular, we see that an $\sF$-limit is essentially the same as a 2-limit that
+respects and detects tightness of morphisms in a specific way. 
 
-Furthermore, note that any $\sF$-limit in an $\sF$-category $\bA$ produces a 2-limit in the 2-category $\bA_
-\lambda$ of loose morphisms, and any 2-limit in $\bA_\lambda$ for which the universal cone is tight and
-for which the universal morphisms induced by cones $\alpha$ are tight if and only if the cones $\alpha$ are
-tight is an $\sF$-limit.
+% Since $\sF$-limits form the core of our constructions, it will be useful to have a few examples of them, to help
+% build intuition.
+%
+% \begin{example}[Tight limits]
+%   Let $J$ be a 2-category, $W : J \to \Cat$ a weight. We call limits weighted by $W^+ : J^+ \to \bF$ \emph{tight
+%   limits}. These will turn out to be important to the theories we define later, since we often want the structural
+%   maps and projections to be preserved strictly for simplicity.
+%
+%   Some examples of tight limits include the following:
+%   \begin{itemize}
+%     \item  A \emph{tight terminal object} in an $\sF$-category $\bA$ is the tight limit of the empty diagram and
+%       weight. It is of an object $t \in \bA$, such that for every object $a \in \bA$ there exists a unique tight
+%       1-cell $!_a : a \to t$, and the only 2-cell $!_a \to\mathop{!}_a$ is identity. 
+%     \item Let $J$ be a discrete $\sF$-category, meaing it has only identity 1-cells and 2-cells, and thus all
+%       morphisms are tight, and let $W : J \to \Cat$ be the functor that is constantly the terminal category.
+%       The tight limits corresponding to $J$, $W$ are then tight products, and so products whose projections are
+%       all tight, and such that a the induced map from a morphisms is tight if and only if all of the morphisms
+%       are tight.
+%   \end{itemize}
+% \end{example}
 
-\begin{example}[Tight limits]
-  Given any 2-category $J$ and weight $W : J \to 2\Cat$, we can consider the corresponding
-  chordate $\sF$-category $J^+$ and weight $W^+ : J^+ \to \sF\text-\Cat$ taking every object
-  $x$ of $J$ to the chordate $\sF$-category $W(x)^+$. 
-\end{example}
-
-\begin{example}[Tight terminal object]
-  A \emph{tight terminal object} in an $\sF$-category $\bA$ is an object $t \in \bA$, such that for
-  every object $a \in \bA$ there exists a unique tight 1-cell $!_a : a \to t$, and the only 2-cell
-  $!_a \to\mathop{!}_a$ is identity. 
-\end{example}
-
-
-\begin{example}[Tight products]
-  Let $J$ be a discrete $\sF$-category, meaing it has only identity 1-cells and 2-cells, and thus all
-  morphisms are tight.
-\end{example}
-
+Since in a limit theory the models are limit preserving functors, and we're aiming to generalize those, we clearly
+need to generalize the preservation of limits:
 \begin{definition}[{Preservation of limits \cite[§3.2]{kelly1982a}}]
   An $\sF$-functor $F : \bA \to \bB$ preserves $W$-weighted limits for some weight $W : \bJ \to \bF$ if,
   for every diagram $D : \bJ \to \bA$ and limiting cone $L : W \to \bA(\ell, D)$, the image $F L$ of $L$
@@ -305,11 +268,15 @@ tight is an $\sF$-limit.
   weighted limits for every weight $W \in \Phi$.
 \end{definition}
 
+Similarly, our limit theories are finitely complete categories, which means we also need completeness:
 \begin{definition}[Completeness]
   For $\Phi$ a class of weights and $\bA$ an $\sF$-category, we say that $\bA$ is $\Phi$-complete if for
   every weight $W \in \Phi$ all diagrams $\bJ_W \to \bA$ have a limit.
 \end{definition}
 
+A key result for us is that, much like in the 1-categorical case, we can freely complete an $\sF$-category
+under a chose class of weights. This free completion is what will allow us to turn finite limit $\sF$-sketches
+into finite limit $\sF$-theories later. 
 \begin{theorem}\label{thm:free completion}
   Let $\Phi$ be a set of weights with small domain. We can freely complete any $\sF$-category $\bA$ under
   $\sF$-limits, in the sense that there exists an $\sF$-category $\hat\bA$ and fully faithful $\sF$-%
@@ -369,7 +336,6 @@ controlled level of weakness in the categories of models, specified by the theor
 Every $\sF$-category $\bA$ gives rise to a $\Phi$-limit sketch by taking $\cC$ to be the class of
 $\Phi$-weighted limit cones in $\bA$. We shall denote this sketch by $\sS_\Phi(\bA)$.
 
-\todo{Remark on size issues and explain concretely what smallness means in this context.}
 \begin{theorem}
   Let $\Phi$ be a class of weights and $(\bA,\cC)$ be a small sketch. Then there exists a $\Phi$-complete
   $\sF$-category $\Th(\bA,\cC)$ and faithful $\sF$-functor $\iota : \bA \to \Th(\bA,\cC)$ taking the cones
@@ -379,7 +345,6 @@ $\Phi$-weighted limit cones in $\bA$. We shall denote this sketch by $\sS_\Phi(\
   where $[(\bA,\cC), \sS_\Phi(\bB)]_w$ denotes the $\sF$-category of sketch-homomorphisms, $w$-natural
   transformations, and modifications. Furthermore, this equivalence natural in $\bB$.
 \end{theorem}
-\todo{Check that this is actually fully correct, and maybe write down a proof.}
 \begin{remark}
   In the strict case, this is proven as theorem 6.23 in \cite{kelly1982a} for general enriched categories.
   A proof for the weak case generalizes relatively straightforwardly from this, though is quite invloved
@@ -387,7 +352,7 @@ $\Phi$-weighted limit cones in $\bA$. We shall denote this sketch by $\sS_\Phi(\
 \end{remark}
 
 
-\section{Examples of theories}
+\subsection{Examples of \texorpdfstring{$\sF$}{F}-theories}
 To get a better understanding of how these theories work, and what their 2-categories of models look like,
 we present a few examples of $\sF$-sketches and $\sF$-theories.
 
@@ -449,12 +414,13 @@ we present a few examples of $\sF$-sketches and $\sF$-theories.
 
 \section{From syntax to \texorpdfstring{$\sF$}{F}-theories}
 In this section we show a correspondence between the syntax of deductive theories, presented by judgements and
-inference rules, and finite limit $\sF$-theories. The connection is generally as follows: a (dependent) judgement
-$d\;\cD \vdash j\;\cJ$ is interpreted is a tight morphism $j : \cJ \to \cD$, with the idea that the fibers of
-$j$ over any instance $d\;\cD$ corresponds to $d\;\cD \vdash j\;\cJ$. A non-dependent judgement can then be
-viewed as a judgement over the terminal object $1$, so that the dependency is trival. Equivalently a non-%
-dependent judgement is just an object. The 2-categorical structure gives us, for each judgement $\cJ$, a
-judgement of morphisms $\cJ^\to$. In modelling type theory, we would for example have a judgement of contexts
+inference rules, and finite limit $\sF$-theories, much in the style of \cite{coraglia2024a}. The connection is
+generally as follows: a (dependent) judgement $d\;\cD \vdash j\;\cJ$ is interpreted is a tight morphism $j : \cJ
+\to \cD$, with the idea that the fibers of $j$ over any instance $d\;\cD$ corresponds to $d\;\cD \vdash j\;\cJ$.
+A non-dependent judgement can then be viewed as a judgement over the terminal object $1$, so that the dependency
+is trival. Equivalently a non-dependent judgement is just an object. An additional feature of this scheme is that,
+for any non-dependent judgement $\cJ$, taking the tight arrow object $\cJ^\to$ gives a judgement of morphisms
+dependent on $\cJ \times \cJ$. In modelling type theory, we would for example have a judgement of contexts
 $\vdash \ctx$, and then a judgement of substitions $\Gamma\ctx, \Delta\ctx \vdash \sigma \ctx^\to$. Given a
 (dependent) judgement of types over contexts $\rty : \ty \to \ctx$, we would then want to formulate a rule for
 stability under such substitutions:
@@ -471,54 +437,55 @@ triangle commutes.
 If we now note that $\ctx^\to \pb[\cod]{\rty} \ty \cong \ctx \comma \rty$, we see that $\sub$ is exactly as the
 morphism $\ell : \ctx \comma \rty \to \rty$ specifying the domain of the lifting in a fibration $\ty \to \ctx$.
 
+In short, we model non-dependent judgements as objects, dependent judgements as tight morphisms, and rules as
+loose morphisms.
 
-\begin{proposition}
-  Let $A$ be any object of an $\sF$-category $\bA$ with finite weighted $\sF$-limits. Then any 2-cell $\rho : a
-  \to b : X \to A^\to$ is $\cod$-cartesian if and only if the following square is a pullback in $\bA(X,A)$
-  \[\begin{codi}[tetragonal=base 5.5em height 4.5em]
-    \obj {\dom a & \dom b \\ \cod a & \cod b \\};
-    \mor (dom a) \dom\rho:-> (dom b) \lambda b:-> (cod b);
-    \mor[swap] (dom a) \lambda a:-> (cod a) \cod\rho:-> (cod b);
-  \end{codi}\]
-\end{proposition}
-
-\begin{proposition}
-  Let $f : A \to B^\to$ be a morphism in an $\sF$-category $\bA$ with finite weighted $\sF$-limits. Then for any
-  2-cell $\rho : a \to b : X \to A$, the whiskering $f\rho$ corresponds to the commuting square
-  \[\begin{codi}[tetragonal=base 6.5em height 4.5em]
-    \obj {\dom fa & \dom fb \\ \cod fa & \cod fb \\};
-    \mor (dom fa) \dom f\rho:-> (dom fb) \lambda fb:-> (cod fb);
-    \mor[swap] (dom fa) \lambda fa:-> (cod fa) \cod f\rho:-> (cod fb);
-  \end{codi}\]
-\end{proposition}
-
-\begin{lemma}
-  For any fibration $p : A \to B$ and 2-cells $a \xrightarrow{n} b \xrightarrow{m} c : X \to A$, if $m\circ n$
-  and $m$ are $p$-cartesian, then so is $n$.
-\end{lemma}
-\begin{proof}
-  Suppose we are given a $p$-cartesian cone over $n$:
-  \[\begin{codi}[tetragonal=base 5.5em height 3.5em]
-    \obj { |(Y)| Y & |(X)| X & |(A)| A \\ & & |(B)| B \\};
-    \mor X ["b",name=x]:[->,bend left] A ["p",name=p]:-> B;
-    \mor X ["a",name=y,swap]:[->,bend right] A;
-    \mor y n:[-2>] x;
-    \mor Y ["x",name=a]:[->, bend left=5em] A;
-    \mor Y ["g",name=g]:-> X;
-    \mor Y ["pc",name=pa,swap]:[->, bend right=2em] B;
-    \mor[swap] a {{k}}:[-2>,slide=0.1em] X;
-    \mor[swap] pa {{l}}:[-2>,slide=0.4em, shorten=0.4em] X;
-  \end{codi}\]
-  Then we have that
-  \[p(mg \circ k) = pmg \circ pk = pmg \circ png \circ l = p(m \circ n)g \circ l,\]
-  so since $m \circ n$ is $p$-cartesian, there exists a unique map $\gamma : x \to a$ such that $p\gamma = l$
-  and $(m \circ n)g \circ \gamma = mg \circ k$. We still need to show that $ng \circ \gamma = k$, but this
-  follows from $m$ being $p$-cartesian, since $k$ is the unique map $\gamma'$ such that $mg \circ \gamma' = mg
-  \circ k$ and $p\gamma' = pk$. Since $mg \circ ng \circ \gamma = mg \circ k$ and $p(ng \circ \gamma) =
-  png \circ p\gamma = png \circ l = pk$, we see that $ng \circ \gamma$ also satisfies the properties of
-  $\gamma'$, and so we conclude that by uniqueness that $ng \circ \gamma = k$.
-\end{proof}
-
+% \begin{proposition}
+%   Let $A$ be any object of an $\sF$-category $\bA$ with finite weighted $\sF$-limits. Then any 2-cell $\rho : a
+%   \to b : X \to A^\to$ is $\cod$-cartesian if and only if the following square is a pullback in $\bA(X,A)$
+%   \[\begin{codi}[tetragonal=base 5.5em height 4.5em]
+%     \obj {\dom a & \dom b \\ \cod a & \cod b \\};
+%     \mor (dom a) \dom\rho:-> (dom b) \lambda b:-> (cod b);
+%     \mor[swap] (dom a) \lambda a:-> (cod a) \cod\rho:-> (cod b);
+%   \end{codi}\]
+% \end{proposition}
+%
+% \begin{proposition}
+%   Let $f : A \to B^\to$ be a morphism in an $\sF$-category $\bA$ with finite weighted $\sF$-limits. Then for any
+%   2-cell $\rho : a \to b : X \to A$, the whiskering $f\rho$ corresponds to the commuting square
+%   \[\begin{codi}[tetragonal=base 6.5em height 4.5em]
+%     \obj {\dom fa & \dom fb \\ \cod fa & \cod fb \\};
+%     \mor (dom fa) \dom f\rho:-> (dom fb) \lambda fb:-> (cod fb);
+%     \mor[swap] (dom fa) \lambda fa:-> (cod fa) \cod f\rho:-> (cod fb);
+%   \end{codi}\]
+% \end{proposition}
+%
+% \begin{lemma}
+%   For any fibration $p : A \to B$ and 2-cells $a \xrightarrow{n} b \xrightarrow{m} c : X \to A$, if $m\circ n$
+%   and $m$ are $p$-cartesian, then so is $n$.
+% \end{lemma}
+% \begin{proof}
+%   Suppose we are given a $p$-cartesian cone over $n$:
+%   \[\begin{codi}[tetragonal=base 5.5em height 3.5em]
+%     \obj { |(Y)| Y & |(X)| X & |(A)| A \\ & & |(B)| B \\};
+%     \mor X ["b",name=x]:[->,bend left] A ["p",name=p]:-> B;
+%     \mor X ["a",name=y,swap]:[->,bend right] A;
+%     \mor y n:[-2>] x;
+%     \mor Y ["x",name=a]:[->, bend left=5em] A;
+%     \mor Y ["g",name=g]:-> X;
+%     \mor Y ["pc",name=pa,swap]:[->, bend right=2em] B;
+%     \mor[swap] a {{k}}:[-2>,slide=0.1em] X;
+%     \mor[swap] pa {{l}}:[-2>,slide=0.4em, shorten=0.4em] X;
+%   \end{codi}\]
+%   Then we have that
+%   \[p(mg \circ k) = pmg \circ pk = pmg \circ png \circ l = p(m \circ n)g \circ l,\]
+%   so since $m \circ n$ is $p$-cartesian, there exists a unique map $\gamma : x \to a$ such that $p\gamma = l$
+%   and $(m \circ n)g \circ \gamma = mg \circ k$. We still need to show that $ng \circ \gamma = k$, but this
+%   follows from $m$ being $p$-cartesian, since $k$ is the unique map $\gamma'$ such that $mg \circ \gamma' = mg
+%   \circ k$ and $p\gamma' = pk$. Since $mg \circ ng \circ \gamma = mg \circ k$ and $p(ng \circ \gamma) =
+%   png \circ p\gamma = png \circ l = pk$, we see that $ng \circ \gamma$ also satisfies the properties of
+%   $\gamma'$, and so we conclude that by uniqueness that $ng \circ \gamma = k$.
+% \end{proof}
 
 \ifSubfilesClassLoaded{\printbibliography}{}
   \end{document}
