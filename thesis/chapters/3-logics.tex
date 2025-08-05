@@ -8,43 +8,33 @@
   
 
 \begin{document}
-\chapter{Finite \texorpdfstring{$\cF$}{F}-limit theories}\label{ch:F-theories}
+\chapter{Finite limit \texorpdfstring{$\sF$}{F}-theories}\label{ch:F-theories}
 In this chapter we introduce the notion of theories and models that underlie our treatment of
 the semantics of type theory in the subsequent chapter. Since the models of our theories ought
 to be categories equipped with some structure, it is sensible take take a 2-dimensional approach.
 The main notion underlying our treatment will be that of $\sF$-categories (\cref{def:F-category}),
 as these will allow fine-grained control of the strictness of homomorphisms.
 
-There are several possible notions in the literature that would apply, notably the various 2-dimensional
-generalizations of Lawvere theories as found in \cite{gray1973, nishizawa2009}. However,
-as weill see later, we will generally require more 2-limits than simply finite products and cotensor.
-In particular, we will make extensive use of 2-pullbacks, comma objects, and equalizers. Rather than
-Lawvere theories, we thus want to consider 2-dimensional limit theories, such as the enriched limit
-theories of \cite{kelly1982a} in the special case of enrichement in $\Cat$. A useful consequence of
-using enriched limit theories, that would also apply to Lawvere theories, is that we can present
-the theories using \emph{limit sketches}, and from that generate the theory we expect. 
+As was discussed in the introduction (\cref{ch:intro}), many different notions of 2-dimensional
+theories have been introduced and used throughout the literature. The reason for using $\sF$-%
+theories, as opposed to some other notion, is precisely that they provide precise control over
+which operations are preserved strictly by homomorphisms and which are preserved only up to
+isomorphism. Since the weak morphisms of models of type theory, whether one considers comprehension
+categories or categories with families or something else, are usually defined with some squares
+commuting strictly and some only up to isomorphism, this fine control provided by $\sF$-theories
+is what allows us to recover the correct morphisms as well. Furthermore, since $\sF$-theories
+are based on \cite{kelly1982a} with a different notion of models, we can also generate these
+theories using $\sF$-enriched sketches, as is done in \cite{arkor2024}. It is also from \cite{
+arkor2024} that we take the notion of model we use, so that our $\sF$-theories align well with
+the $\sF$-sketches of \emph{op. cit.}.
 
-\begin{remark}
-  One issue that arises when considering enriched limit theories, however, is that generally the
-  homomorphisms will be either too strict or too weak. If we take the notion of homomorphisms to
-  be what falls out directly from the notion of enriched limit theories as presented in \cite{kelly1982a},
-  enriched natural transformations, we find that the homomorphisms are too strict.
+We begin this chapter (\cref{sec:F and cats}) by defining $\sF$ (\cref{def:F}) and its enriched categories (\cref{%
+def:F-category}), where we also relate them to standard 2-categories. Then we go on to provide an explcit description of
+its weighted limits (\cref{sec:F limits}), which provides the basis for the subsequent $\sF$-theories and sketches (\cref{%
+sec:F theories}). We end the section with a short informal relation between the syntax of deductive systems and $\sF$-theoris,
+in a similar style to the descrption of syntax from the judgemental theories of \cite{coraglia2024a}.
 
-  Consider, for example, a theory for categories with finite products. In this case, the models are
-  categories equipped with a choice of finite products, and homomorphisms are 2-natural transformations
-  strictly preserving them. This suggests that we ought to use pseudonatural transformations, rather than
-  strict 2-natural transformations, as homomorphisms, as then the homomorphisms are functors 
-  preserving products in the traditional sense.
-
-  However, now we instead suffer from the opposite problem: in the theory of functors, whose models are
-  pairs of categories with a functor between them, we would expect the morphisms to be commuting squares
-  of functors, but with pseudonatural transformations they would only be squares commuting up to isomorphism.
-\end{remark}
-
-Given the issues of having the right strictness of morphisms when considering $\Cat$-enriched finite
-limit theories, we will instead be following \cite{arkor2024}, where they replace $\Cat$ with another
-category $\sF$ (essentially) consisting of categories equipped with full subcategories, and then take
-homomorphisms of models to allow $\sF$-enriched finite limit theories to specify strictness.
+\section{\texorpdfstring{$\sF$}{F} and its enriched categories}\label{sec:F and cats}
 \begin{definition}[{\cite[§3.1]{lack2012}}]\label{def:F}
   We define $\sF$ to be the full subcategory of $\Cat^\to$, the arrow category of $\Cat$, on fully faithful and
   injective-on-objects functors. Given an object $A_\tau \hookrightarrow A_\lambda$ of $\sF$, we call $A_\tau$ the
@@ -155,7 +145,7 @@ whose componenets need not be tight, and its 2-cells are modifications.
   category of loose morphisms.
 \end{definition}
 
-\section{Limits in \texorpdfstring{$\sF$}{F}-categories}
+\section{Limits in \texorpdfstring{$\sF$}{F}-categories}\label{sec:F limits}
 Since we will be considering $\sF$-enriched finite limit theories, it will be helpful to have an
 explicit description of $\sF$-enriched limits in a similar style to that of \cref{prop:chr of 2-limits}.
 In fact, much of that description works out the same for $\sF$-limits, with tightness conditions
@@ -291,7 +281,7 @@ into finite limit $\sF$-theories later.
 % As $\sF$-categories are simply enriched categories, we have a general notion of limits in $\sF$-%
 % categories, as is described in \cref{sec:enriched/limits}. Here we show how limits are defined
 % explicitly in $\sF$-categories.
-\section{Enhanced finite limit 2-theories and sketches}
+\section{Finite limit \texorpdfstring{$\sF$}{F}-theories and sketches}\label{sec:F theories}
 Generalizing the notion of finite limit theories, we would define an enhanced finite limit 2-theory,
 as a small enhanced 2-category with finite weighted limits. To aid with constructing these categories,
 and thus providing examples of such theories, we make use of enhanced finite limit 2-sketches, introduced
@@ -299,12 +289,13 @@ in \cite{arkor2024} as a specialization of enriched sketches defined by \cite{ke
 
 However, taking as $\sF$-category of models the $\sF$-category of $\sF$-functors and strict $\sF$-natural
 transformations is too strict for our purposes, as this would require models to preserve all structure
-of the theory strictly. Thus we would be unable to capture well the 2-category of cartesian categories,
-for example. Therefore we shall introduce the following functor $\sF$-categories, which allow for a
-controlled level of weakness in the categories of models, specified by the theory under consideration.
+of the theory strictly. Thus we would be unable to capture well structured categories with weak morphisms,
+such as the 2-category of cartesian categories. Therefore we shall introduce the following functor $\sF$-%
+categories, which allow for a controlled level of weakness in the categories of models, specified by the
+theory under consideration.
 
 \begin{definition}[{\cite[§4.1]{lack2012}}]
-  Let $w$ be a flavor of weakness $w \in \set{\text{strict},\text{pseudo}}$ and $F, G : \bA \to \bB$
+  Let $w$ be a flavor of weakness $w \in \set{s,p}$ (for \emph{strict} and \emph{pseudo}) and $F, G : \bA \to \bB$
   be $\sF$-functors. A \emph{loose $w$-natural transformation} $F \to G$ is a $w$-natural transformation
   of 2-functors $\alpha : F_\lambda \to G_\lambda$ such $\alpha$ is strictly 2-natural on tight morphisms,
   in the sense that $\alpha_d \circ F f = G f \circ \alpha_c$ for tight morphisms $f : c \to d \in \bA$. 
@@ -316,7 +307,10 @@ controlled level of weakness in the categories of models, specified by the theor
   and 2-cells are modifications. 
 \end{definition}
 
-\begin{definition}[Logic]
+These special functor $\sF$-categories are what provide our $\sF$-categories of models, and so we are
+now prepared to give the notions of theories and sketches we will use throughout.
+
+\begin{definition}[{Weighted Theory}]
   A \emph{$\Phi$-weighted $\sF$-theory} is a small $\sF$-category with all $\Phi$-weighted limits. A model
   for a theory $\bL$ is a $\sF$-limit preserving functor $\sF$-functor $M : \bL \to \bF$. We have for each
   flavor  of weakness $w \in \set{\text{strict}, \text{pseudo}}$ an $\sF$-category of $w$ models, namely
@@ -350,7 +344,6 @@ $\Phi$-weighted limit cones in $\bA$. We shall denote this sketch by $\sS_\Phi(\
   A proof for the weak case generalizes relatively straightforwardly from this, though is quite invloved
   and so is omitted here.
 \end{remark}
-
 
 \subsection{Examples of \texorpdfstring{$\sF$}{F}-theories}
 To get a better understanding of how these theories work, and what their 2-categories of models look like,
@@ -434,7 +427,7 @@ triangle commutes.
   \obj {|(P)| \ctx^\to \pb[\cod]{\rty} \ty & & \ty \\ & \ctx \\};
   \mor ctx \dom\pi_1:<- P \sub:-> ty \rty:-> ctx; 
 \end{codi}\]
-If we now note that $\ctx^\to \pb[\cod]{\rty} \ty \cong \ctx \comma \rty$, we see that $\sub$ is exactly as the
+Now, note that $\ctx^\to \pb[\cod]{\rty} \ty \cong \ctx \comma \rty$, so we see that $\sub$ is exactly as the
 morphism $\ell : \ctx \comma \rty \to \rty$ specifying the domain of the lifting in a fibration $\ty \to \ctx$.
 
 In short, we model non-dependent judgements as objects, dependent judgements as tight morphisms, and rules as
